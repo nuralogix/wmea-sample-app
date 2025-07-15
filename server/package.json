@@ -1,0 +1,37 @@
+{
+  "name": "nuralogix-anura-online-sample-app-react-server",
+  "version": "2.0.0",
+  "description": "Nuralogix Aura Online Sample App - React - Server",
+  "contributors": [
+    "Hamed Hassanzadeh Amin",
+    "Will Morgan"
+  ],
+  "type": "module",
+  "main": "index.mjs",
+  "scripts": {
+    "serve:prod": "node --env-file=../.prod.env src/index.ts",
+    "serve:dev": "node --env-file=../.dev.env src/index.ts"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "@nuralogix.ai/dfx-api-client": "^1.0.73",
+    "compression": "^1.8.0",
+    "connect-livereload": "^0.6.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "livereload": "^0.9.3"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.8.1",
+    "@types/connect-livereload": "^0.6.3",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/livereload": "^0.9.5",
+    "@types/node": "^24.0.6",
+    "cross-env": "^7.0.3"
+  }
+}

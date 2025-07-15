@@ -1,0 +1,28 @@
+import { proxy } from 'valtio';
+import { DemographicsState } from './types';
+import { faceAttributeValue } from '@nuralogix.ai/anura-online';
+
+const {
+  SEX_ASSIGNED_MALE_AT_BIRTH,
+  SMOKER_FALSE,
+  BLOOD_PRESSURE_MEDICATION_FALSE,
+  DIABETES_NONE
+} = faceAttributeValue;
+
+const demographicsState: DemographicsState = proxy({
+  demographics: {
+    age: 40,
+    height: 180,
+    weight: 60,
+    sex: SEX_ASSIGNED_MALE_AT_BIRTH,
+    smoking: SMOKER_FALSE,
+    bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
+    diabetes: DIABETES_NONE,
+    unit: 'Metric',
+  },
+  setDemographics: (demographics) => {
+    demographicsState.demographics = demographics;
+  },
+});
+
+export default demographicsState;
