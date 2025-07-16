@@ -1,4 +1,4 @@
-import { Demographics } from '@nuralogix.ai/anura-web-core-sdk';
+import { Demographics } from '@nuralogix.ai/anura-online';
 import { FormState } from '../types';
 import { FORM_VALUES } from '../constants';
 
