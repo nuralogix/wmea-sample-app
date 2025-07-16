@@ -1,17 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router';
+import WebFormWizard from './WebFormWizard';
 
 const Profile = () => {
-  const navigate = useNavigate();
-
-  return (
-    <div>
-        Profile pages
-        <br />
-        <br />
-        <button onClick={() => navigate('/measurement')}>Start Measurement</button>
-    </div>
-  );
+  // TODO check device type, render MobileFormWizard if mobile
+  return <WebFormWizard />;
 };
 
 export default Profile;
