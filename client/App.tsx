@@ -10,7 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 
 const styles = stylex.create({
   wrapper: {
-    height: '100%',
+    minHeight: '100vh',
     margin: 0,
     display: 'flex',
     flexDirection: 'column',
@@ -24,7 +24,7 @@ const App = () => {
   return (
     <LanguageInitializer>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <Container height="auto">
+        <Container height="100vh">
           <div {...stylex.props(styles.wrapper)}>
             <Navbar />
             <AppRouter />
