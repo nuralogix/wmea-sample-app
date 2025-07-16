@@ -1,7 +1,7 @@
 import { Heading, Tabs } from '@nuralogix.ai/web-ui';
-import HeartRateCard from './ResultsElements/HeartRateCard';
+import HeartRateCard from './Cards/HeartRateCard';
 
-const ResultsPage = () => {
+const CardsPresenter = () => {
   return (
     <>
       <Heading>Results</Heading>
@@ -20,4 +20,4 @@ const ResultsPage = () => {
   );
 };
 
-export default ResultsPage;
+export default CardsPresenter;
