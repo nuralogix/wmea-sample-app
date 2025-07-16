@@ -1153,10 +1153,10 @@
   version "2.0.0"
   resolved "file:./nuralogix.ai-anura-online-v2.0.0.tgz#7913ee25b0f8d646297db4b62f7fffcd48aa05f0"
 
-"@nuralogix.ai/web-ui@^0.1.0-alpha.10":
-  version "0.1.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.10.tgz#afbed71ccbd4a6a90557db2c93d3faeffcd573cb"
-  integrity sha512-iLCPrYmiK6eIt4YB6x8tGraBQEsHyKP9asYnbvC5rhWQfPdUxc3wOZWJzeRtBjDjvn/aRrdUa2Whu3IqqRpucA==
+"@nuralogix.ai/web-ui@^0.1.0-alpha.11":
+  version "0.1.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.11.tgz#fbca73293f8d975921d74f70c37242c923de6215"
+  integrity sha512-NGXeDdzfbKGpX5GuwNK5FsDCzgvBCuwGs2A+iQKOPsikc/Cb9LbSg3QaUAy0YcMSuIkf9RcJIPEuTX33+irgvg==
 
 "@rollup/plugin-commonjs@^28.0.2":
   version "28.0.6"
