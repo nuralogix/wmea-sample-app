@@ -38,14 +38,10 @@ const Navbar: React.FC = () => {
         <Button variant="link" onClick={toggleLanguage}>
           {i18n.language === 'en' ? 'Français' : 'English'}
         </Button>
-        {/* TODO replace with toggle */}
         <ThemeToggle
           isDarkMode={theme === 'dark'}
           onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
         />
-        {/* <Button variant="outline" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-          Change theme
-        </Button> */}
       </div>
     </header>
   );
