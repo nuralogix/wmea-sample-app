@@ -2,7 +2,6 @@ import React from 'react';
 import state from '../../state';
 import { useSnapshot } from 'valtio';
 import type { DfxPointId } from '@nuralogix.ai/anura-online';
-import ResultsPage from './ResultsPage';
 
 const Results = () => {
   const measurementSnap = useSnapshot(state.measurement);
@@ -33,7 +32,7 @@ const Results = () => {
       </div>
     );
   } else {
-    return <ResultsPage />;
+    return <div>Final results are not ready.</div>;
   }
 };
 
