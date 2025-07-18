@@ -1,4 +1,4 @@
-import { getColorFromGroup } from '../getColorFromDialSections';
+import { getColorFromGroup } from '../utils/getColorFromDialSections';
 import * as stylex from '@stylexjs/stylex';
 import { Accordion } from '@nuralogix.ai/web-ui';
 import MetricRow from './MetricRow';
@@ -7,7 +7,6 @@ import { THEME_GROUPS } from '../constants';
 
 interface AccordionPresenterProps {
   results: Results;
-  // Optionally, you could pass in a grouping function or config for sections
 }
 
 const styles = stylex.create({

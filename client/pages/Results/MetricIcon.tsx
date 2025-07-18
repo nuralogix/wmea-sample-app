@@ -24,14 +24,17 @@ import {
   WaistToHeight,
 } from '@nuralogix.ai/web-ui';
 
-const width = '24px';
-const height = '24px';
-
 interface MetricIconProps {
   dfxPointId: DfxPointId;
+  width?: string;
+  height?: string;
 }
 
-export const MetricIcon: React.FC<MetricIconProps> = ({ dfxPointId }) => {
+export const MetricIcon: React.FC<MetricIconProps> = ({
+  dfxPointId,
+  width = '24px',
+  height = '24px',
+}) => {
   switch (dfxPointId) {
     case 'ABSI':
       return <BodyShapeIndex width={width} height={height} />;

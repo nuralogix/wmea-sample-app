@@ -40,5 +40,11 @@
   "PROFILE_FORM_VALIDATION_WEIGHT_METRIC": "Le poids doit être compris entre 30 et 300 kg",
   "PROFILE_FORM_VALIDATION_WEIGHT_IMPERIAL": "Le poids doit être compris entre 66 et 661 lb",
   "PROFILE_FORM_VALIDATION_AGE": "L'âge doit être compris entre 13 et 120 ans",
-  "PROFILE_FORM_VALIDATION_BMI": "L'IMC doit être compris entre 10 et 65 pour une mesure précise"
+  "PROFILE_FORM_VALIDATION_BMI": "L'IMC doit être compris entre 10 et 65 pour une mesure précise",
+  "MEASURE_AGAIN": "Mesurer à nouveau",
+  "KIOSK_HELP_CAMERA": "Faites face à la caméra et gardez votre visage dans le cercle pendant toute la mesure.",
+  "KIOSK_HELP_ACCESSORIES": "Retirez tous les accessoires comme les lunettes ou les chapeaux, ainsi que tout maquillage sur le visage, avant de commencer la mesure.",
+  "KIOSK_HELP_STAY": "Une fois la mesure commencée, restez immobile et en position pendant 30 secondes jusqu'à ce qu'elle soit terminée.",
+  "RESULTS_PROCESSING_ERROR": "Un problème est survenu lors du traitement de vos résultats. Veuillez consulter les directives et réessayer.",
+  "EXIT": "Quitter"
 }
