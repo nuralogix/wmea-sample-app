@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import AnuraApplet, {
   faceAttributeValue,
   type Demographics,
-  type AppSettings
+  type AppSettings,
 } from '@nuralogix.ai/anura-online';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
@@ -15,7 +15,7 @@ const Measurement = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const container = document.createElement("div");
+    const container = document.createElement('div');
     const {
       SEX_ASSIGNED_MALE_AT_BIRTH,
       SMOKER_FALSE,
@@ -35,9 +35,9 @@ const Measurement = () => {
     };
 
     const settings: AppSettings = {
-      token: "token-value",
-      refreshToken: "refresh-token-value",
-      studyId: "study-id-value",
+      token: 'token-value',
+      refreshToken: 'refresh-token-value',
+      studyId: 'study-id-value',
     };
 
     anuraApplet.init({
@@ -45,23 +45,23 @@ const Measurement = () => {
       appPath: '.',
       settings,
       profile,
-      loadError: function(error) {
-        console.error("error", error);
-      }
+      loadError: function (error) {
+        console.error('error', error);
+      },
     });
     anuraApplet.on.results = (results) => {
       setResutls(results);
       navigate('/results');
     };
     anuraApplet.on.error = (error) => {
-      console.log("error received", error);
+      console.log('error received', error);
     };
     anuraApplet.on.webhook = (webhook) => {
-      console.log("Webhook received", webhook);
+      console.log('Webhook received', webhook);
     };
     return () => {
       anuraApplet.destroy();
-    };    
+    };
   }, []);
   return null;
 };
