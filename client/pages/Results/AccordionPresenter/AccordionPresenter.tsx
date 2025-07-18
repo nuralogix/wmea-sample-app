@@ -1,168 +1,29 @@
-import * as stylex from '@stylexjs/stylex';
-import { Accordion } from '@nuralogix.ai/web-ui';
 import type { DfxPointId } from '@nuralogix.ai/anura-online';
-import MetricRow from './MetricRow';
 
-const GREEN = '#4CAF50';
-
-// Mock data
-
-type Metric = {
-  dfxPointId: DfxPointId;
-  label: string;
+// Define Point and Points interfaces locally if not exported from the package
+interface Point {
+  channel: string;
+  notes: any[]; // Replace with RealtimeResultNotes[] if available
   value: string;
-  fillColor: string;
+  dial: {
+    sections: any[]; // Replace with DialSection[] if available
+    group: number;
+    subGroup: number;
+  };
+  meta: any; // Replace with IMeta if available
+  info: {
+    name: string;
+    unit: string;
+  };
+}
+type Points = {
+  [x in DfxPointId]?: Point;
 };
 
-const ACCORDION_DATA: {
-  title: string;
-  metrics: Metric[];
-}[] = [
-  {
-    title: 'Cardiovascular Health',
-    metrics: [
-      {
-        dfxPointId: 'BP_CVD',
-        label: 'CVD Risk',
-        value: '5%',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'BP_HEART_ATTACK',
-        label: 'Heart Attack Risk',
-        value: '2%',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'BP_STROKE',
-        label: 'Stroke Risk',
-        value: '1%',
-        fillColor: GREEN,
-      },
-    ],
-  },
-  {
-    title: 'Vitals',
-    metrics: [
-      {
-        dfxPointId: 'HR_BPM',
-        label: 'Heart Rate',
-        value: '78 bpm',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'BR_BPM',
-        label: 'Breathing Rate',
-        value: '16 bpm',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'BP_SYSTOLIC',
-        label: 'Systolic BP',
-        value: '120 mmHg',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'BP_DIASTOLIC',
-        label: 'Diastolic BP',
-        value: '80 mmHg',
-        fillColor: GREEN,
-      },
-    ],
-  },
-  {
-    title: 'Metabolic Health',
-    metrics: [
-      {
-        dfxPointId: 'BMI_CALC',
-        label: 'BMI',
-        value: '22.5',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'WAIST_TO_HEIGHT',
-        label: 'Waist/Height',
-        value: '0.48',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'ABSI',
-        label: 'ABSI',
-        value: '0.08',
-        fillColor: GREEN,
-      },
-    ],
-  },
-  {
-    title: 'Diabetes & Glucose',
-    metrics: [
-      {
-        dfxPointId: 'DBT_RISK_PROB',
-        label: 'Type 2 Diabetes Risk',
-        value: '3%',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'MFBG_RISK_PROB',
-        label: 'Fasting Blood Glucose',
-        value: '5.1 mmol/L',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'HBA1C_RISK_PROB',
-        label: 'Hemoglobin A1C',
-        value: '5.4%',
-        fillColor: GREEN,
-      },
-    ],
-  },
-  {
-    title: 'Liver & Lipids',
-    metrics: [
-      {
-        dfxPointId: 'FLD_RISK_PROB',
-        label: 'Fatty Liver Risk',
-        value: '4%',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'HDLTC_RISK_PROB',
-        label: 'Hypercholesterolemia',
-        value: '2%',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'TG_RISK_PROB',
-        label: 'Hypertriglyceridemia',
-        value: '1%',
-        fillColor: GREEN,
-      },
-    ],
-  },
-  {
-    title: 'Mental & Overall Health',
-    metrics: [
-      {
-        dfxPointId: 'MENTAL_SCORE',
-        label: 'Mental Stress Index',
-        value: 'Low',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'HEALTH_SCORE',
-        label: 'Health Score',
-        value: '92',
-        fillColor: GREEN,
-      },
-      {
-        dfxPointId: 'VITAL_SCORE',
-        label: 'Vital Score',
-        value: '88',
-        fillColor: GREEN,
-      },
-    ],
-  },
-];
+interface AccordionPresenterProps {
+  points: Points;
+  // Optionally, you could pass in a grouping function or config for sections
+}
 
 const styles = stylex.create({
   container: {
@@ -174,29 +35,208 @@ const styles = stylex.create({
   },
 });
 
-const AccordionPresenter = () => {
+// Example: group metrics by a simple theme map (customize as needed)
+const THEME_GROUPS: { [section: string]: DfxPointId[] } = {
+  'Cardiovascular Health': ['BP_CVD', 'BP_HEART_ATTACK', 'BP_STROKE'],
+  Vitals: ['HR_BPM', 'BR_BPM', 'BP_SYSTOLIC', 'BP_DIASTOLIC'],
+  'Metabolic Health': ['BMI_CALC', 'WAIST_TO_HEIGHT', 'ABSI'],
+  'Diabetes & Glucose': ['DBT_RISK_PROB', 'MFBG_RISK_PROB', 'HBA1C_RISK_PROB'],
+  'Liver & Lipids': ['FLD_RISK_PROB', 'HDLTC_RISK_PROB', 'TG_RISK_PROB'],
+  'Mental & Overall Health': ['MENTAL_SCORE', 'HEALTH_SCORE', 'VITAL_SCORE'],
+};
+
+import { getColorFromGroup } from '../getColorFromDialSections';
+import * as stylex from '@stylexjs/stylex';
+import { Accordion } from '@nuralogix.ai/web-ui';
+import MetricRow from './MetricRow';
+
+const AccordionPresenter: React.FC<AccordionPresenterProps> = ({ points }) => {
   return (
     <div {...stylex.props(styles.container)}>
-      {ACCORDION_DATA.map((section, sectionIdx) => (
-        <Accordion
-          key={sectionIdx}
-          title={section.title}
-          width="500px"
-          defaultOpen={sectionIdx === 0}
-        >
-          {section.metrics.map((metric, idx) => (
-            <MetricRow
-              key={idx}
-              dfxPointId={metric.dfxPointId}
-              label={metric.label}
-              value={metric.value}
-              fillColor={metric.fillColor}
-            />
-          ))}
-        </Accordion>
-      ))}
+      {Object.entries(THEME_GROUPS).map(([section, ids], sectionIdx) => {
+        // Only include ids that exist in points
+        const presentIds = ids.filter((id) => points[id]);
+        if (presentIds.length === 0) return null;
+        return (
+          <Accordion key={section} title={section} width="500px" defaultOpen={sectionIdx === 0}>
+            {presentIds.map((id) => {
+              const metric = points[id]!;
+              // Defensive: check for dial and info
+              const color =
+                metric.dial && metric.dial.sections && typeof metric.dial.group === 'number'
+                  ? getColorFromGroup(metric.dial.sections, metric.dial.group)
+                  : undefined;
+              return (
+                <MetricRow
+                  key={id}
+                  dfxPointId={id}
+                  label={metric.info?.name ?? id}
+                  value={metric.info ? `${metric.value} ${metric.info.unit}` : metric.value}
+                  fillColor={color ?? ''}
+                />
+              );
+            })}
+          </Accordion>
+        );
+      })}
     </div>
   );
+};
+
+// Minimal mock data for testing/demo
+export const mockPoints: Points = {
+  BP_CVD: {
+    channel: '',
+    notes: [],
+    value: '5',
+    dial: { sections: [], group: 1, subGroup: 0 },
+    meta: {},
+    info: { name: 'CVD Risk', unit: '%' },
+  },
+  BP_HEART_ATTACK: {
+    channel: '',
+    notes: [],
+    value: '2',
+    dial: { sections: [], group: 1, subGroup: 0 },
+    meta: {},
+    info: { name: 'Heart Attack Risk', unit: '%' },
+  },
+  BP_STROKE: {
+    channel: '',
+    notes: [],
+    value: '1',
+    dial: { sections: [], group: 1, subGroup: 0 },
+    meta: {},
+    info: { name: 'Stroke Risk', unit: '%' },
+  },
+  HR_BPM: {
+    channel: '',
+    notes: [],
+    value: '78',
+    dial: { sections: [], group: 2, subGroup: 0 },
+    meta: {},
+    info: { name: 'Heart Rate', unit: 'bpm' },
+  },
+  BR_BPM: {
+    channel: '',
+    notes: [],
+    value: '16',
+    dial: { sections: [], group: 2, subGroup: 0 },
+    meta: {},
+    info: { name: 'Breathing Rate', unit: 'bpm' },
+  },
+  BP_SYSTOLIC: {
+    channel: '',
+    notes: [],
+    value: '120',
+    dial: { sections: [], group: 2, subGroup: 0 },
+    meta: {},
+    info: { name: 'Systolic BP', unit: 'mmHg' },
+  },
+  BP_DIASTOLIC: {
+    channel: '',
+    notes: [],
+    value: '80',
+    dial: { sections: [], group: 2, subGroup: 0 },
+    meta: {},
+    info: { name: 'Diastolic BP', unit: 'mmHg' },
+  },
+  BMI_CALC: {
+    channel: '',
+    notes: [],
+    value: '22.5',
+    dial: { sections: [], group: 3, subGroup: 0 },
+    meta: {},
+    info: { name: 'BMI', unit: '' },
+  },
+  WAIST_TO_HEIGHT: {
+    channel: '',
+    notes: [],
+    value: '0.48',
+    dial: { sections: [], group: 3, subGroup: 0 },
+    meta: {},
+    info: { name: 'Waist/Height', unit: '' },
+  },
+  ABSI: {
+    channel: '',
+    notes: [],
+    value: '0.08',
+    dial: { sections: [], group: 3, subGroup: 0 },
+    meta: {},
+    info: { name: 'ABSI', unit: '' },
+  },
+  DBT_RISK_PROB: {
+    channel: '',
+    notes: [],
+    value: '3',
+    dial: { sections: [], group: 4, subGroup: 0 },
+    meta: {},
+    info: { name: 'Type 2 Diabetes Risk', unit: '%' },
+  },
+  MFBG_RISK_PROB: {
+    channel: '',
+    notes: [],
+    value: '5.1',
+    dial: { sections: [], group: 4, subGroup: 0 },
+    meta: {},
+    info: { name: 'Fasting Blood Glucose', unit: 'mmol/L' },
+  },
+  HBA1C_RISK_PROB: {
+    channel: '',
+    notes: [],
+    value: '5.4',
+    dial: { sections: [], group: 4, subGroup: 0 },
+    meta: {},
+    info: { name: 'Hemoglobin A1C', unit: '%' },
+  },
+  FLD_RISK_PROB: {
+    channel: '',
+    notes: [],
+    value: '4',
+    dial: { sections: [], group: 5, subGroup: 0 },
+    meta: {},
+    info: { name: 'Fatty Liver Risk', unit: '%' },
+  },
+  HDLTC_RISK_PROB: {
+    channel: '',
+    notes: [],
+    value: '2',
+    dial: { sections: [], group: 5, subGroup: 0 },
+    meta: {},
+    info: { name: 'Hypercholesterolemia', unit: '%' },
+  },
+  TG_RISK_PROB: {
+    channel: '',
+    notes: [],
+    value: '1',
+    dial: { sections: [], group: 5, subGroup: 0 },
+    meta: {},
+    info: { name: 'Hypertriglyceridemia', unit: '%' },
+  },
+  MENTAL_SCORE: {
+    channel: '',
+    notes: [],
+    value: 'Low',
+    dial: { sections: [], group: 6, subGroup: 0 },
+    meta: {},
+    info: { name: 'Mental Stress Index', unit: '' },
+  },
+  HEALTH_SCORE: {
+    channel: '',
+    notes: [],
+    value: '92',
+    dial: { sections: [], group: 6, subGroup: 0 },
+    meta: {},
+    info: { name: 'Health Score', unit: '' },
+  },
+  VITAL_SCORE: {
+    channel: '',
+    notes: [],
+    value: '88',
+    dial: { sections: [], group: 6, subGroup: 0 },
+    meta: {},
+    info: { name: 'Vital Score', unit: '' },
+  },
 };
 
 export default AccordionPresenter;

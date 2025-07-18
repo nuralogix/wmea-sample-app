@@ -3,7 +3,7 @@ import state from '../../state';
 import { useSnapshot } from 'valtio';
 import type { DfxPointId } from '@nuralogix.ai/anura-online';
 import CardsPresenter from './CardsPresenter/CardsPresenter';
-import AccordionPresenter from './AccordionPresenter/AccordionPresenter';
+import AccordionPresenter, { mockPoints } from './AccordionPresenter/AccordionPresenter';
 
 const Results = () => {
   const measurementSnap = useSnapshot(state.measurement);
@@ -37,7 +37,7 @@ const Results = () => {
     {
       /* return <CardsPresenter />; */
     }
-    return <AccordionPresenter />;
+    return <AccordionPresenter points={mockPoints} />;
   }
 };
 
