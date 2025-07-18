@@ -1151,7 +1151,7 @@
 
 "@nuralogix.ai/anura-online@file:./nuralogix.ai-anura-online-v2.0.0.tgz":
   version "2.0.0"
-  resolved "file:./nuralogix.ai-anura-online-v2.0.0.tgz#7913ee25b0f8d646297db4b62f7fffcd48aa05f0"
+  resolved "file:./nuralogix.ai-anura-online-v2.0.0.tgz#3d0886885a999dbc564c83f9ed8e6cad5909a8b5"
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.11":
   version "0.1.0-alpha.11"
