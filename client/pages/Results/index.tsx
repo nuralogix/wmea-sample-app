@@ -4,7 +4,7 @@ import { useSnapshot } from 'valtio';
 import type { DfxPointId } from '@nuralogix.ai/anura-online';
 import CardsPresenter from './CardsPresenter/CardsPresenter';
 import AccordionPresenter from './AccordionPresenter/AccordionPresenter';
-import { mockResults } from './constants';
+import { mockResults } from './mockResults';
 
 const Results = () => {
   const measurementSnap = useSnapshot(state.measurement);
@@ -12,6 +12,7 @@ const Results = () => {
   if (results) {
     const { points } = results;
     const pointList = Object.keys(points) as DfxPointId[];
+    return <AccordionPresenter results={results} />;
     return (
       <div>
         <div>Final Results</div>
@@ -39,6 +40,7 @@ const Results = () => {
       /* return <CardsPresenter />; */
     }
     return <AccordionPresenter results={mockResults} />;
+    // return <div>no results</div>;
   }
 };
 

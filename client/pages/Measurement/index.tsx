@@ -53,6 +53,7 @@ const Measurement = () => {
           },
         });
         anuraApplet.on.results = (results) => {
+          console.log('Results received', results);
           setResults(results);
           navigate('/results');
           // anuraApplet.destroy();

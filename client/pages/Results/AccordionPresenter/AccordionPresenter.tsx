@@ -2,7 +2,7 @@ import { getColorFromGroup } from '../getColorFromDialSections';
 import * as stylex from '@stylexjs/stylex';
 import { Accordion } from '@nuralogix.ai/web-ui';
 import MetricRow from './MetricRow';
-import { Results } from '@nuralogix.ai/anura-online';
+import type { Results } from '@nuralogix.ai/anura-online';
 import { THEME_GROUPS } from '../constants';
 
 interface AccordionPresenterProps {
@@ -29,6 +29,7 @@ const AccordionPresenter: React.FC<AccordionPresenterProps> = ({ results }) => {
         // Only include ids that exist in points
         const presentIds = metricIds.filter((id) => points[id]);
         if (presentIds.length === 0) return null;
+
         return (
           <Accordion key={section} title={section} width="500px" defaultOpen={sectionIdx === 0}>
             {presentIds.map((id) => {
