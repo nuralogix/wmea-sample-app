@@ -1,11 +1,9 @@
-import { Heading, Tabs } from '@nuralogix.ai/web-ui';
+import { Tabs } from '@nuralogix.ai/web-ui';
 import HeartRateCard from './Cards/HeartRateCard';
 
 const CardsPresenter = () => {
   return (
     <>
-      <Heading>Results</Heading>
-
       <Tabs
         tabs={[
           {
