@@ -59,8 +59,10 @@
   },
   "dependencies": {
     "@nuralogix.ai/anura-online": "file:./nuralogix.ai-anura-online-v2.0.0.tgz",
-    "@nuralogix.ai/web-ui": "^0.1.0-alpha.10",
+    "@nuralogix.ai/web-ui": "^0.1.0-alpha.11",
     "@stylexjs/stylex": "0.9.3",
+    "i18next": "^25.3.2",
+    "i18next-http-backend": "^3.0.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.6.0",

@@ -12,7 +12,7 @@ const Results = () => {
     return (
       <div>
         <div>Final Results</div>
-          <div>
+        <div>
           {pointList.map((point) => {
             const signal = points[point]!;
             const { value, info } = signal;
@@ -29,14 +29,10 @@ const Results = () => {
             );
           })}
         </div>
-    </div>
-    );
-  } else {
-    return (
-      <div>
-        Final results are not ready.
       </div>
     );
+  } else {
+    return <div>Final results are not ready.</div>;
   }
 };
 

@@ -78,6 +78,7 @@ const config = [
       // Copy Anura Online to anura-online folder inside dist folder
       copy({
         targets: [
+          { src: 'client/language/*.json', dest: 'dist/language' },
           {
             src: 'node_modules/@nuralogix.ai/anura-online/dist/*',
             dest: `${distFolder}/anura-online`,
