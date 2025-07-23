@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Results } from '@nuralogix.ai/anura-online';
-import type { DfxPointId } from '@nuralogix.ai/anura-online';
+import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 
 interface BasicPresenterProps {
   results: Results;

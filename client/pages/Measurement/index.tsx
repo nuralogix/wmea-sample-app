@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import AnuraApplet, { faceAttributeValue, type Demographics } from '@nuralogix.ai/anura-online';
+import AnuraApplet, {
+  faceAttributeValue,
+  type Demographics,
+} from '@nuralogix.ai/web-measurement-embedded-app';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';

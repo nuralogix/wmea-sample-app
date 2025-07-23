@@ -1,4 +1,4 @@
-import type { Results } from '@nuralogix.ai/anura-online';
+import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
 
 export interface MeasurementState {
   apiUrl: string;

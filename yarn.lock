@@ -836,7 +836,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.27.1"
 
-"@babel/runtime@^7.27.6":
+"@babel/runtime@^7.26.10", "@babel/runtime@^7.27.6":
   version "7.27.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.6.tgz#ec4070a04d76bae8ddbb10770ba55714a417b7c6"
   integrity sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==
@@ -1128,6 +1128,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@mediapipe/tasks-vision@^0.10.21":
+  version "0.10.21"
+  resolved "https://registry.yarnpkg.com/@mediapipe/tasks-vision/-/tasks-vision-0.10.21.tgz#b78df074763e0c7fdf8606c60121d65c9199bbf6"
+  integrity sha512-TuhKH+credq4zLksGbYrnvJ1aLIWMc5r0UHwzxzql4BHECJwIAoBR61ZrqwGOW6ZmSBIzU1t4VtKj8hbxFaKeA==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1153,7 +1158,17 @@
   version "2.0.0"
   resolved "file:./nuralogix.ai-anura-online-v2.0.0.tgz#3d0886885a999dbc564c83f9ed8e6cad5909a8b5"
 
-"@nuralogix.ai/web-ui@^0.1.0-alpha.11":
+"@nuralogix.ai/anura-web-core-sdk@^0.1.0-alpha.22":
+  version "0.1.0-alpha.22"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-alpha.22.tgz#eb2cd531773ca405bfc22f806fc2d3495f7b9003"
+  integrity sha512-XOEVm9H+rfTi+AvLo9kfnqFbX5lFwL9rUjGr2K03Zurkx8rfh605WszB4K9N9lB9wnhBG4zGWbigc7P214E2oQ==
+
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.2":
+  version "0.1.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.2.tgz#25dcd83f1721d020cb06f52dfe5c0ed7635fa4a0"
+  integrity sha512-nTNrr+rfal1J1aD8oD1bU8vJMOUAqOkBTZ8z1RSwdkxtdU+bnQv5HtsC9iIJzUWhnfDosSB5y7xIZ2hF/AEOKw==
+
+"@nuralogix.ai/web-ui@^0.1.0-alpha.11", "@nuralogix.ai/web-ui@^0.1.0-alpha.9":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.11.tgz#fbca73293f8d975921d74f70c37242c923de6215"
   integrity sha512-NGXeDdzfbKGpX5GuwNK5FsDCzgvBCuwGs2A+iQKOPsikc/Cb9LbSg3QaUAy0YcMSuIkf9RcJIPEuTX33+irgvg==
@@ -2757,6 +2772,13 @@ i18next-http-backend@^3.0.2:
   dependencies:
     cross-fetch "4.0.0"
 
+i18next@^24.2.3:
+  version "24.2.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-24.2.3.tgz#3a05f72615cbd7c00d7e348667e2aabef1df753b"
+  integrity sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==
+  dependencies:
+    "@babel/runtime" "^7.26.10"
+
 i18next@^25.3.2:
   version "25.3.2"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-25.3.2.tgz#3d6a7d1dc058caa1b9bdca47fd585483e2e7a637"
@@ -3903,6 +3925,14 @@ react-dom@^19.1.0:
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
   dependencies:
     scheduler "^0.26.0"
+
+react-i18next@^15.4.1:
+  version "15.6.1"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.6.1.tgz#a2747bed7768faef28fa28de32ff3811b2459c20"
+  integrity sha512-uGrzSsOUUe2sDBG/+FJq2J1MM+Y4368/QW8OLEKSFvnDflHBbZhSd1u3UkW0Z06rMhZmnB/AQrhCpYfE5/5XNg==
+  dependencies:
+    "@babel/runtime" "^7.27.6"
+    html-parse-stringify "^3.0.1"
 
 react-i18next@^15.6.0:
   version "15.6.0"

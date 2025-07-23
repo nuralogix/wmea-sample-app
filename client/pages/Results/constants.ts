@@ -1,4 +1,4 @@
-import type { DfxPointId, Results } from '@nuralogix.ai/anura-online';
+import type { DfxPointId, Results } from '@nuralogix.ai/web-measurement-embedded-app';
 
 export const THEME_GROUPS: { [section: string]: DfxPointId[] } = {
   'Cardiovascular Health': ['BP_CVD', 'BP_HEART_ATTACK', 'BP_STROKE'],

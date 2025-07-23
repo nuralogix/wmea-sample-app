@@ -1,16 +1,29 @@
 import React, { useState } from 'react';
 import {
-  Activity,
-  Heart,
-  Brain,
-  Scale,
-  TrendingUp,
-  AlertTriangle,
-  CheckCircle,
-  Droplets,
-  Wind,
-  Zap,
-} from 'lucide-react';
+  PulseRate,
+  BloodPressure,
+  Breathing,
+  HeartRateVariability,
+  CardioVascularDiseaseRisk,
+  StrokeRisk,
+  HeartAttackRisk,
+  CardiacWorkload,
+  Hypertension,
+  Type2DiabetesRisk,
+  FattyLiverDiseaseRisk,
+  HemoglobinA1C,
+  Hypercholesterolemia,
+  FastingBloodGlucose,
+  Hypertriglyceridemia,
+  BodyMassIndex,
+  BodyShapeIndex,
+  WaistToHeight,
+  HealthScore,
+  MentalStressIndex,
+  OverallMetabolicHealthRisk,
+} from '@nuralogix.ai/web-ui';
+
+import { Heart, Activity, Droplets, Scale, CheckCircle } from 'lucide-react';
 
 interface HealthMetric {
   id: string;
@@ -21,6 +34,9 @@ interface HealthMetric {
   range: string;
   icon: React.ReactNode;
 }
+
+const ICON_WIDTH = '24';
+const ICON_HEIGHT = '24';
 
 const ResultsSummary = () => {
   const [activeTab, setActiveTab] = useState('vitals');
@@ -35,7 +51,7 @@ const ResultsSummary = () => {
         unit: 'bpm',
         status: 'normal' as const,
         range: '60-100 bpm',
-        icon: <Heart size={24} />,
+        icon: <PulseRate width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'BP_SYSTOLIC',
@@ -44,7 +60,7 @@ const ResultsSummary = () => {
         unit: 'mmHg',
         status: 'normal' as const,
         range: '90-120 mmHg',
-        icon: <Activity size={24} />,
+        icon: <BloodPressure width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'BP_DIASTOLIC',
@@ -53,7 +69,7 @@ const ResultsSummary = () => {
         unit: 'mmHg',
         status: 'normal' as const,
         range: '60-80 mmHg',
-        icon: <Activity size={24} />,
+        icon: <BloodPressure width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'BR_BPM',
@@ -62,7 +78,7 @@ const ResultsSummary = () => {
         unit: 'breaths/min',
         status: 'normal' as const,
         range: '12-20 breaths/min',
-        icon: <Wind size={24} />,
+        icon: <Breathing width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'HRV_SDNN',
@@ -71,7 +87,7 @@ const ResultsSummary = () => {
         unit: 'ms',
         status: 'excellent' as const,
         range: '>30 ms',
-        icon: <Zap size={24} />,
+        icon: <HeartRateVariability width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
     ],
     cardiovascular: [
@@ -82,7 +98,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<10%',
-        icon: <Heart size={24} />,
+        icon: <CardioVascularDiseaseRisk width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'BP_STROKE',
@@ -91,7 +107,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<5%',
-        icon: <Brain size={24} />,
+        icon: <StrokeRisk width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'BP_HEART_ATTACK',
@@ -100,7 +116,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<7%',
-        icon: <AlertTriangle size={24} />,
+        icon: <HeartAttackRisk width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'BP_RPP',
@@ -109,7 +125,7 @@ const ResultsSummary = () => {
         unit: 'units',
         status: 'normal' as const,
         range: '6000-12000',
-        icon: <TrendingUp size={24} />,
+        icon: <CardiacWorkload width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'HPT_RISK_PROB',
@@ -118,7 +134,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'warning' as const,
         range: '<15%',
-        icon: <AlertTriangle size={24} />,
+        icon: <Hypertension width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
     ],
     metabolic: [
@@ -129,7 +145,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<7.5%',
-        icon: <Droplets size={24} />,
+        icon: <Type2DiabetesRisk width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'FLD_RISK_PROB',
@@ -138,7 +154,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'warning' as const,
         range: '<20%',
-        icon: <AlertTriangle size={24} />,
+        icon: <FattyLiverDiseaseRisk width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'HBA1C_RISK_PROB',
@@ -147,7 +163,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<5.7%',
-        icon: <Droplets size={24} />,
+        icon: <HemoglobinA1C width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'HDLTC_RISK_PROB',
@@ -156,7 +172,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'warning' as const,
         range: '<25%',
-        icon: <TrendingUp size={24} />,
+        icon: <Hypercholesterolemia width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'MFBG_RISK_PROB',
@@ -165,7 +181,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<10%',
-        icon: <Droplets size={24} />,
+        icon: <FastingBloodGlucose width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'TG_RISK_PROB',
@@ -174,7 +190,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<20%',
-        icon: <TrendingUp size={24} />,
+        icon: <Hypertriglyceridemia width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
     ],
     bodyComposition: [
@@ -185,7 +201,7 @@ const ResultsSummary = () => {
         unit: 'kg/m²',
         status: 'normal' as const,
         range: '18.5-24.9',
-        icon: <Scale size={24} />,
+        icon: <BodyMassIndex width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'ABSI',
@@ -194,7 +210,7 @@ const ResultsSummary = () => {
         unit: '',
         status: 'normal' as const,
         range: '0.075-0.085',
-        icon: <Scale size={24} />,
+        icon: <BodyShapeIndex width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'WAIST_TO_HEIGHT',
@@ -203,7 +219,7 @@ const ResultsSummary = () => {
         unit: '',
         status: 'excellent' as const,
         range: '<0.5',
-        icon: <Scale size={24} />,
+        icon: <WaistToHeight width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
     ],
     overallScores: [
@@ -214,7 +230,7 @@ const ResultsSummary = () => {
         unit: '/100',
         status: 'excellent' as const,
         range: '70-100',
-        icon: <CheckCircle size={24} />,
+        icon: <HealthScore width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'VITAL_SCORE',
@@ -223,7 +239,7 @@ const ResultsSummary = () => {
         unit: '/100',
         status: 'excellent' as const,
         range: '70-100',
-        icon: <Activity size={24} />,
+        icon: <HealthScore width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'MENTAL_SCORE',
@@ -232,7 +248,7 @@ const ResultsSummary = () => {
         unit: '/100',
         status: 'normal' as const,
         range: '60-80',
-        icon: <Brain size={24} />,
+        icon: <MentalStressIndex width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
       {
         id: 'OVERALL_METABOLIC_RISK_PROB',
@@ -241,7 +257,7 @@ const ResultsSummary = () => {
         unit: '%',
         status: 'normal' as const,
         range: '<20%',
-        icon: <TrendingUp size={24} />,
+        icon: <OverallMetabolicHealthRisk width={ICON_WIDTH} height={ICON_HEIGHT} />,
       },
     ],
   };
@@ -353,7 +369,7 @@ const ResultsSummary = () => {
         >
           Normal range: {metric.range}
         </div>
-        <div
+        {/* <div
           style={{
             display: 'inline-block',
             backgroundColor: getStatusColor(metric.status),
@@ -366,7 +382,7 @@ const ResultsSummary = () => {
           }}
         >
           {metric.status}
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -500,76 +516,6 @@ const ResultsSummary = () => {
           {healthData[activeTab as keyof typeof healthData].map((metric) => (
             <MetricCard key={metric.id} metric={metric} />
           ))}
-        </div>
-
-        {/* Summary Stats */}
-        <div
-          style={{
-            marginTop: '32px',
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            padding: '24px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-          }}
-        >
-          <h2
-            style={{
-              margin: '0 0 16px 0',
-              fontSize: '20px',
-              fontWeight: '600',
-              color: '#1f2937',
-            }}
-          >
-            Quick Summary
-          </h2>
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '16px',
-            }}
-          >
-            {Object.entries(healthData).map(([category, metrics]) => {
-              const normalCount = metrics.filter(
-                (m) => m.status === 'normal' || m.status === 'excellent'
-              ).length;
-              const totalCount = metrics.length;
-              const percentage = Math.round((normalCount / totalCount) * 100);
-
-              return (
-                <div
-                  key={category}
-                  style={{
-                    textAlign: 'center',
-                    padding: '16px',
-                    backgroundColor: '#f8fafc',
-                    borderRadius: '8px',
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '24px',
-                      fontWeight: '700',
-                      color:
-                        percentage >= 80 ? '#10b981' : percentage >= 60 ? '#f59e0b' : '#ef4444',
-                      marginBottom: '4px',
-                    }}
-                  >
-                    {percentage}%
-                  </div>
-                  <div
-                    style={{
-                      fontSize: '14px',
-                      color: '#6b7280',
-                      textTransform: 'capitalize',
-                    }}
-                  >
-                    {category.replace(/([A-Z])/g, ' $1').trim()} Normal
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
       </div>
     </div>

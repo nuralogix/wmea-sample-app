@@ -1,5 +1,5 @@
 import React from 'react';
-import { DfxPointId } from '@nuralogix.ai/anura-online';
+import { DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 import {
   BodyShapeIndex,
   BodyMassIndex,

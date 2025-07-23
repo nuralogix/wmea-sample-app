@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@nuralogix.ai/anura-online": "file:./nuralogix.ai-anura-online-v2.0.0.tgz",
+    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-alpha.2",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.11",
     "@stylexjs/stylex": "0.9.3",
     "i18next": "^25.3.2",
