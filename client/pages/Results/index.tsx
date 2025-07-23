@@ -15,7 +15,7 @@ const Results = () => {
     return <ResultsError />;
   }
 
-  return <ResultsSummary />;
+  return <ResultsSummary results={data} />;
 };
 
 export default Results;

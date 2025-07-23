@@ -1,9 +1,25 @@
+// TODO use color tokens from design system?
+// const colors = {
+//   dfxPointBandGreen: '#62DB99',
+//   dfxPointBandLightGreen: '#91E6B7',
+//   dfxPointBandYellow: '#FFEC89',
+//   dfxPointBandLightRed: '#FF8989',
+//   dfxPointBandRed: '#FF5757',
+// };
+const colors = {
+  dfxPointBandGreen: 'rgba(98, 219, 153, 0.5)',
+  dfxPointBandLightGreen: 'rgba(145, 230, 183, 0.5)',
+  dfxPointBandYellow: 'rgba(255, 236, 137, 0.5)',
+  dfxPointBandLightRed: 'rgba(255, 137, 137, 0.5)',
+  dfxPointBandRed: 'rgba(255, 87, 87, 0.5)',
+};
+
 export const BAND_COLOR_MAP = {
-  YELLOW: '#FFEB3B',
-  LIGHT_GREEN: '#8BC34A',
-  GREEN: '#4CAF50',
-  LIGHT_RED: '#FF8A80',
-  RED: '#F44336',
+  YELLOW: colors.dfxPointBandYellow,
+  LIGHT_GREEN: colors.dfxPointBandLightGreen,
+  GREEN: colors.dfxPointBandGreen,
+  LIGHT_RED: colors.dfxPointBandLightRed,
+  RED: colors.dfxPointBandRed,
 } as const;
 
 export type BandColor = keyof typeof BAND_COLOR_MAP;
@@ -16,7 +32,9 @@ export interface DialSection {
 
 // Utility to get color from group index (preferred for Anura Results)
 export function getColorFromGroup(sections: DialSection[], group: number): string {
-  if (!Array.isArray(sections) || typeof group !== 'number' || !sections[group])
-    return BAND_COLOR_MAP.GREEN;
-  return BAND_COLOR_MAP[sections[group].bandColor];
+  console.log('MetricCard getColorFromGroup', { sections, group });
+  if (sections.length === 0) {
+    return '#D8CAB5';
+  }
+  return BAND_COLOR_MAP[sections[group - 1].bandColor];
 }
