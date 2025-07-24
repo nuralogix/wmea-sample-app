@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { Heart, Activity, Droplets, Scale, CheckCircle } from 'lucide-react';
 import { THEME_GROUPS } from './constants';
-import { MetricIcon } from './MetricIcon';
-// import { getColorFromGroup } from './utils/getColorFromDialSections';
 import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
-import { getColorFromGroup } from './utils/getColorFromDialSections';
 import MetricCard from './MetricCard';
 
 interface ResultsSummaryProps {

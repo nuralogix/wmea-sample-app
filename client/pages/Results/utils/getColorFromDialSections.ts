@@ -7,11 +7,11 @@
 //   dfxPointBandRed: '#FF5757',
 // };
 const colors = {
-  dfxPointBandGreen: 'rgba(98, 219, 153, 0.5)',
-  dfxPointBandLightGreen: 'rgba(145, 230, 183, 0.5)',
-  dfxPointBandYellow: 'rgba(255, 236, 137, 0.5)',
-  dfxPointBandLightRed: 'rgba(255, 137, 137, 0.5)',
-  dfxPointBandRed: 'rgba(255, 87, 87, 0.5)',
+  dfxPointBandGreen: 'rgba(98, 219, 153, 0.5)', // #62DB99
+  dfxPointBandLightGreen: 'rgba(145, 230, 183, 0.5)', // #91E6B7
+  dfxPointBandYellow: 'rgba(255, 236, 137, 0.5)', // #FFEC89
+  dfxPointBandLightRed: 'rgba(255, 137, 137, 0.5)', // #FF8989
+  dfxPointBandRed: 'rgba(255, 87, 87, 0.5)', // #FF5757
 };
 
 export const BAND_COLOR_MAP = {
