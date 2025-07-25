@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { THEME_GROUPS } from './constants';
 import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
 
@@ -7,14 +6,32 @@ interface ResultsSummaryProps {
   results: Results;
 }
 
-const TABS = [
-  { id: 'All', name: 'All Results' },
-  { id: 'Vitals', name: 'Vitals' },
-  { id: 'Cardiovascular Health', name: 'Cardiovascular Health' },
-  { id: 'Metabolic Health', name: 'Metabolic Health' },
-  { id: 'Body Composition', name: 'Body Composition' },
-  { id: 'Overall Scores', name: 'Overall Scores' },
-];
+export const pointGroup = {
+  METADATA: 'metadata',
+  PHYSICAL: 'physical',
+  GENERAL_RISKS: 'generalRisks',
+  VITALS: 'vitals',
+  PHYSIOLOGICAL: 'physiological',
+  METABOLIC_RISKS: 'metabolicRisks',
+  BLOOD_BIOMARKERS: 'bloodBiomarkers',
+  OVERALL: 'overall',
+  MENTAL: 'mental',
+  SURVEYS: 'surveys',
+} as const;
+
+// Utility: get all unique groups present in results.points
+function getGroupsFromResults(points: Results['points']) {
+  const groupSet = new Set<string>();
+  Object.values(points || {}).forEach((pt: any) => {
+    if (pt?.meta?.group) groupSet.add(pt.meta.group);
+  });
+  return Array.from(groupSet);
+}
+
+// Utility: get all points for a group
+function getPointsForGroup(points: Results['points'], group: string) {
+  return Object.entries(points || {}).filter(([, pt]: any) => pt?.meta?.group === group);
+}
 
 // Utility: should render a group if at least one metric exists in results.points
 function shouldRenderGroup(groupIds: DfxPointId[], points: Results['points']): boolean {
@@ -23,10 +40,12 @@ function shouldRenderGroup(groupIds: DfxPointId[], points: Results['points']): b
 }
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
-  // Only show tabs for groups that have at least one metric present, plus 'All' tab
-  const visibleTabs = TABS.filter(
-    (tab) => tab.id === 'All' || shouldRenderGroup(THEME_GROUPS[tab.id] || [], results.points)
-  );
+  // Dynamically generate tabs from groups present in results.points
+  const groups = getGroupsFromResults(results.points);
+  const visibleTabs = [
+    { id: 'All', name: 'All Results' },
+    ...groups.map((group) => ({ id: group, name: group })),
+  ];
   // If the current activeTab is not visible, default to the first visible tab
   const [activeTab, setActiveTab] = useState<string>(visibleTabs[0]?.id || '');
 
@@ -35,8 +54,6 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
       setActiveTab(visibleTabs[0]?.id || '');
     }
   }, [activeTab, visibleTabs]);
-
-  const groupIds = THEME_GROUPS[activeTab] || [];
 
   return (
     <div
@@ -153,20 +170,12 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
 
         {/* Content */}
         {activeTab === 'All' ? (
-          <div
-            style={{
-              maxHeight: 'calc(100vh - 300px)',
-              overflowY: 'auto',
-              paddingRight: '8px',
-            }}
-          >
-            {Object.entries(THEME_GROUPS).map(([groupName, ids]) => {
-              const presentIds = ids.filter(
-                (dfxPointId) => results.points && results.points[dfxPointId]
-              );
-              if (presentIds.length === 0) return null;
+          <>
+            {groups.map((group) => {
+              const pointsForGroup = getPointsForGroup(results.points, group);
+              if (pointsForGroup.length === 0) return null;
               return (
-                <div key={groupName} style={{ marginBottom: '32px' }}>
+                <div key={group} style={{ marginBottom: '32px' }}>
                   <h2
                     style={{
                       fontSize: '18px',
@@ -177,7 +186,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                       paddingBottom: '4px',
                     }}
                   >
-                    {groupName}
+                    {group}
                   </h2>
                   <div
                     style={{
@@ -187,20 +196,18 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                       gap: '20px',
                     }}
                   >
-                    {presentIds.map((dfxPointId) =>
-                      results.points[dfxPointId] ? (
-                        <MetricCard
-                          point={results.points[dfxPointId]}
-                          key={dfxPointId}
-                          dfxPointId={dfxPointId}
-                        />
-                      ) : null
-                    )}
+                    {pointsForGroup.map(([dfxPointId, pt]) => (
+                      <MetricCard
+                        point={pt}
+                        key={dfxPointId}
+                        dfxPointId={dfxPointId as DfxPointId}
+                      />
+                    ))}
                   </div>
                 </div>
               );
             })}
-          </div>
+          </>
         ) : (
           <div
             style={{
@@ -210,15 +217,9 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
               gap: '20px',
             }}
           >
-            {groupIds.map((dfxPointId) =>
-              results.points && results.points[dfxPointId] ? (
-                <MetricCard
-                  point={results.points[dfxPointId]}
-                  key={dfxPointId}
-                  dfxPointId={dfxPointId}
-                />
-              ) : null
-            )}
+            {getPointsForGroup(results.points, activeTab).map(([dfxPointId, pt]) => (
+              <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId as DfxPointId} />
+            ))}
           </div>
         )}
       </div>
