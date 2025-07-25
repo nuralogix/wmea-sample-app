@@ -73,8 +73,8 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
             marginBottom: '4px',
           }}
         >
-          {/* TODO: Add range maybe */}
-          {/* Normal range: {meta?.range ? `${meta.range.min} - ${meta.range.max}` : ''} */}
+          
+          
         </div>
       </div>
     </div>
