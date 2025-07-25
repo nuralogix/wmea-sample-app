@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
 
@@ -34,21 +35,22 @@ function getPointsForGroup(points: Results['points'], group: string) {
 }
 
 // Utility: convert group keys to readable labels
-function getGroupLabel(groupKey: string): string {
-  const labelMap: Record<string, string> = {
-    metadata: 'Metadata',
-    physical: 'Physical Measurements',
-    generalRisks: 'General Health Risks',
-    vitals: 'Vital Signs',
-    physiological: 'Physiological Indicators',
-    metabolicRisks: 'Metabolic Risk Factors',
-    bloodBiomarkers: 'Blood Biomarkers',
-    overall: 'Overall Health',
-    mental: 'Mental Health',
-    surveys: 'Survey Results',
+function getGroupLabel(groupKey: string, t: any): string {
+  const keyMap: Record<string, string> = {
+    metadata: 'RESULTS_GROUP_METADATA',
+    physical: 'RESULTS_GROUP_PHYSICAL',
+    generalRisks: 'RESULTS_GROUP_GENERAL_RISKS',
+    vitals: 'RESULTS_GROUP_VITALS',
+    physiological: 'RESULTS_GROUP_PHYSIOLOGICAL',
+    metabolicRisks: 'RESULTS_GROUP_METABOLIC_RISKS',
+    bloodBiomarkers: 'RESULTS_GROUP_BLOOD_BIOMARKERS',
+    overall: 'RESULTS_GROUP_OVERALL',
+    mental: 'RESULTS_GROUP_MENTAL',
+    surveys: 'RESULTS_GROUP_SURVEYS',
   };
 
-  return labelMap[groupKey] || groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
+  const translationKey = keyMap[groupKey];
+  return translationKey ? t(translationKey) : groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
 }
 
 // Utility: should render a group if at least one metric exists in results.points
@@ -58,11 +60,13 @@ function shouldRenderGroup(groupIds: DfxPointId[], points: Results['points']): b
 }
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
+  const { t } = useTranslation();
+
   // Dynamically generate tabs from groups present in results.points
   const groups = getGroupsFromResults(results.points);
   const visibleTabs = [
-    { id: 'All', name: 'All Results' },
-    ...groups.map((group) => ({ id: group, name: getGroupLabel(group) })),
+    { id: 'All', name: t('RESULTS_ALL_RESULTS') },
+    ...groups.map((group) => ({ id: group, name: getGroupLabel(group, t) })),
   ];
   // If the current activeTab is not visible, default to the first visible tab
   const [activeTab, setActiveTab] = useState<string>(visibleTabs[0]?.id || '');
@@ -204,7 +208,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                       paddingBottom: '4px',
                     }}
                   >
-                    {getGroupLabel(group)}
+                    {getGroupLabel(group, t)}
                   </h2>
                   <div
                     style={{

@@ -46,5 +46,16 @@
   "KIOSK_HELP_ACCESSORIES": "Retirez tous les accessoires comme les lunettes ou les chapeaux, ainsi que tout maquillage sur le visage, avant de commencer la mesure.",
   "KIOSK_HELP_STAY": "Une fois la mesure commencée, restez immobile et en position pendant 30 secondes jusqu'à ce qu'elle soit terminée.",
   "RESULTS_PROCESSING_ERROR": "Un problème est survenu lors du traitement de vos résultats. Veuillez consulter les directives et réessayer.",
-  "EXIT": "Quitter"
+  "EXIT": "Quitter",
+  "RESULTS_GROUP_METADATA": "Métadonnées",
+  "RESULTS_GROUP_PHYSICAL": "Mesures physiques",
+  "RESULTS_GROUP_GENERAL_RISKS": "Risques de santé généraux",
+  "RESULTS_GROUP_VITALS": "Signes vitaux",
+  "RESULTS_GROUP_PHYSIOLOGICAL": "Indicateurs physiologiques",
+  "RESULTS_GROUP_METABOLIC_RISKS": "Facteurs de risque métaboliques",
+  "RESULTS_GROUP_BLOOD_BIOMARKERS": "Biomarqueurs sanguins",
+  "RESULTS_GROUP_OVERALL": "Santé globale",
+  "RESULTS_GROUP_MENTAL": "Santé mentale",
+  "RESULTS_GROUP_SURVEYS": "Résultats d'enquêtes",
+  "RESULTS_ALL_RESULTS": "Tous les résultats"
 }

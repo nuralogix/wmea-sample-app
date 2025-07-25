@@ -46,5 +46,16 @@
   "KIOSK_HELP_ACCESSORIES": "Remove any accessories such as glasses or hats, and any facial makeup, before starting the measurement.",
   "KIOSK_HELP_STAY": "Once the measurement begins, remain still and in position for 30 seconds until it is complete.",
   "RESULTS_PROCESSING_ERROR": "We encountered an issue while processing your results. Please review the guidelines and try again.",
-  "EXIT": "Exit"
+  "EXIT": "Exit",
+  "RESULTS_GROUP_METADATA": "Metadata",
+  "RESULTS_GROUP_PHYSICAL": "Physical Measurements",
+  "RESULTS_GROUP_GENERAL_RISKS": "General Health Risks",
+  "RESULTS_GROUP_VITALS": "Vital Signs",
+  "RESULTS_GROUP_PHYSIOLOGICAL": "Physiological Indicators",
+  "RESULTS_GROUP_METABOLIC_RISKS": "Metabolic Risk Factors",
+  "RESULTS_GROUP_BLOOD_BIOMARKERS": "Blood Biomarkers",
+  "RESULTS_GROUP_OVERALL": "Overall Health",
+  "RESULTS_GROUP_MENTAL": "Mental Health",
+  "RESULTS_GROUP_SURVEYS": "Survey Results",
+  "RESULTS_ALL_RESULTS": "All Results"
 }
