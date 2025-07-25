@@ -74,13 +74,7 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
         </span>
       </div>
       <div style={{ marginTop: 'auto' }}>
-        <div
-          style={{
-            fontSize: '12px',
-            color: '#6b7280',
-            marginBottom: '4px',
-          }}
-        ></div>
+        <div></div>
       </div>
     </div>
   );
