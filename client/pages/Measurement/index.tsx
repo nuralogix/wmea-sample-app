@@ -1,5 +1,8 @@
 import { useEffect } from 'react';
-import AnuraApplet, { faceAttributeValue, type Demographics } from '@nuralogix.ai/anura-online';
+import AnuraApplet, {
+  faceAttributeValue,
+  type Demographics,
+} from '@nuralogix.ai/web-measurement-embedded-app';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
@@ -11,7 +14,7 @@ const Measurement = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    (async () => {
+    (async function () {
       const container = document.createElement('div');
       const {
         SEX_ASSIGNED_MALE_AT_BIRTH,
@@ -41,7 +44,7 @@ const Measurement = () => {
         anuraApplet.init({
           container,
           top: '93.5px',
-          appPath: '.',
+          appPath: './measurement-app',
           settings: {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
@@ -53,6 +56,7 @@ const Measurement = () => {
           },
         });
         anuraApplet.on.results = (results) => {
+          console.log('Results received', results);
           setResults(results);
           navigate('/results');
           // anuraApplet.destroy();

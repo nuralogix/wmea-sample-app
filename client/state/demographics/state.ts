@@ -1,13 +1,9 @@
 import { proxy } from 'valtio';
 import { DemographicsState } from './types';
-import { faceAttributeValue } from '@nuralogix.ai/anura-online';
+import { faceAttributeValue } from '@nuralogix.ai/web-measurement-embedded-app';
 
-const {
-  SEX_ASSIGNED_MALE_AT_BIRTH,
-  SMOKER_FALSE,
-  BLOOD_PRESSURE_MEDICATION_FALSE,
-  DIABETES_NONE
-} = faceAttributeValue;
+const { SEX_ASSIGNED_MALE_AT_BIRTH, SMOKER_FALSE, BLOOD_PRESSURE_MEDICATION_FALSE, DIABETES_NONE } =
+  faceAttributeValue;
 
 const demographicsState: DemographicsState = proxy({
   demographics: {

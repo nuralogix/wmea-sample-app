@@ -1,4 +1,4 @@
-import { Demographics } from '@nuralogix.ai/anura-online';
+import { Demographics } from '@nuralogix.ai/web-measurement-embedded-app';
 import { FormState } from '../types';
 import { FORM_VALUES } from '../constants';
 

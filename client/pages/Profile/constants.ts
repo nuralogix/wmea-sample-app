@@ -1,4 +1,4 @@
-import { faceAttributeValue } from '@nuralogix.ai/anura-online';
+import { faceAttributeValue } from '@nuralogix.ai/web-measurement-embedded-app';
 import { FormState } from './types';
 
 export const FORM_VALUES = {
