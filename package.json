@@ -63,7 +63,6 @@
     "@stylexjs/stylex": "0.9.3",
     "i18next": "^25.3.2",
     "i18next-http-backend": "^3.0.2",
-    "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-i18next": "^15.6.0",

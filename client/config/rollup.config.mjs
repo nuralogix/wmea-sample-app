@@ -80,8 +80,8 @@ const config = [
         targets: [
           { src: 'client/language/*.json', dest: 'dist/language' },
           {
-            src: 'node_modules/@nuralogix.ai/anura-online/dist/*',
-            dest: `${distFolder}/anura-online`,
+            src: 'node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
+            dest: `${distFolder}/measurement-app`,
           },
         ],
       }),

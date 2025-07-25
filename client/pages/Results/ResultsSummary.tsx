@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Heart, Activity, Droplets, Scale, CheckCircle } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
 import { THEME_GROUPS } from './constants';
 import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
@@ -9,11 +8,12 @@ interface ResultsSummaryProps {
 }
 
 const TABS = [
-  { id: 'Vitals', name: 'Vitals', icon: <Heart size={20} /> },
-  { id: 'Cardiovascular Health', name: 'Cardiovascular Health', icon: <Activity size={20} /> },
-  { id: 'Metabolic Health', name: 'Metabolic Health', icon: <Droplets size={20} /> },
-  { id: 'Body Composition', name: 'Body Composition', icon: <Scale size={20} /> },
-  { id: 'Overall Scores', name: 'Overall Scores', icon: <CheckCircle size={20} /> },
+  { id: 'All', name: 'All Results' },
+  { id: 'Vitals', name: 'Vitals' },
+  { id: 'Cardiovascular Health', name: 'Cardiovascular Health' },
+  { id: 'Metabolic Health', name: 'Metabolic Health' },
+  { id: 'Body Composition', name: 'Body Composition' },
+  { id: 'Overall Scores', name: 'Overall Scores' },
 ];
 
 // Utility: should render a group if at least one metric exists in results.points
@@ -23,14 +23,14 @@ function shouldRenderGroup(groupIds: DfxPointId[], points: Results['points']): b
 }
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
-  // Only show tabs for groups that have at least one metric present
-  const visibleTabs = TABS.filter((tab) =>
-    shouldRenderGroup(THEME_GROUPS[tab.id] || [], results.points)
+  // Only show tabs for groups that have at least one metric present, plus 'All' tab
+  const visibleTabs = TABS.filter(
+    (tab) => tab.id === 'All' || shouldRenderGroup(THEME_GROUPS[tab.id] || [], results.points)
   );
   // If the current activeTab is not visible, default to the first visible tab
   const [activeTab, setActiveTab] = useState<string>(visibleTabs[0]?.id || '');
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!visibleTabs.find((tab) => tab.id === activeTab)) {
       setActiveTab(visibleTabs[0]?.id || '');
     }
@@ -119,9 +119,6 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
                 padding: '12px 16px',
                 border: 'none',
                 borderRadius: '8px',
@@ -147,7 +144,6 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                 }
               }}
             >
-              {tab.icon}
               <span style={{ display: window.innerWidth < 640 ? 'none' : 'inline' }}>
                 {tab.name}
               </span>
@@ -156,20 +152,75 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
         </div>
 
         {/* Content */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns:
-              window.innerWidth < 640 ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-            gap: '20px',
-          }}
-        >
-          {groupIds.map((dfxPointId) =>
-            results.points && results.points[dfxPointId] ? (
-              <MetricCard results={results} key={dfxPointId} dfxPointId={dfxPointId} />
-            ) : null
-          )}
-        </div>
+        {activeTab === 'All' ? (
+          <div
+            style={{
+              maxHeight: 'calc(100vh - 300px)',
+              overflowY: 'auto',
+              paddingRight: '8px',
+            }}
+          >
+            {Object.entries(THEME_GROUPS).map(([groupName, ids]) => {
+              const presentIds = ids.filter(
+                (dfxPointId) => results.points && results.points[dfxPointId]
+              );
+              if (presentIds.length === 0) return null;
+              return (
+                <div key={groupName} style={{ marginBottom: '32px' }}>
+                  <h2
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: '600',
+                      color: '#374151',
+                      marginBottom: '16px',
+                      borderBottom: '1px solid #e5e7eb',
+                      paddingBottom: '4px',
+                    }}
+                  >
+                    {groupName}
+                  </h2>
+                  <div
+                    style={{
+                      display: 'grid',
+                      gridTemplateColumns:
+                        window.innerWidth < 640 ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
+                      gap: '20px',
+                    }}
+                  >
+                    {presentIds.map((dfxPointId) =>
+                      results.points[dfxPointId] ? (
+                        <MetricCard
+                          point={results.points[dfxPointId]}
+                          key={dfxPointId}
+                          dfxPointId={dfxPointId}
+                        />
+                      ) : null
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns:
+                window.innerWidth < 640 ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
+              gap: '20px',
+            }}
+          >
+            {groupIds.map((dfxPointId) =>
+              results.points && results.points[dfxPointId] ? (
+                <MetricCard
+                  point={results.points[dfxPointId]}
+                  key={dfxPointId}
+                  dfxPointId={dfxPointId}
+                />
+              ) : null
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

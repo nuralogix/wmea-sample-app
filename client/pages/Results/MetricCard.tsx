@@ -1,22 +1,24 @@
 import { DfxPointId, Results } from '@nuralogix.ai/web-measurement-embedded-app';
-import { getColorFromGroup } from './utils/getColorFromDialSections';
+import { BAND_COLOR_MAP } from './constants';
 import { MetricIcon } from './MetricIcon';
 
-const MetricCard = ({ results, dfxPointId }: { dfxPointId: DfxPointId; results: Results }) => {
-  if (!results || !results.points) return null;
-  const metric = results.points[dfxPointId];
-  if (!metric) return null;
-  const { info, value } = metric;
+type PointsType = Results['points'];
+type DefinedPoint = NonNullable<PointsType['SNR']>;
 
-  const color = getColorFromGroup(metric.dial?.sections, metric.dial?.group);
-  // const color = getStatusColor(status);
-  console.log('MetricCard', { dfxPointId, metric });
-  const background = getColorFromGroup(metric.dial?.sections, metric.dial?.group);
+const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: DefinedPoint }) => {
+  const { info, value, dial } = point;
+  const sections = dial.sections || [];
+  const group = dial.group || 0;
+
+  const cardColor =
+    sections.length === 0 ? 'transparent' : BAND_COLOR_MAP[sections[group - 1].bandColor];
+  const borderColor = cardColor === 'transparent' ? '#d1d5db' : cardColor;
+
   return (
     <div
       style={{
-        backgroundColor: background,
-        border: `2px solid ${color}`,
+        backgroundColor: cardColor,
+        border: `2px solid ${borderColor}`,
         borderRadius: '12px',
         padding: '20px',
         display: 'flex',
@@ -24,7 +26,7 @@ const MetricCard = ({ results, dfxPointId }: { dfxPointId: DfxPointId; results: 
         gap: '12px',
         transition: 'all 0.2s ease',
         cursor: 'pointer',
-        minHeight: '160px',
+        minHeight: '80px',
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>

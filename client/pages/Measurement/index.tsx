@@ -44,7 +44,7 @@ const Measurement = () => {
         anuraApplet.init({
           container,
           top: '93.5px',
-          appPath: '.',
+          appPath: './measurement-app',
           settings: {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,

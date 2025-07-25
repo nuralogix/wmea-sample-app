@@ -836,7 +836,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.27.1"
 
-"@babel/runtime@^7.26.10", "@babel/runtime@^7.27.6":
+"@babel/runtime@^7.27.6":
   version "7.27.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.6.tgz#ec4070a04d76bae8ddbb10770ba55714a417b7c6"
   integrity sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==
@@ -1149,17 +1149,12 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nuralogix.ai/anura-web-core-sdk@^0.1.0-alpha.22":
-  version "0.1.0-alpha.22"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-alpha.22.tgz#eb2cd531773ca405bfc22f806fc2d3495f7b9003"
-  integrity sha512-XOEVm9H+rfTi+AvLo9kfnqFbX5lFwL9rUjGr2K03Zurkx8rfh605WszB4K9N9lB9wnhBG4zGWbigc7P214E2oQ==
-
 "@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.4":
   version "0.1.0-alpha.4"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.4.tgz#91bdfa53ed9658ec3a3e20b0f1fd2073b203fd44"
   integrity sha512-UyagWq+aBSRCgiJWBwl46FUP9xxaJ2SLP+m1WrKtvfV1dOfT0bJzTJ+iDRmd3XUIVXuC3XKRZeXbOZvntcXWrw==
 
-"@nuralogix.ai/web-ui@^0.1.0-alpha.11", "@nuralogix.ai/web-ui@^0.1.0-alpha.9":
+"@nuralogix.ai/web-ui@^0.1.0-alpha.11":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.11.tgz#fbca73293f8d975921d74f70c37242c923de6215"
   integrity sha512-NGXeDdzfbKGpX5GuwNK5FsDCzgvBCuwGs2A+iQKOPsikc/Cb9LbSg3QaUAy0YcMSuIkf9RcJIPEuTX33+irgvg==
@@ -2756,24 +2751,12 @@ html-parse-stringify@^3.0.1:
   dependencies:
     void-elements "3.1.0"
 
-i18next-fetch-backend@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/i18next-fetch-backend/-/i18next-fetch-backend-6.0.0.tgz#21bfedc2a98f7540dd39aad2bab3ca4cdcca534c"
-  integrity sha512-kVqnydqLVMZfVlOuP2nf71cREydlxEKLH43jUXAFdOku/GF+6b9fBg31anoos5XncdhdtiYgL9fheqMrtXRwng==
-
 i18next-http-backend@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-3.0.2.tgz#7c8daa31aa69679e155ec1f96a37846225bdf907"
   integrity sha512-PdlvPnvIp4E1sYi46Ik4tBYh/v/NbYfFFgTjkwFl0is8A18s7/bx9aXqsrOax9WUbeNS6mD2oix7Z0yGGf6m5g==
   dependencies:
     cross-fetch "4.0.0"
-
-i18next@^24.2.3:
-  version "24.2.3"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-24.2.3.tgz#3a05f72615cbd7c00d7e348667e2aabef1df753b"
-  integrity sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==
-  dependencies:
-    "@babel/runtime" "^7.26.10"
 
 i18next@^25.3.2:
   version "25.3.2"
@@ -3298,11 +3281,6 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
-
-lucide-react@^0.525.0:
-  version "0.525.0"
-  resolved "https://registry.yarnpkg.com/lucide-react/-/lucide-react-0.525.0.tgz#5f7bcecd65e4f9b2b5b6b5d295e3376df032d5e3"
-  integrity sha512-Tm1txJ2OkymCGkvwoHt33Y2JpN5xucVq1slHcgE6Lk0WjDfjgKWor5CdVER8U6DvcfMwh4M8XxmpTiyzfmfDYQ==
 
 magic-string@^0.25.7:
   version "0.25.9"
@@ -3921,14 +3899,6 @@ react-dom@^19.1.0:
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
   dependencies:
     scheduler "^0.26.0"
-
-react-i18next@^15.4.1:
-  version "15.6.1"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.6.1.tgz#a2747bed7768faef28fa28de32ff3811b2459c20"
-  integrity sha512-uGrzSsOUUe2sDBG/+FJq2J1MM+Y4368/QW8OLEKSFvnDflHBbZhSd1u3UkW0Z06rMhZmnB/AQrhCpYfE5/5XNg==
-  dependencies:
-    "@babel/runtime" "^7.27.6"
-    html-parse-stringify "^3.0.1"
 
 react-i18next@^15.6.0:
   version "15.6.0"
