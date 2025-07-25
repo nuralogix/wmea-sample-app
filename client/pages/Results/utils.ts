@@ -3,7 +3,7 @@ import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded
 // Utility: get all unique groups present in results.points
 export function getGroupsFromResults(points: Results['points']) {
   const groupSet = new Set<string>();
-  Object.values(points || {}).forEach((pt: any) => {
+  Object.values(points || {}).forEach((pt: Results['points'][string]) => {
     if (pt?.meta?.group) groupSet.add(pt.meta.group);
   });
   return Array.from(groupSet);
