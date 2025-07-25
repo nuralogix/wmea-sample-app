@@ -38,11 +38,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
     ...visibleGroups.map((group) => ({ id: group, name: getGroupLabel(group) })),
   ];
 
-  // Get SNR value for header display
-  const snrPoint = results.points?.SNR;
-  const snrValue = snrPoint?.value;
-  const snrUnit = snrPoint?.info?.unit;
-
+  const snr = results.points.SNR;
   const [activeTab, setActiveTab] = useState<string>('All');
 
   return (
@@ -82,7 +78,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
           >
             Health Assessment Results
           </h1>
-          {snrValue && (
+          {snr && (
             <div
               style={{
                 fontSize: '16px',
@@ -90,8 +86,8 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                 marginTop: '8px',
               }}
             >
-              {t('RESULTS_SNR_LABEL')}: {snrValue}
-              {snrUnit && ` ${snrUnit}`}
+              {t('RESULTS_SNR_LABEL')}: {snr.value}
+              {snr.info.unit && ` ${snr.info.unit}`}
             </div>
           )}
         </div>
