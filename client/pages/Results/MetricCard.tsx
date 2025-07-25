@@ -50,7 +50,7 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
             lineHeight: '1.3',
           }}
         >
-          {info?.name ?? dfxPointId}
+          {info.name}
         </h3>
       </div>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: '4px' }}>
@@ -58,7 +58,6 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
           style={{
             fontSize: '28px',
             fontWeight: '700',
-            
           }}
         >
           {value}
@@ -70,7 +69,7 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
             color: '#6b7280',
           }}
         >
-          {info?.unit}
+          {info.unit}
         </span>
       </div>
       <div style={{ marginTop: 'auto' }}>

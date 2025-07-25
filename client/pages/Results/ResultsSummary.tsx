@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
-import { getGroupsFromResults, getPointsForGroup, getGroupLabel } from './utils';
+import { getGroupsFromResults, getPointsForGroup } from './utils';
 
 interface ResultsSummaryProps {
   results: Results;
@@ -11,13 +11,31 @@ interface ResultsSummaryProps {
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const { t } = useTranslation();
 
+  // Utility: convert group keys to readable labels
+  const getGroupLabel = (groupKey: string): string => {
+    const keyMap = {
+      metadata: 'RESULTS_GROUP_METADATA',
+      physical: 'RESULTS_GROUP_PHYSICAL',
+      generalRisks: 'RESULTS_GROUP_GENERAL_RISKS',
+      vitals: 'RESULTS_GROUP_VITALS',
+      physiological: 'RESULTS_GROUP_PHYSIOLOGICAL',
+      metabolicRisks: 'RESULTS_GROUP_METABOLIC_RISKS',
+      bloodBiomarkers: 'RESULTS_GROUP_BLOOD_BIOMARKERS',
+      overall: 'RESULTS_GROUP_OVERALL',
+      mental: 'RESULTS_GROUP_MENTAL',
+      surveys: 'RESULTS_GROUP_SURVEYS',
+    } as const;
+
+    return t(keyMap[groupKey as keyof typeof keyMap]);
+  };
+
   // Dynamically generate tabs from groups present in results.points
   const groups = getGroupsFromResults(results.points);
   // Filter out metadata group as it will be displayed in header
   const visibleGroups = groups.filter((group) => group !== 'metadata');
   const visibleTabs = [
     { id: 'All', name: t('RESULTS_ALL_RESULTS') },
-    ...visibleGroups.map((group) => ({ id: group, name: getGroupLabel(group, t) })),
+    ...visibleGroups.map((group) => ({ id: group, name: getGroupLabel(group) })),
   ];
 
   // Get SNR value for header display
@@ -25,11 +43,11 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const snrValue = snrPoint?.value;
   const snrUnit = snrPoint?.info?.unit;
   // If the current activeTab is not visible, default to the first visible tab
-  const [activeTab, setActiveTab] = useState<string>(visibleTabs[0]?.id || '');
+  const [activeTab, setActiveTab] = useState<string>(visibleTabs[0].id || '');
 
   useEffect(() => {
     if (!visibleTabs.find((tab) => tab.id === activeTab)) {
-      setActiveTab(visibleTabs[0]?.id || '');
+      setActiveTab(visibleTabs[0].id);
     }
   }, [activeTab, visibleTabs]);
 
@@ -152,7 +170,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                       paddingBottom: '4px',
                     }}
                   >
-                    {getGroupLabel(group, t)}
+                    {getGroupLabel(group)}
                   </h2>
                   <div
                     style={{
