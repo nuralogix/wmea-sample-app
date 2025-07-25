@@ -11,11 +11,11 @@ export function getGroupsFromResults(points: Results['points']) {
 
 // Utility: get all points for a group
 export function getPointsForGroup(points: Results['points'], group: string) {
-  return Object.entries(points || {}).filter(([, pt]: any) => pt?.meta?.group === group);
+  return Object.entries(points || {}).filter(([, pt]: Results['points'][string]) => pt?.meta?.group === group);
 }
 
 // Utility: convert group keys to readable labels
-export function getGroupLabel(groupKey: string, t: any): string {
+export function getGroupLabel(groupKey: string, t: (key: string) => string): string {
   // Convert camelCase to SCREAMING_SNAKE_CASE
   const snakeCase = groupKey.replace(/([A-Z])/g, '_$1').toUpperCase();
   return t(`RESULTS_GROUP_${snakeCase}`);
