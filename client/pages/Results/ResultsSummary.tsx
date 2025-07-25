@@ -36,7 +36,8 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   return (
     <div
       style={{
-        minHeight: '100vh',
+        height: '100vh',
+        overflowY: 'auto',
         backgroundColor: '#f8fafc',
         padding: '20px',
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',

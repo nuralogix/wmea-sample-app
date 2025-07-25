@@ -14,7 +14,7 @@ const styles = stylex.create({
     margin: 0,
     display: 'flex',
     flexDirection: 'column',
-    // overflow: 'hidden',
+    overflow: 'hidden',
   },
 });
 
