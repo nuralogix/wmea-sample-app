@@ -57,5 +57,6 @@
   "RESULTS_GROUP_OVERALL": "Santé globale",
   "RESULTS_GROUP_MENTAL": "Santé mentale",
   "RESULTS_GROUP_SURVEYS": "Résultats d'enquêtes",
-  "RESULTS_ALL_RESULTS": "Tous les résultats"
+  "RESULTS_ALL_RESULTS": "Tous les résultats",
+  "RESULTS_SNR_LABEL": "RSB"
 }

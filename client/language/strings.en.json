@@ -57,5 +57,6 @@
   "RESULTS_GROUP_OVERALL": "Overall Health",
   "RESULTS_GROUP_MENTAL": "Mental Health",
   "RESULTS_GROUP_SURVEYS": "Survey Results",
-  "RESULTS_ALL_RESULTS": "All Results"
+  "RESULTS_ALL_RESULTS": "All Results",
+  "RESULTS_SNR_LABEL": "SNR"
 }

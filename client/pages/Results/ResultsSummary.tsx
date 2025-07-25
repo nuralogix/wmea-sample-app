@@ -64,10 +64,17 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
 
   // Dynamically generate tabs from groups present in results.points
   const groups = getGroupsFromResults(results.points);
+  // Filter out metadata group as it will be displayed in header
+  const visibleGroups = groups.filter((group) => group !== 'metadata');
   const visibleTabs = [
     { id: 'All', name: t('RESULTS_ALL_RESULTS') },
-    ...groups.map((group) => ({ id: group, name: getGroupLabel(group, t) })),
+    ...visibleGroups.map((group) => ({ id: group, name: getGroupLabel(group, t) })),
   ];
+
+  // Get SNR value for header display
+  const snrPoint = results.points?.SNR;
+  const snrValue = snrPoint?.value;
+  const snrUnit = snrPoint?.info?.unit;
   // If the current activeTab is not visible, default to the first visible tab
   const [activeTab, setActiveTab] = useState<string>(visibleTabs[0]?.id || '');
 
@@ -113,31 +120,18 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
           >
             Health Assessment Results
           </h1>
-          {/* <p
-            style={{
-              margin: 0,
-              fontSize: '16px',
-              color: '#6b7280',
-            }}
-          >
-            Comprehensive contactless medical diagnostics analysis
-          </p> */}
-          <div
-            style={{
-              marginTop: '16px',
-              fontSize: '14px',
-              color: '#9ca3af',
-            }}
-          >
-            Scan completed on{' '}
-            {new Date().toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-              hour: '2-digit',
-              minute: '2-digit',
-            })}
-          </div>
+          {snrValue && (
+            <div
+              style={{
+                fontSize: '16px',
+                color: '#6b7280',
+                marginTop: '8px',
+              }}
+            >
+              {t('RESULTS_SNR_LABEL')}: {snrValue}
+              {snrUnit && ` ${snrUnit}`}
+            </div>
+          )}
         </div>
 
         {/* Navigation Tabs */}
@@ -150,7 +144,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
             display: 'flex',
             gap: '4px',
-            overflowX: 'auto',
+            flexWrap: 'wrap',
           }}
         >
           {visibleTabs.map((tab) => (
@@ -193,7 +187,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
         {/* Content */}
         {activeTab === 'All' ? (
           <>
-            {groups.map((group) => {
+            {visibleGroups.map((group) => {
               const pointsForGroup = getPointsForGroup(results.points, group);
               if (pointsForGroup.length === 0) return null;
               return (
