@@ -10,9 +10,17 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
   const sections = dial.sections || [];
   const group = dial.group || 0;
 
-  const cardColor =
-    sections.length === 0 ? 'transparent' : BAND_COLOR_MAP[sections[group - 1].bandColor];
-  const borderColor = cardColor === 'transparent' ? '#d1d5db' : cardColor;
+  // Get the band color, ensuring we handle missing bandColor properties
+  let cardColor = 'transparent';
+  let borderColor = '#d1d5db'; // Default gray border
+
+  if (sections.length > 0 && group > 0 && group <= sections.length) {
+    const section = sections[group - 1];
+    if (section.bandColor && BAND_COLOR_MAP[section.bandColor]) {
+      cardColor = BAND_COLOR_MAP[section.bandColor];
+      borderColor = cardColor;
+    }
+  }
 
   return (
     <div
@@ -72,10 +80,7 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
             color: '#6b7280',
             marginBottom: '4px',
           }}
-        >
-          
-          
-        </div>
+        ></div>
       </div>
     </div>
   );

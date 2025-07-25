@@ -33,6 +33,24 @@ function getPointsForGroup(points: Results['points'], group: string) {
   return Object.entries(points || {}).filter(([, pt]: any) => pt?.meta?.group === group);
 }
 
+// Utility: convert group keys to readable labels
+function getGroupLabel(groupKey: string): string {
+  const labelMap: Record<string, string> = {
+    metadata: 'Metadata',
+    physical: 'Physical Measurements',
+    generalRisks: 'General Health Risks',
+    vitals: 'Vital Signs',
+    physiological: 'Physiological Indicators',
+    metabolicRisks: 'Metabolic Risk Factors',
+    bloodBiomarkers: 'Blood Biomarkers',
+    overall: 'Overall Health',
+    mental: 'Mental Health',
+    surveys: 'Survey Results',
+  };
+
+  return labelMap[groupKey] || groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
+}
+
 // Utility: should render a group if at least one metric exists in results.points
 function shouldRenderGroup(groupIds: DfxPointId[], points: Results['points']): boolean {
   if (!points) return false;
@@ -44,7 +62,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const groups = getGroupsFromResults(results.points);
   const visibleTabs = [
     { id: 'All', name: 'All Results' },
-    ...groups.map((group) => ({ id: group, name: group })),
+    ...groups.map((group) => ({ id: group, name: getGroupLabel(group) })),
   ];
   // If the current activeTab is not visible, default to the first visible tab
   const [activeTab, setActiveTab] = useState<string>(visibleTabs[0]?.id || '');
@@ -186,7 +204,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                       paddingBottom: '4px',
                     }}
                   >
-                    {group}
+                    {getGroupLabel(group)}
                   </h2>
                   <div
                     style={{
