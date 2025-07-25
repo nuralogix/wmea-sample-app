@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
 import { getGroupsFromResults, getPointsForGroup } from './utils';
 
@@ -33,7 +33,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const groups = getGroupsFromResults(results.points);
   // Filter out metadata group as it will be displayed in header
   const visibleGroups = groups.filter((group) => group !== 'metadata');
-  const visibleTabs = [
+  const tabs = [
     { id: 'All', name: t('RESULTS_ALL_RESULTS') },
     ...visibleGroups.map((group) => ({ id: group, name: getGroupLabel(group) })),
   ];
@@ -42,14 +42,8 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const snrPoint = results.points?.SNR;
   const snrValue = snrPoint?.value;
   const snrUnit = snrPoint?.info?.unit;
-  // If the current activeTab is not visible, default to the first visible tab
-  const [activeTab, setActiveTab] = useState<string>(visibleTabs[0].id || '');
 
-  useEffect(() => {
-    if (!visibleTabs.find((tab) => tab.id === activeTab)) {
-      setActiveTab(visibleTabs[0].id);
-    }
-  }, [activeTab, visibleTabs]);
+  const [activeTab, setActiveTab] = useState<string>('All');
 
   return (
     <div
@@ -115,7 +109,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
             flexWrap: 'wrap',
           }}
         >
-          {visibleTabs.map((tab) => (
+          {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
