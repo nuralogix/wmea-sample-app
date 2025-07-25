@@ -181,11 +181,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                     }}
                   >
                     {pointsForGroup.map(([dfxPointId, pt]) => (
-                      <MetricCard
-                        point={pt}
-                        key={dfxPointId}
-                        dfxPointId={dfxPointId as DfxPointId}
-                      />
+                      <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
                     ))}
                   </div>
                 </div>
@@ -202,7 +198,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
             }}
           >
             {getPointsForGroup(results.points, activeTab).map(([dfxPointId, pt]) => (
-              <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId as DfxPointId} />
+              <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
             ))}
           </div>
         )}

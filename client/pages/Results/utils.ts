@@ -1,4 +1,4 @@
-import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 
 // Utility: get all unique groups present in results.points
 export function getGroupsFromResults(points: Results['points']) {
@@ -11,5 +11,7 @@ export function getGroupsFromResults(points: Results['points']) {
 
 // Utility: get all points for a group
 export function getPointsForGroup(points: Results['points'], group: string) {
-  return Object.entries(points).filter(([, pt]) => pt.meta.group === group);
+  return Object.entries(points).filter(([, pt]) => pt.meta.group === group) as Array<
+    [DfxPointId, NonNullable<Results['points'][DfxPointId]>]
+  >;
 }
