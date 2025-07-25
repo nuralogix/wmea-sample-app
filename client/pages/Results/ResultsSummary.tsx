@@ -2,61 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
+import { getGroupsFromResults, getPointsForGroup, getGroupLabel } from './utils';
 
 interface ResultsSummaryProps {
   results: Results;
-}
-
-export const pointGroup = {
-  METADATA: 'metadata',
-  PHYSICAL: 'physical',
-  GENERAL_RISKS: 'generalRisks',
-  VITALS: 'vitals',
-  PHYSIOLOGICAL: 'physiological',
-  METABOLIC_RISKS: 'metabolicRisks',
-  BLOOD_BIOMARKERS: 'bloodBiomarkers',
-  OVERALL: 'overall',
-  MENTAL: 'mental',
-  SURVEYS: 'surveys',
-} as const;
-
-// Utility: get all unique groups present in results.points
-function getGroupsFromResults(points: Results['points']) {
-  const groupSet = new Set<string>();
-  Object.values(points || {}).forEach((pt: any) => {
-    if (pt?.meta?.group) groupSet.add(pt.meta.group);
-  });
-  return Array.from(groupSet);
-}
-
-// Utility: get all points for a group
-function getPointsForGroup(points: Results['points'], group: string) {
-  return Object.entries(points || {}).filter(([, pt]: any) => pt?.meta?.group === group);
-}
-
-// Utility: convert group keys to readable labels
-function getGroupLabel(groupKey: string, t: any): string {
-  const keyMap: Record<string, string> = {
-    metadata: 'RESULTS_GROUP_METADATA',
-    physical: 'RESULTS_GROUP_PHYSICAL',
-    generalRisks: 'RESULTS_GROUP_GENERAL_RISKS',
-    vitals: 'RESULTS_GROUP_VITALS',
-    physiological: 'RESULTS_GROUP_PHYSIOLOGICAL',
-    metabolicRisks: 'RESULTS_GROUP_METABOLIC_RISKS',
-    bloodBiomarkers: 'RESULTS_GROUP_BLOOD_BIOMARKERS',
-    overall: 'RESULTS_GROUP_OVERALL',
-    mental: 'RESULTS_GROUP_MENTAL',
-    surveys: 'RESULTS_GROUP_SURVEYS',
-  };
-
-  const translationKey = keyMap[groupKey];
-  return translationKey ? t(translationKey) : groupKey.charAt(0).toUpperCase() + groupKey.slice(1);
-}
-
-// Utility: should render a group if at least one metric exists in results.points
-function shouldRenderGroup(groupIds: DfxPointId[], points: Results['points']): boolean {
-  if (!points) return false;
-  return groupIds.some((dfxPointId) => !!points[dfxPointId]);
 }
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
