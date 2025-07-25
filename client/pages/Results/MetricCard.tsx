@@ -58,7 +58,7 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Defi
           style={{
             fontSize: '28px',
             fontWeight: '700',
-            // color: color,
+            
           }}
         >
           {value}
