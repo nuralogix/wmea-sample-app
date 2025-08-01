@@ -58,5 +58,9 @@
   "RESULTS_GROUP_MENTAL": "Mental Health",
   "RESULTS_GROUP_SURVEYS": "Survey Results",
   "RESULTS_ALL_RESULTS": "All Results",
-  "RESULTS_SNR_LABEL": "SNR"
+  "RESULTS_SNR_LABEL": "SNR",
+  "CAMERA_PERMISSION_NOT_GRANTED_TITLE": "Camera Permission Required",
+  "CAMERA_PERMISSION_INSTRUCTIONS": "This app requires camera permissions to work. Please try to refresh the page and grant permission when prompted. On some browsers, you may have to click the lock icon in the address bar to grant permission. If it does not work, then please follow your browser's specific instructions to grant permission.",
+  "CAMERA_PERMISSION_DENY_TEXT": "If you don't want to grant permissions, ",
+  "CAMERA_PERMISSION_DENY_LINK": "click here"
 }

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import AnuraApplet, {
   faceAttributeValue,
   type Demographics,
@@ -6,11 +6,13 @@ import AnuraApplet, {
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
+import CameraPermissionsNotGranted from '../../components/CameraPermissionsNotGranted';
 
 const anuraApplet = new AnuraApplet();
 
 const Measurement = () => {
   const { setResults } = useSnapshot(state.measurement);
+  const [isCameraPermissionsNotGranted, setIsCameraPermissionsNotGranted] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,6 +65,9 @@ const Measurement = () => {
         };
         anuraApplet.on.error = (error) => {
           console.log('error received', error);
+          // if (error === 'camera_permissions_not_granted') {
+          //   setIsCameraPermissionsNotGranted(true);
+          // }
         };
         anuraApplet.on.webhook = (webhook) => {
           console.log('Webhook received', webhook);
@@ -78,7 +83,7 @@ const Measurement = () => {
       anuraApplet.destroy();
     };
   }, []);
-  return null;
+  return isCameraPermissionsNotGranted ? <CameraPermissionsNotGranted /> : null;
 };
 
 export default Measurement;

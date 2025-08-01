@@ -58,5 +58,9 @@
   "RESULTS_GROUP_MENTAL": "Santé mentale",
   "RESULTS_GROUP_SURVEYS": "Résultats d'enquêtes",
   "RESULTS_ALL_RESULTS": "Tous les résultats",
-  "RESULTS_SNR_LABEL": "RSB"
+  "RESULTS_SNR_LABEL": "RSB",
+  "CAMERA_PERMISSION_NOT_GRANTED_TITLE": "Autorisation de caméra requise",
+  "CAMERA_PERMISSION_INSTRUCTIONS": "Cette application nécessite des autorisations de caméra pour fonctionner. Veuillez essayer d'actualiser la page et d'accorder l'autorisation lorsque vous y êtes invité. Sur certains navigateurs, vous devrez peut-être cliquer sur l'icône de cadenas dans la barre d'adresse pour accorder l'autorisation. Si cela ne fonctionne pas, veuillez suivre les instructions spécifiques de votre navigateur pour accorder l'autorisation.",
+  "CAMERA_PERMISSION_DENY_TEXT": "Si vous ne souhaitez pas accorder les autorisations, ",
+  "CAMERA_PERMISSION_DENY_LINK": "cliquez ici"
 }
