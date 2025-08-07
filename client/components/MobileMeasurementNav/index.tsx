@@ -20,9 +20,6 @@ const styles = stylex.create({
     justifyContent: 'center',
     padding: '8px',
   },
-  spacer: {
-    flex: 1,
-  },
 });
 
 const MobileMeasurementNav: React.FC = () => {
@@ -44,8 +41,6 @@ const MobileMeasurementNav: React.FC = () => {
           ←
         </Button>
       </div>
-
-      <div {...stylex.props(styles.spacer)} />
 
       <div {...stylex.props(styles.iconButton)}>
         <Button variant="link" onClick={handleFlipCamera} aria-label="Flip camera">
