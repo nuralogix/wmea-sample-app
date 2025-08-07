@@ -1,7 +1,8 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import { Button, Rotate } from '@nuralogix.ai/web-ui';
+import { Button, Chevron, Rotate } from '@nuralogix.ai/web-ui';
 import { useNavigate } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 const styles = stylex.create({
   header: {
@@ -20,10 +21,16 @@ const styles = stylex.create({
     justifyContent: 'center',
     padding: '8px',
   },
+  backButton: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '4px',
+  },
 });
 
 const MobileMeasurementNav: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleBack = () => {
     navigate(-1);
@@ -38,7 +45,10 @@ const MobileMeasurementNav: React.FC = () => {
     <header {...stylex.props(styles.header)}>
       <div {...stylex.props(styles.iconButton)}>
         <Button variant="link" onClick={handleBack} aria-label="Go back">
-          ←
+          <div {...stylex.props(styles.backButton)}>
+            <Chevron direction="left" height="24px" width="24px" />
+            <span>{t('BACK')}</span>
+          </div>
         </Button>
       </div>
 
