@@ -4,19 +4,42 @@ import Profile from '../../pages/Profile';
 import Measurement from '../../pages/Measurement';
 import Results from '../../pages/Results';
 import PageWrapper from '../PageWrapper';
-
-const routes = [
-  { path: '/', element: <Profile /> },
-  { path: '/measurement', element: <Measurement /> },
-  { path: '/results', element: <Results /> },
-  { path: '*', element: <NotFound /> },
-];
+import MeasurementPageWrapper from '../MeasurementPageWrapper';
 
 const AppRouter = () => (
   <Routes>
-    {routes.map(({ path, element }) => (
-      <Route key={path} path={path} element={<PageWrapper>{element}</PageWrapper>} />
-    ))}
+    <Route
+      path="/"
+      element={
+        <PageWrapper>
+          <Profile />
+        </PageWrapper>
+      }
+    />
+    <Route
+      path="/measurement"
+      element={
+        <MeasurementPageWrapper>
+          <Measurement />
+        </MeasurementPageWrapper>
+      }
+    />
+    <Route
+      path="/results"
+      element={
+        <PageWrapper>
+          <Results />
+        </PageWrapper>
+      }
+    />
+    <Route
+      path="*"
+      element={
+        <PageWrapper>
+          <NotFound />
+        </PageWrapper>
+      }
+    />
   </Routes>
 );
 
