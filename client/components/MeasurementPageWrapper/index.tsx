@@ -1,5 +1,5 @@
 import React from 'react';
-import MeasurementNavbar from '../MobileMeasurementNav';
+import MobileMeasurementNav from '../MobileMeasurementNav';
 import Navbar from '../Navbar/Navbar';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 
@@ -12,7 +12,7 @@ const MeasurementPageWrapper: React.FC<MeasurementPageWrapperProps> = ({ childre
 
   return (
     <>
-      {isMobile ? <MeasurementNavbar /> : <Navbar />}
+      {isMobile ? <MobileMeasurementNav /> : <Navbar />}
       {children}
     </>
   );
