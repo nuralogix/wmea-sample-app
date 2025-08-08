@@ -11,6 +11,7 @@ const anuraApplet = new AnuraApplet();
 
 const Measurement = () => {
   const { setResults } = useSnapshot(state.measurement);
+  const { theme, language } = useSnapshot(state.general);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,6 +45,7 @@ const Measurement = () => {
         anuraApplet.init({
           container,
           top: '93.5px',
+          language: language,
           appPath: './measurement-app',
           settings: {
             token: tokenResponse.token,
@@ -55,6 +57,7 @@ const Measurement = () => {
             console.error('load error', error);
           },
         });
+
         anuraApplet.on.results = (results) => {
           console.log('Results received', results);
           setResults(results);
@@ -78,6 +81,17 @@ const Measurement = () => {
       anuraApplet.destroy();
     };
   }, []);
+
+  // Listen for theme changes and update the measurement app
+  useEffect(() => {
+    anuraApplet.setTheme(theme);
+  }, [theme]);
+
+  // Listen for language changes and update the measurement app
+  useEffect(() => {
+    anuraApplet.setLanguage(language);
+  }, [language]);
+
   return null;
 };
 

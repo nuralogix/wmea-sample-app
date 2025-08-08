@@ -3,7 +3,6 @@ import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import { Button, Heading, ThemeToggle } from '@nuralogix.ai/web-ui';
-import { useTranslation } from 'react-i18next';
 
 const styles = stylex.create({
   header: {
@@ -22,12 +21,11 @@ const styles = stylex.create({
 });
 
 const Navbar: React.FC = () => {
-  const { theme, setTheme } = useSnapshot(state.general);
-  const { i18n } = useTranslation();
+  const { theme, setTheme, language, setLanguage } = useSnapshot(state.general);
 
   const toggleLanguage = () => {
-    const newLanguage = i18n.language === 'en' ? 'fr' : 'en';
-    i18n.changeLanguage(newLanguage);
+    const newLanguage = language === 'en' ? 'fr' : 'en';
+    setLanguage(newLanguage);
   };
 
   return (
@@ -36,7 +34,7 @@ const Navbar: React.FC = () => {
       <Heading>Web Measurement Embedded Sample App</Heading>
       <div {...stylex.props(styles.right)}>
         <Button variant="link" onClick={toggleLanguage}>
-          {i18n.language === 'en' ? 'Français' : 'English'}
+          {language === 'en' ? 'Français' : 'English'}
         </Button>
         <ThemeToggle
           isDarkMode={theme === 'dark'}
