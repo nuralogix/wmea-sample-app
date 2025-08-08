@@ -58,7 +58,7 @@
     "typescript-eslint": "^8.25.0"
   },
   "dependencies": {
-    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-alpha.4",
+    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-alpha.6",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.11",
     "@stylexjs/stylex": "0.9.3",
     "i18next": "^25.3.2",
