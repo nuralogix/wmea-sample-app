@@ -45,7 +45,7 @@ const Measurement = () => {
         anuraApplet.init({
           container,
           top: '93.5px',
-          language: language,
+          language,
           appPath: './measurement-app',
           settings: {
             token: tokenResponse.token,
