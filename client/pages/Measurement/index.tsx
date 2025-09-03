@@ -1,19 +1,16 @@
 import { useEffect, useState } from 'react';
-import AnuraApplet, {
-  faceAttributeValue,
-  type Demographics,
-} from '@nuralogix.ai/web-measurement-embedded-app';
+import AnuraApplet, { faceAttributeValue } from '@nuralogix.ai/web-measurement-embedded-app';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
-import CameraPermissionsNotGranted from '../../components/CameraPermissionsNotGranted';
+import ErrorMessage from './ErrorMessage';
 
 const anuraApplet = new AnuraApplet();
 
 const Measurement = () => {
   const { setResults } = useSnapshot(state.measurement);
-  const [isCameraPermissionsNotGranted, setIsCameraPermissionsNotGranted] = useState(true);
   const navigate = useNavigate();
+  const [errorCode, setErrorCode] = useState<string | null>(null);
 
   useEffect(() => {
     (async function () {
@@ -25,7 +22,7 @@ const Measurement = () => {
         DIABETES_NONE,
       } = faceAttributeValue;
 
-      const profile: Demographics = {
+      const profile = {
         age: 40,
         height: 180,
         weight: 60,
@@ -34,6 +31,7 @@ const Measurement = () => {
         bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
         diabetes: DIABETES_NONE,
         unit: 'Metric',
+        bypassProfile: false,
       };
 
       const apiUrl = '/api';
@@ -65,9 +63,8 @@ const Measurement = () => {
         };
         anuraApplet.on.error = (error) => {
           console.log('error received', error);
-          // if (error === 'camera_permissions_not_granted') {
-          //   setIsCameraPermissionsNotGranted(true);
-          // }
+          const code = (error as any)?.code as string | undefined;
+          setErrorCode(code ?? null);
         };
         anuraApplet.on.webhook = (webhook) => {
           console.log('Webhook received', webhook);
@@ -83,7 +80,11 @@ const Measurement = () => {
       anuraApplet.destroy();
     };
   }, []);
-  return isCameraPermissionsNotGranted ? <CameraPermissionsNotGranted /> : null;
+  return (
+    <>
+      {errorCode ? <ErrorMessage errorCode={errorCode} onClear={() => setErrorCode(null)} /> : null}
+    </>
+  );
 };
 
 export default Measurement;

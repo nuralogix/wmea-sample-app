@@ -836,6 +836,11 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.27.1"
 
+"@babel/runtime@^7.26.10":
+  version "7.28.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.3.tgz#75c5034b55ba868121668be5d5bb31cc64e6e61a"
+  integrity sha512-9uIQ10o0WGdpP6GDhXcdOJPJuDgFtIDtN/9+ArJQ2NAfAmiuhTQdzkaTGR33v43GYS2UrSA0eX2pPPHoFVvpxA==
+
 "@babel/runtime@^7.27.6":
   version "7.27.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.6.tgz#ec4070a04d76bae8ddbb10770ba55714a417b7c6"
@@ -1128,6 +1133,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@mediapipe/tasks-vision@^0.10.21":
+  version "0.10.21"
+  resolved "https://registry.yarnpkg.com/@mediapipe/tasks-vision/-/tasks-vision-0.10.21.tgz#b78df074763e0c7fdf8606c60121d65c9199bbf6"
+  integrity sha512-TuhKH+credq4zLksGbYrnvJ1aLIWMc5r0UHwzxzql4BHECJwIAoBR61ZrqwGOW6ZmSBIzU1t4VtKj8hbxFaKeA==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1149,12 +1159,17 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.4":
-  version "0.1.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.4.tgz#91bdfa53ed9658ec3a3e20b0f1fd2073b203fd44"
-  integrity sha512-UyagWq+aBSRCgiJWBwl46FUP9xxaJ2SLP+m1WrKtvfV1dOfT0bJzTJ+iDRmd3XUIVXuC3XKRZeXbOZvntcXWrw==
+"@nuralogix.ai/anura-web-core-sdk@^0.1.0-alpha.24":
+  version "0.1.0-alpha.25"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-alpha.25.tgz#dc4fe9a05c52fa4f1ebdd661eaa7373d055cf09b"
+  integrity sha512-Ai5kmIvOUZrofVRIU2dvTv9Txe2COE3wZGRDKyQ3R9uSzb3RdXg/Crl8UObOxFGDThIsCaJqZukJYtqpdf65Rg==
 
-"@nuralogix.ai/web-ui@^0.1.0-alpha.11":
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.6":
+  version "0.1.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.6.tgz#c6d4701f4359a0bd5e068017595613e8e5fd8226"
+  integrity sha512-Og0DOhqPMgLRB4M0Yu/n7w7aOeSzc9jB1xoV+Wyd+O8szSHR0YEHg8iENPm6/sQPSiZgTYS++03+Jqd9EwoxAQ==
+
+"@nuralogix.ai/web-ui@^0.1.0-alpha.11", "@nuralogix.ai/web-ui@^0.1.0-alpha.9":
   version "0.1.0-alpha.11"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.11.tgz#fbca73293f8d975921d74f70c37242c923de6215"
   integrity sha512-NGXeDdzfbKGpX5GuwNK5FsDCzgvBCuwGs2A+iQKOPsikc/Cb9LbSg3QaUAy0YcMSuIkf9RcJIPEuTX33+irgvg==
@@ -2751,12 +2766,24 @@ html-parse-stringify@^3.0.1:
   dependencies:
     void-elements "3.1.0"
 
+i18next-fetch-backend@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/i18next-fetch-backend/-/i18next-fetch-backend-6.0.0.tgz#21bfedc2a98f7540dd39aad2bab3ca4cdcca534c"
+  integrity sha512-kVqnydqLVMZfVlOuP2nf71cREydlxEKLH43jUXAFdOku/GF+6b9fBg31anoos5XncdhdtiYgL9fheqMrtXRwng==
+
 i18next-http-backend@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/i18next-http-backend/-/i18next-http-backend-3.0.2.tgz#7c8daa31aa69679e155ec1f96a37846225bdf907"
   integrity sha512-PdlvPnvIp4E1sYi46Ik4tBYh/v/NbYfFFgTjkwFl0is8A18s7/bx9aXqsrOax9WUbeNS6mD2oix7Z0yGGf6m5g==
   dependencies:
     cross-fetch "4.0.0"
+
+i18next@^24.2.3:
+  version "24.2.3"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-24.2.3.tgz#3a05f72615cbd7c00d7e348667e2aabef1df753b"
+  integrity sha512-lfbf80OzkocvX7nmZtu7nSTNbrTYR52sLWxPtlXX1zAhVw8WEnFk4puUkCR4B1dNQwbSpEHHHemcZu//7EcB7A==
+  dependencies:
+    "@babel/runtime" "^7.26.10"
 
 i18next@^25.3.2:
   version "25.3.2"
@@ -3899,6 +3926,14 @@ react-dom@^19.1.0:
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
   dependencies:
     scheduler "^0.26.0"
+
+react-i18next@^15.4.1:
+  version "15.7.3"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.7.3.tgz#2eba235247dff0cbf9f0338e2ab85e10e127aa54"
+  integrity sha512-AANws4tOE+QSq/IeMF/ncoHlMNZaVLxpa5uUGW1wjike68elVYr0018L9xYoqBr1OFO7G7boDPrbn0HpMCJxTw==
+  dependencies:
+    "@babel/runtime" "^7.27.6"
+    html-parse-stringify "^3.0.1"
 
 react-i18next@^15.6.0:
   version "15.6.0"
