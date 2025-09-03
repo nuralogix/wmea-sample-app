@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import AnuraApplet, { faceAttributeValue } from '@nuralogix.ai/web-measurement-embedded-app';
+import AnuraApplet from '@nuralogix.ai/web-measurement-embedded-app';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
@@ -11,28 +11,15 @@ const anuraApplet = new AnuraApplet();
 const Measurement = () => {
   const { setResults } = useSnapshot(state.measurement);
   const { theme, language } = useSnapshot(state.general);
+  const { demographics } = useSnapshot(state.demographics);
   const navigate = useNavigate();
   const [errorCode, setErrorCode] = useState<UIErrorCode | null>(null);
 
   useEffect(() => {
     (async function () {
       const container = document.createElement('div');
-      const {
-        SEX_ASSIGNED_MALE_AT_BIRTH,
-        SMOKER_FALSE,
-        BLOOD_PRESSURE_MEDICATION_FALSE,
-        DIABETES_NONE,
-      } = faceAttributeValue;
-
       const profile = {
-        age: 40,
-        height: 180,
-        weight: 60,
-        sex: SEX_ASSIGNED_MALE_AT_BIRTH,
-        smoking: SMOKER_FALSE,
-        bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
-        diabetes: DIABETES_NONE,
-        unit: 'Metric',
+        ...demographics,
         bypassProfile: false,
       };
 
