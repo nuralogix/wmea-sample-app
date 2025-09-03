@@ -1,10 +1,9 @@
 import { Modal, Paragraph } from '@nuralogix.ai/web-ui';
-import { getMessageFromKey } from './utils';
 import { CODE_TO_I18N_KEY, type UIErrorCode } from './constants';
 import { ErrorCodes } from './types';
 import CameraPermissionsNotGranted from '../../components/CameraPermissionsNotGranted';
 import type React from 'react';
-import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 type ErrorMessageProps = {
   errorCode: UIErrorCode;
@@ -12,32 +11,20 @@ type ErrorMessageProps = {
 };
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorCode, onClear }) => {
-  // Control modal visibility locally
-  const [open, setOpen] = useState(true);
-  useEffect(() => {
-    setOpen(true);
-  }, [errorCode]);
-
+  const { t } = useTranslation();
   if (errorCode === ErrorCodes.CAMERA_PERMISSION_DENIED) {
     return <CameraPermissionsNotGranted />;
   }
 
   if (errorCode === ErrorCodes.NO_DEVICES_FOUND) {
-    return <Paragraph variant="error">{getMessageFromKey(CODE_TO_I18N_KEY[errorCode])}</Paragraph>;
+    return <Paragraph variant="error">{t('NO_DEVICES_FOUND')}</Paragraph>;
   }
 
-  const body = getMessageFromKey(CODE_TO_I18N_KEY[errorCode]);
+  const messageKey = CODE_TO_I18N_KEY[errorCode];
 
   return (
-    <Modal
-      isOpen={open}
-      variant="danger"
-      onClose={() => {
-        setOpen(false);
-        onClear();
-      }}
-    >
-      <Paragraph>{body}</Paragraph>
+    <Modal isOpen variant="danger" onClose={onClear}>
+      <Paragraph>{t(messageKey)}</Paragraph>
     </Modal>
   );
 };

@@ -1,10 +1,11 @@
 import { ErrorCodes } from './types';
+import type en from '../../language/strings.en.json';
 
-export const CODE_TO_I18N_KEY: Record<UIErrorCode, string> = {
+export const CODE_TO_I18N_KEY: Record<UIErrorCode, keyof typeof en> = {
   [ErrorCodes.PAGE_NOT_VISIBLE]: 'ERR_TAB_SWITCHED_OR_WINDOW_MINIMIZED',
   [ErrorCodes.MEASUREMENT_LOW_SNR]: 'ERR_MSG_SNR',
   [ErrorCodes.NO_DEVICES_FOUND]: 'NO_DEVICES_FOUND',
-  [ErrorCodes.CAMERA_PERMISSION_DENIED]: 'CAMERA_PERMISSION_DENIED',
+  [ErrorCodes.CAMERA_PERMISSION_DENIED]: 'CAMERA_PERMISSION_NOT_GRANTED_TITLE',
 };
 
 export type EmbeddedErrorCode = keyof typeof CODE_TO_I18N_KEY;

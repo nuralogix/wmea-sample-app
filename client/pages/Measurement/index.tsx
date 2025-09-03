@@ -63,7 +63,7 @@ const Measurement = () => {
           // anuraApplet.destroy();
         };
         anuraApplet.on.error = (error) => {
-          const code = error.code;
+          const { code } = error;
           if (isUIErrorCode(code)) {
             setErrorCode(code);
           }
