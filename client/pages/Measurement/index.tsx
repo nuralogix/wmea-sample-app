@@ -4,13 +4,14 @@ import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import ErrorMessage from './ErrorMessage';
+import { ErrorCodes } from './types';
 
 const anuraApplet = new AnuraApplet();
 
 const Measurement = () => {
   const { setResults } = useSnapshot(state.measurement);
   const navigate = useNavigate();
-  const [errorCode, setErrorCode] = useState<string | null>(null);
+  const [errorCode, setErrorCode] = useState<ErrorCodes | null>(null);
 
   useEffect(() => {
     (async function () {
@@ -64,7 +65,11 @@ const Measurement = () => {
         anuraApplet.on.error = (error) => {
           console.log('error received', error);
           const code = (error as any)?.code as string | undefined;
-          setErrorCode(code ?? null);
+          if (code && (Object.values(ErrorCodes) as string[]).includes(code)) {
+            setErrorCode(code as ErrorCodes);
+          } else {
+            setErrorCode(null);
+          }
         };
         anuraApplet.on.webhook = (webhook) => {
           console.log('Webhook received', webhook);
