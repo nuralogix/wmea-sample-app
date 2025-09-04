@@ -66,7 +66,7 @@
   "CANCEL": "Annuler",
   "ERR_FACE_NONE": "Veuillez garder votre visage centré dans le contour pendant toute la mesure",
   "ERROR_TAB_SWITCHED_OR_WINDOW_MINIMIZED": "La mesure a échoué car l’onglet a été changé ou la fenêtre du navigateur a été minimisée. Veuillez vous assurer que l’onglet reste ouvert et actif.",
-  "ERR_MSG_SNR": "Le mesure du flux sanguin n'est pas fiable.\nVeuillez rester immobile et ajuster l'éclairage afin que la lumière soit uniformément répartie sur votre visage",
+  "ERR_MSG_SNR": "La mesure du flux sanguin n'est pas fiable.\nVeuillez rester immobile et ajuster l'éclairage afin que la lumière soit uniformément répartie sur votre visage",
   "ERR_TAB_SWITCHED_OR_WINDOW_MINIMIZED": "La mesure a échoué car l’onglet a été changé ou la fenêtre du navigateur a été minimisée. Veuillez vous assurer que l’onglet reste ouvert et actif.",
   "NO_DEVICES_FOUND": "Aucun appareil détecté"
 }
