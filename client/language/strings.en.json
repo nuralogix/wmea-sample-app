@@ -68,5 +68,12 @@
   "ERROR_TAB_SWITCHED_OR_WINDOW_MINIMIZED": "Measurement failed because the tab was switched or the browser window was minimized. Please ensure the tab remains open and active.",
   "ERR_MSG_SNR": "The blood flow measurement was not reliable.\nPlease try to allow the light to fall evenly across your face while holding still",
   "ERR_TAB_SWITCHED_OR_WINDOW_MINIMIZED": "Measurement failed because the tab was switched or the browser window was minimized. Please ensure the tab remains open and active.",
-  "NO_DEVICES_FOUND": "No devices found"
+  "NO_DEVICES_FOUND": "No devices found",
+  "ENTER_ACCESS_CODE": "Enter Access Code (default: admin)",
+  "LOGIN": "Login",
+  "INVALID_ACCESS_CODE": "Invalid Access Code",
+  "ACCESS_CODE": "Access Code",
+  "LOGOUT": "Logout",
+  "APP_TITLE": "Web Measurement Embedded Sample App",
+  "HEALTH_RESULTS": "Health Assessment Results"
 }

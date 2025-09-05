@@ -4,7 +4,6 @@ import { SupportedLanguage } from '../types';
 import Backend from 'i18next-fetch-backend';
 
 const initI18n = (loadPath: string, selectedLanguage: SupportedLanguage) => {
-  console.log('Initializing i18n with language:', loadPath, selectedLanguage);
   return i18n
     .use(Backend)
     .use(initReactI18next)

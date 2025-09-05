@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import * as stylex from '@stylexjs/stylex';
 import { Button, Card, Heading, Paragraph, TextInput } from '@nuralogix.ai/web-ui';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const styles = stylex.create({
   nextButton: {
@@ -27,8 +28,9 @@ const styles = stylex.create({
 });
 
 const Login = () => {
+    const { t } = useTranslation();
     const [accessCode, setAccessCode] = useState('');
-    const [info, setInfo] = useState('Enter Access Code (default: admin)');
+    const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
     const { login } = useSnapshot(state.auth);
     const navigate = useNavigate();
 
@@ -37,7 +39,7 @@ const Login = () => {
             login();
             navigate('/profile');
         } else {
-            setInfo('Invalid Access Code');
+            setInfo(t('INVALID_ACCESS_CODE'));
         }
     };
 
@@ -49,21 +51,21 @@ const Login = () => {
         <div {...stylex.props(styles.wrapper)}>
             <Card xstyle={styles.card}>
                 <Heading>
-                    Login
+                    {t('LOGIN')}
                 </Heading>
                 <div {...stylex.props(styles.introMessage)}>
                 <Paragraph>{info}</Paragraph>
                 </div>
 
                 <TextInput
-                    placeholder='Access Code'
+                    placeholder={t('ACCESS_CODE')}
                     value={accessCode}
                     onChange={handleChange}
                     type="text"
                 />
                 <div {...stylex.props(styles.nextButton)}>
                     <Button width="100%" onClick={handleLogin}>
-                    Login
+                        {t('LOGIN')}
                     </Button>
                 </div>
             </Card>

@@ -76,7 +76,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
               color: '#1f2937',
             }}
           >
-            Health Assessment Results
+            {t('HEALTH_RESULTS')}
           </h1>
           {snr && (
             <div
