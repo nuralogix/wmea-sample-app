@@ -4,20 +4,25 @@ import Profile from '../../pages/Profile';
 import Measurement from '../../pages/Measurement';
 import Results from '../../pages/Results';
 import PageWrapper from '../PageWrapper';
+import { ProtectedRoute } from '../ProtectedRoute';
+import Login from '../Login';
 
 const routes = [
-  { path: '/', element: <Profile /> },
+  { path: '/profile', element: <Profile /> },
   { path: '/measurement', element: <Measurement /> },
   { path: '/results', element: <Results /> },
-  { path: '*', element: <NotFound /> },
 ];
 
 const AppRouter = () => (
   <BrowserRouter basename="/">
     <Routes>
-      {routes.map(({ path, element }) => (
-        <Route key={path} path={path} element={<PageWrapper>{element}</PageWrapper>} />
-      ))}
+      <Route path="/" element={<Login />} />
+      <Route element={<ProtectedRoute />}>
+        {routes.map(({ path, element }) => (
+          <Route key={path} path={path} element={<PageWrapper>{element}</PageWrapper>} />
+        ))}
+      </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   </BrowserRouter>
 );

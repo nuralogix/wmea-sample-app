@@ -3,11 +3,13 @@ import { proxy } from 'valtio';
 import measurementState from './measurement/state';
 import demographicsState from './demographics/state';
 import generalState from './general/state';
+import authState from './auth/state';
 
 const appState = {
   general: generalState,
   measurement: measurementState,
   demographics: demographicsState,
+  auth: authState,
 };
 
 const state = proxy(appState);
