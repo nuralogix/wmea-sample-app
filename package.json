@@ -1,7 +1,7 @@
 {
-  "name": "anura-online-sample-app-react",
-  "version": "2.0.0",
-  "description": "Nuralogix Anura Online Sample App - React",
+  "name": "wmea-sample-app-react",
+  "version": "0.1.0-alpha.2",
+  "description": "Nuralogix WMEA Sample App - React",
   "contributors": [
     "Hamed Hassanzadeh Amin",
     "Will Morgan"
@@ -20,8 +20,9 @@
   },
   "keywords": [
     "Nuralogix",
-    "Anura Online Sample App",
-    "React"
+    "WMEA Sample App",
+    "React",
+    "Web measurement embedded app"
   ],
   "license": "SEE LICENSE IN LICENSE",
   "devDependencies": {
@@ -58,7 +59,7 @@
     "typescript-eslint": "^8.25.0"
   },
   "dependencies": {
-    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-alpha.6",
+    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-alpha.7",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.11",
     "@stylexjs/stylex": "0.9.3",
     "i18next": "^25.3.2",

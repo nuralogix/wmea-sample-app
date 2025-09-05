@@ -72,16 +72,16 @@ const config = [
       html({
         fileName: 'index.html',
         template: ({ bundle, files }) => {
-          return getpageTemplate('Anura Online', Object.keys(bundle)[0], files.css[0].fileName);
+          return getpageTemplate('Web Measurement Embedded App', Object.keys(bundle)[0], files.css[0].fileName);
         },
       }),
-      // Copy Anura Online to anura-online folder inside dist folder
+      // Copy WMEA to wmea folder inside dist folder
       copy({
         targets: [
           { src: 'client/language/*.json', dest: 'dist/language' },
           {
             src: 'node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
-            dest: `${distFolder}/measurement-app`,
+            dest: `${distFolder}/wmea`,
           },
         ],
       }),

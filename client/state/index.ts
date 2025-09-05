@@ -14,5 +14,5 @@ const state = proxy(appState);
 // Enable Redux DevTools Extension for Valtio. This is only available in development mode.
 // REDUX_DEV_TOOLS env is injected from rollup.config.mjs
 // To use this you need to install Chrome Redux DevTool extension
-if (process.env.IS_DEVELOPMENT) devtools(state, { name: 'Anura-online', enabled: true });
+if (process.env.IS_DEVELOPMENT) devtools(state, { name: 'WMEA', enabled: true });
 export default state;

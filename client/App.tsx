@@ -6,7 +6,6 @@ import AppRouter from './components/AppRouter';
 import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
 import { LanguageInitializer } from './language/LanguageInitializer';
-import Navbar from './components/Navbar/Navbar';
 
 const styles = stylex.create({
   wrapper: {
