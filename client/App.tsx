@@ -5,7 +5,10 @@ import state from './state';
 import AppRouter from './components/AppRouter';
 import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
-import { LanguageInitializer } from './language/LanguageInitializer';
+import initI18n from './language/i18n';
+import { supportedLanguages } from './language/constants';
+import { useEffect, useState } from 'react';
+import { type SupportedLanguage } from './types';
 
 const styles = stylex.create({
   wrapper: {
@@ -18,10 +21,26 @@ const styles = stylex.create({
 });
 
 const App = () => {
-  const { theme } = useSnapshot(state.general);
+  const { theme, language } = useSnapshot(state.general);
+  const [isLangInitialized, setIsLangInitialized] = useState(false);
+
+  useEffect(() => {
+    const browserLanguage = navigator.language.split('-')[0];
+    const matchedLanguage = (
+      supportedLanguages.includes(browserLanguage) ? browserLanguage : 'en'
+    ) as SupportedLanguage;
+    const languageToSet = language || matchedLanguage;
+
+    const languageFilesPath = `./language/strings.{{lng}}.json`;
+
+    initI18n(`${languageFilesPath}`, languageToSet).then(() => {
+      setIsLangInitialized(true);
+    });
+  }, []);
+
+  if (!isLangInitialized) return null;
 
   return (
-    <LanguageInitializer>
       <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
         <Container>
           <div {...stylex.props(styles.wrapper)}>
@@ -29,7 +48,6 @@ const App = () => {
           </div>
         </Container>
       </ThemeProvider>
-    </LanguageInitializer>
   );
 };
 
