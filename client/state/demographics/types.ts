@@ -1,4 +1,6 @@
-import type { Demographics } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { Profile } from '@nuralogix.ai/web-measurement-embedded-app';
+
+export type Demographics = Omit<Profile, 'bypassProfile'>;
 
 export interface DemographicsState {
   demographics: Demographics;

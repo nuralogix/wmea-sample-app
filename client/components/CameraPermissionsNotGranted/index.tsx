@@ -53,7 +53,7 @@ const CameraPermissionsNotGranted = () => {
         </div>
         <div {...stylex.props(styles.mb16)}>
           <Paragraph variant="error" fontWeight="bold">
-            {t('CAMERA_PERMISSION_NOT_GRANTED_TITLE')}
+            {t('CAMERA_PERMISSION_DENIED')}
           </Paragraph>
         </div>
         <div {...stylex.props(styles.mb24)}>

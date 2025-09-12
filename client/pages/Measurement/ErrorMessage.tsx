@@ -1,30 +1,51 @@
 import { Modal, Paragraph } from '@nuralogix.ai/web-ui';
-import { CODE_TO_I18N_KEY, type UIErrorCode } from './constants';
-import { ErrorCodes } from './types';
 import CameraPermissionsNotGranted from '../../components/CameraPermissionsNotGranted';
+import { ErrorCodes, MeasurementEmbeddedAppError } from '@nuralogix.ai/web-measurement-embedded-app';
 import type React from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ErrorMessageProps = {
-  errorCode: UIErrorCode;
+  error: MeasurementEmbeddedAppError;
   onClear: () => void;
 };
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({ errorCode, onClear }) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, onClear }) => {
+  const { code, message } = error;
   const { t } = useTranslation();
-  if (errorCode === ErrorCodes.CAMERA_PERMISSION_DENIED) {
-    return <CameraPermissionsNotGranted />;
+  let text = '';
+  // TODO: Update text with proper messages from translation file
+  switch (code) {
+    case ErrorCodes.CAMERA_PERMISSION_DENIED:
+      return <CameraPermissionsNotGranted />;
+    case ErrorCodes.CAMERA_START_FAILED:
+      break;
+    case ErrorCodes.NO_DEVICES_FOUND:
+      return <Paragraph variant="error">{t('NO_DEVICES_FOUND')}</Paragraph>;
+    case ErrorCodes.PAGE_NOT_VISIBLE:
+      text = t(code);
+      break;
+    case ErrorCodes.PROFILE_INFO_NOT_SET:
+      text = message;
+      break;
+    case ErrorCodes.MEASUREMENT_LOW_SNR:
+      text = t(code);
+      break;
+    case ErrorCodes.WORKER_ERROR:
+      text = message;
+      break;
+    case ErrorCodes.COLLECTOR:
+      text = message;
+      break;
+    case ErrorCodes.WEBSOCKET_DISCONNECTED:
+      text = message;
+      break;
+    default:
+      break;
   }
-
-  if (errorCode === ErrorCodes.NO_DEVICES_FOUND) {
-    return <Paragraph variant="error">{t('NO_DEVICES_FOUND')}</Paragraph>;
-  }
-
-  const messageKey = CODE_TO_I18N_KEY[errorCode];
 
   return (
     <Modal isOpen variant="danger" onClose={onClear}>
-      <Paragraph>{t(messageKey)}</Paragraph>
+      <Paragraph>{text}</Paragraph>
     </Modal>
   );
 };

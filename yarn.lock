@@ -1183,10 +1183,10 @@
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-alpha.25.tgz#dc4fe9a05c52fa4f1ebdd661eaa7373d055cf09b"
   integrity sha512-Ai5kmIvOUZrofVRIU2dvTv9Txe2COE3wZGRDKyQ3R9uSzb3RdXg/Crl8UObOxFGDThIsCaJqZukJYtqpdf65Rg==
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.8":
-  version "0.1.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.8.tgz#7d3a85019a884f5ea428658e1059f01e9fbe6f5e"
-  integrity sha512-PxFALzE2sah4GwzG2WGvjo/RTESJLEJ7HAIbn2N6gDom3EuAeLcrZ/c2sfs41ASPAG+KQSHKW4AyUJ5TNprVzg==
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.11":
+  version "0.1.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.11.tgz#2bff3596f961bf994f3310fff910b4654a408291"
+  integrity sha512-g6taII5Nunwy+pOvuEeazVIBdPqCZC+uBjrnAPg7oxgoWlOK6jRMSsCglflqYlBZ25dQWwIouItVkJAYoYGz9g==
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.11", "@nuralogix.ai/web-ui@^0.1.0-alpha.9":
   version "0.1.0-alpha.11"
