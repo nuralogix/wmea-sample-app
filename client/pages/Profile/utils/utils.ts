@@ -1,6 +1,6 @@
-import { Demographics } from '@nuralogix.ai/web-measurement-embedded-app';
 import { FormState } from '../types';
 import { FORM_VALUES } from '../constants';
+import { Demographics } from '../../../state/demographics/types';
 
 /**
  * Converts imperial height (feet + inches) to centimeters
@@ -58,6 +58,5 @@ export const convertFormStateToSDKDemographics = (formState: FormState): Demogra
     smoking: parseInt(smoking), // Form value is already SDK value as string
     bloodPressureMedication: parseInt(bloodPressureMed), // Form value is already SDK value as string
     diabetes: parseInt(diabetesStatus), // Form value is already SDK value as string
-    unit: 'Metric', // TODO remove when sdk updated
   };
 };

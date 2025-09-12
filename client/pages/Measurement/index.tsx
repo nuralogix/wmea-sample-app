@@ -1,38 +1,29 @@
-import { useEffect } from 'react';
-import AnuraApplet, {
-  faceAttributeValue,
-  type Demographics,
-} from '@nuralogix.ai/web-measurement-embedded-app';
+import { useEffect, useState } from 'react';
+import MeasurementEmbeddedApp,
+  { appEvents,
+    type MeasurementEmbeddedAppError,
+    type MeasurementEmbeddedAppOptions
+  }
+from '@nuralogix.ai/web-measurement-embedded-app';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
-
-const anuraApplet = new AnuraApplet();
+import ErrorMessage from './ErrorMessage';
 
 const Measurement = () => {
+  const [measurementApp ] = useState(() => new MeasurementEmbeddedApp());
   const { setResults } = useSnapshot(state.measurement);
   const { theme, language } = useSnapshot(state.general);
+  const { demographics } = useSnapshot(state.demographics);
   const navigate = useNavigate();
+  const [appError, setAppError] = useState<MeasurementEmbeddedAppError | null>(null);
 
   useEffect(() => {
     (async function () {
       const container = document.createElement('div');
-      const {
-        SEX_ASSIGNED_MALE_AT_BIRTH,
-        SMOKER_FALSE,
-        BLOOD_PRESSURE_MEDICATION_FALSE,
-        DIABETES_NONE,
-      } = faceAttributeValue;
-
-      const profile: Demographics = {
-        age: 40,
-        height: 180,
-        weight: 60,
-        sex: SEX_ASSIGNED_MALE_AT_BIRTH,
-        smoking: SMOKER_FALSE,
-        bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
-        diabetes: DIABETES_NONE,
-        unit: 'Metric',
+      const profile = {
+        ...demographics,
+        bypassProfile: false,
       };
 
       const apiUrl = '/api';
@@ -42,57 +33,109 @@ const Measurement = () => {
       const tokenResponse = await token.json();
 
       if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
-        anuraApplet.init({
+        const options: MeasurementEmbeddedAppOptions = {
           container,
           top: '93.5px',
           language,
-          appPath: './measurement-app',
+          appPath: './wmea',
+          apiUrl: 'api.deepaffex.ai',
           settings: {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
             studyId: studyIdResponse.studyId,
           },
           profile,
+          config: {
+            checkConstraints: true,
+            cameraFacingMode: 'user',
+            cameraAutoStart: true,
+            measurementAutoStart: true,
+          },
           loadError: function (error) {
             console.error('load error', error);
           },
-        });
+        }
+        measurementApp.init(options);
 
-        anuraApplet.on.results = (results) => {
-          console.log('Results received', results);
+        measurementApp.on.results = (results) => {
           setResults(results);
           navigate('/results');
-          // anuraApplet.destroy();
         };
-        anuraApplet.on.error = (error) => {
-          console.log('error received', error);
+        measurementApp.on.error = (error) => {
+          // Update only if null to avoid overwriting the first error
+          setAppError(prev => {
+            return prev === null ? error : prev;
+          });
+          console.log('Error received', error);
         };
-        anuraApplet.on.webhook = (webhook) => {
-          console.log('Webhook received', webhook);
-        };
-        anuraApplet.on.cancel = () => {
-          console.log('Measurement cancelled');
+        measurementApp.on.event = (appEvent) => {
+          switch (appEvent) {
+            case appEvents.APP_LOADED:
+              break;
+            case appEvents.CAMERA_PERMISSION_GRANTED:
+              break;
+            case appEvents.CAMERA_STARTED:
+              break;
+            case appEvents.CONSTRAINT_VIOLATION:
+              break;
+            case appEvents.INTERMEDIATE_RESULTS:
+              break;
+            case appEvents.MEASUREMENT_CANCELED:
+              break;
+            case appEvents.MEASUREMENT_COMPLETED:
+              break;
+            case appEvents.MEASUREMENT_STARTED:
+              break;
+            case appEvents.PAGE_UNLOADED:
+              break;
+            case appEvents.PAGE_VISIBILITY_CHANGE:
+              break;
+            case appEvents.RESULTS_RECEIVED:
+              break;
+            default:
+              break;
+          }
+          console.log('App event received', appEvent);
         };
       } else {
         console.error('Failed to get Study ID and Token pair');
       }
     })();
     return () => {
-      anuraApplet.destroy();
+      const cleanup = async () => {
+        // Close the camera and hide the mask but not reset the SDK
+        await measurementApp.cancel(false);
+        const logs = await measurementApp.getLogs();
+        console.log('WMEA Logs:', logs);
+        // Destroy the instance and free up resources
+        measurementApp.destroy();
+      };
+      cleanup();
     };
   }, []);
 
   // Listen for theme changes and update the measurement app
   useEffect(() => {
-    anuraApplet.setTheme(theme);
+    measurementApp.setTheme(theme);
   }, [theme]);
 
   // Listen for language changes and update the measurement app
   useEffect(() => {
-    anuraApplet.setLanguage(language);
+    measurementApp.setLanguage(language);
   }, [language]);
 
-  return null;
+  const onClear = () => {
+    navigate('/');
+  }
+
+  return (
+    <>
+      {appError
+        ? <ErrorMessage error={appError} onClear={onClear} />
+        : null
+      }
+    </>
+  );
 };
 
 export default Measurement;

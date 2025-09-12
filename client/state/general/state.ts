@@ -1,6 +1,6 @@
 import { proxy } from 'valtio';
 import { GeneralState } from './types';
-import i18n from '../../i18n';
+import i18n from 'i18next';
 import { getSavedLanguage, getSavedTheme } from '../../utils/localStorage';
 
 const savedTheme = getSavedTheme();

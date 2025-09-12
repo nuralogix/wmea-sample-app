@@ -58,5 +58,22 @@
   "RESULTS_GROUP_MENTAL": "Mental Health",
   "RESULTS_GROUP_SURVEYS": "Survey Results",
   "RESULTS_ALL_RESULTS": "All Results",
-  "RESULTS_SNR_LABEL": "SNR"
+  "RESULTS_SNR_LABEL": "SNR",
+  "CAMERA_PERMISSION_DENIED": "Camera Permission Required",
+  "CAMERA_PERMISSION_INSTRUCTIONS": "This app requires camera permissions to work. Please try to refresh the page and grant permission when prompted. On some browsers, you may have to click the lock icon in the address bar to grant permission. If it does not work, then please follow your browser's specific instructions to grant permission.",
+  "CAMERA_PERMISSION_DENY_TEXT": "If you don't want to grant permissions, ",
+  "CAMERA_PERMISSION_DENY_LINK": "click here",
+  "CANCEL": "Cancel",
+  "ERR_FACE_NONE": "Please keep your face centred within the outline throughout the measurement",
+  "ERROR_TAB_SWITCHED_OR_WINDOW_MINIMIZED": "Measurement failed because the tab was switched or the browser window was minimized. Please ensure the tab remains open and active.",
+  "MEASUREMENT_LOW_SNR": "The blood flow measurement was not reliable.\nPlease try to allow the light to fall evenly across your face while holding still",
+  "PAGE_NOT_VISIBLE": "Measurement failed because the tab was switched or the browser window was minimized. Please ensure the tab remains open and active.",
+  "NO_DEVICES_FOUND": "No devices found",
+  "ENTER_ACCESS_CODE": "Enter Access Code (default: admin)",
+  "LOGIN": "Login",
+  "INVALID_ACCESS_CODE": "Invalid Access Code",
+  "ACCESS_CODE": "Access Code",
+  "LOGOUT": "Logout",
+  "APP_TITLE": "Web Measurement Embedded Sample App",
+  "HEALTH_RESULTS": "Health Assessment Results"
 }
