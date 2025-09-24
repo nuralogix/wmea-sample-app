@@ -6,7 +6,7 @@ import ProfileInfo from './ProfileInfo';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState, WizardStep } from './types';
 import { isFormValid } from './utils/validationUtils';
-import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS } from './constants';
+import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS, FORM_VALUES } from './constants';
 import { convertFormStateToSDKDemographics } from './utils/utils';
 import { useNavigate } from 'react-router';
 import state from '../../state';
@@ -27,6 +27,19 @@ const styles = stylex.create({
   introMessage: {
     marginBottom: '24px',
   },
+  skipRow: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: 8,
+  },
+  skipBtn: {
+    background: 'none',
+    border: 'none',
+    color: '#666',
+    cursor: 'pointer',
+    fontSize: 12,
+    textDecoration: 'underline',
+  },
 });
 
 const FormWizard = () => {
@@ -45,6 +58,31 @@ const FormWizard = () => {
       [FORM_FIELDS.WEIGHT]: '',
     }));
   }, [formState.unit]);
+
+  const isDev = !!process.env.IS_DEVELOPMENT;
+
+  const handleSkipProfile = () => {
+    // Build a full valid FormState with SDK-aligned numeric string values.
+    // Fall back to known safe defaults if user hasn't entered anything yet.
+    const skipFormState: FormState = {
+      [FORM_FIELDS.UNIT]: FORM_VALUES.METRIC,
+      [FORM_FIELDS.HEIGHT_METRIC]: formState.heightMetric || '180',
+      [FORM_FIELDS.HEIGHT_FEET]: '',
+      [FORM_FIELDS.HEIGHT_INCHES]: '',
+      [FORM_FIELDS.WEIGHT]: formState.weight || '60',
+      [FORM_FIELDS.AGE]: formState.age || '40',
+      [FORM_FIELDS.SEX]: formState.sex || FORM_VALUES.MALE, // valid male value
+      [FORM_FIELDS.SMOKING]: formState.smoking || FORM_VALUES.SMOKER_FALSE,
+      [FORM_FIELDS.BLOOD_PRESSURE_MED]:
+        formState.bloodPressureMed || FORM_VALUES.BLOOD_PRESSURE_MEDICATION_FALSE,
+      [FORM_FIELDS.DIABETES_STATUS]: formState.diabetesStatus || FORM_VALUES.DIABETES_NONE,
+    };
+
+    const demographicsData = convertFormStateToSDKDemographics(skipFormState);
+    // Persist with a bypassProfile hint for Measurement component
+    state.demographics.setDemographics({ ...demographicsData, bypassProfile: true } as any);
+    navigate('/measurement');
+  };
 
   const handleNextStep = () => {
     setCurrentStep(WIZARD_STEPS.MEDICAL);
@@ -74,6 +112,13 @@ const FormWizard = () => {
   return (
     <div {...stylex.props(styles.wrapper)}>
       <Card xstyle={styles.card}>
+        {isDev && (
+          <div {...stylex.props(styles.skipRow)}>
+            <button type="button" {...stylex.props(styles.skipBtn)} onClick={handleSkipProfile}>
+              Skip Profile
+            </button>
+          </div>
+        )}
         <Heading>
           {currentStep === WIZARD_STEPS.PROFILE
             ? t('PROFILE_FORM_STEP_1_TITLE')

@@ -48,8 +48,8 @@ const Measurement = () => {
           config: {
             checkConstraints: true,
             cameraFacingMode: 'user',
-            cameraAutoStart: true,
-            measurementAutoStart: true,
+            cameraAutoStart: false,
+            measurementAutoStart: false,
           },
           loadError: function (error) {
             console.error('load error', error);

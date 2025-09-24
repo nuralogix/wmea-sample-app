@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 import { useNavigate } from 'react-router';
 import * as stylex from '@stylexjs/stylex';
 import { Button, Card, Heading, Paragraph, TextInput } from '@nuralogix.ai/web-ui';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const styles = stylex.create({
@@ -28,49 +28,57 @@ const styles = stylex.create({
 });
 
 const Login = () => {
-    const { t } = useTranslation();
-    const [accessCode, setAccessCode] = useState('');
-    const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
-    const { login } = useSnapshot(state.auth);
-    const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [accessCode, setAccessCode] = useState('');
+  const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
+  const { login, isLoggedIn } = useSnapshot(state.auth);
+  const navigate = useNavigate();
 
-    const handleLogin = async () => {
-        if (accessCode === 'admin') {
-            login();
-            navigate('/profile');
-        } else {
-            setInfo(t('INVALID_ACCESS_CODE'));
-        }
-    };
+  // Dev-mode auto login/redirect
+  useEffect(() => {
+    if (process.env.IS_DEVELOPMENT) {
+      if (!isLoggedIn) {
+        login();
+      }
+      navigate('/profile', { replace: true });
+    }
+  }, [isLoggedIn, login, navigate]);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAccessCode(e.target.value);
-    };
+  const handleLogin = async () => {
+    if (accessCode === 'admin') {
+      login();
+      navigate('/profile');
+    } else {
+      setInfo(t('INVALID_ACCESS_CODE'));
+    }
+  };
 
-    return (
-        <div {...stylex.props(styles.wrapper)}>
-            <Card xstyle={styles.card}>
-                <Heading>
-                    {t('LOGIN')}
-                </Heading>
-                <div {...stylex.props(styles.introMessage)}>
-                <Paragraph>{info}</Paragraph>
-                </div>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAccessCode(e.target.value);
+  };
 
-                <TextInput
-                    placeholder={t('ACCESS_CODE')}
-                    value={accessCode}
-                    onChange={handleChange}
-                    type="text"
-                />
-                <div {...stylex.props(styles.nextButton)}>
-                    <Button width="100%" onClick={handleLogin}>
-                        {t('LOGIN')}
-                    </Button>
-                </div>
-            </Card>
+  return (
+    <div {...stylex.props(styles.wrapper)}>
+      <Card xstyle={styles.card}>
+        <Heading>{t('LOGIN')}</Heading>
+        <div {...stylex.props(styles.introMessage)}>
+          <Paragraph>{info}</Paragraph>
         </div>
-    );
-}
+
+        <TextInput
+          placeholder={t('ACCESS_CODE')}
+          value={accessCode}
+          onChange={handleChange}
+          type="text"
+        />
+        <div {...stylex.props(styles.nextButton)}>
+          <Button width="100%" onClick={handleLogin}>
+            {t('LOGIN')}
+          </Button>
+        </div>
+      </Card>
+    </div>
+  );
+};
 
 export default Login;
