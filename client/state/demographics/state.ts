@@ -7,15 +7,14 @@ const { SEX_ASSIGNED_MALE_AT_BIRTH, SMOKER_FALSE, BLOOD_PRESSURE_MEDICATION_FALS
 
 const demographicsState: DemographicsState = proxy({
   demographics: {
-    age: 0,
-    height: 0,
-    weight: 0,
+    age: 40,
+    height: 180,
+    weight: 60,
     sex: SEX_ASSIGNED_MALE_AT_BIRTH,
     smoking: SMOKER_FALSE,
     bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
     diabetes: DIABETES_NONE,
-  // allow bypass in development mode
-  bypassProfile: !!process.env.IS_DEVELOPMENT,
+    bypassProfile: false,
   },
   setDemographics: (demographics) => {
     demographicsState.demographics = demographics;

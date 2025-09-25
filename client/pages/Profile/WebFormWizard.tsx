@@ -62,25 +62,8 @@ const FormWizard = () => {
   const isDev = !!process.env.IS_DEVELOPMENT;
 
   const handleSkipProfile = () => {
-    // Build a full valid FormState with SDK-aligned numeric string values.
-    // Fall back to known safe defaults if user hasn't entered anything yet.
-    const skipFormState: FormState = {
-      [FORM_FIELDS.UNIT]: FORM_VALUES.METRIC,
-      [FORM_FIELDS.HEIGHT_METRIC]: formState.heightMetric || '180',
-      [FORM_FIELDS.HEIGHT_FEET]: '',
-      [FORM_FIELDS.HEIGHT_INCHES]: '',
-      [FORM_FIELDS.WEIGHT]: formState.weight || '60',
-      [FORM_FIELDS.AGE]: formState.age || '40',
-      [FORM_FIELDS.SEX]: formState.sex || FORM_VALUES.MALE, // valid male value
-      [FORM_FIELDS.SMOKING]: formState.smoking || FORM_VALUES.SMOKER_FALSE,
-      [FORM_FIELDS.BLOOD_PRESSURE_MED]:
-        formState.bloodPressureMed || FORM_VALUES.BLOOD_PRESSURE_MEDICATION_FALSE,
-      [FORM_FIELDS.DIABETES_STATUS]: formState.diabetesStatus || FORM_VALUES.DIABETES_NONE,
-    };
-
-    const demographicsData = convertFormStateToSDKDemographics(skipFormState);
-    // Persist with a bypassProfile hint for Measurement component
-    state.demographics.setDemographics({ ...demographicsData, bypassProfile: true } as any);
+    const base = state.demographics.demographics;
+    state.demographics.setDemographics({ ...base, bypassProfile: true });
     navigate('/measurement');
   };
 
