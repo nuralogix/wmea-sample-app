@@ -10,6 +10,7 @@ import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS, FORM_VALUES } from './co
 import { convertFormStateToSDKDemographics } from './utils/utils';
 import { useNavigate } from 'react-router';
 import state from '../../state';
+import { useSnapshot } from 'valtio';
 
 const styles = stylex.create({
   wrapper: {
@@ -59,7 +60,7 @@ const FormWizard = () => {
     }));
   }, [formState.unit]);
 
-  const isDev = !!process.env.IS_DEVELOPMENT;
+  const { isDev } = useSnapshot(state.auth);
 
   const handleSkipProfile = () => {
     const base = state.demographics.demographics;

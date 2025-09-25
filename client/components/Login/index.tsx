@@ -31,18 +31,16 @@ const Login = () => {
   const { t } = useTranslation();
   const [accessCode, setAccessCode] = useState('');
   const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
-  const { login, isLoggedIn } = useSnapshot(state.auth);
+  const { login, isLoggedIn, isDev } = useSnapshot(state.auth);
   const navigate = useNavigate();
 
   // Dev-mode auto login/redirect
   useEffect(() => {
-    if (process.env.IS_DEVELOPMENT) {
-      if (!isLoggedIn) {
-        login();
-      }
+    if (isDev) {
+      if (!isLoggedIn) login();
       navigate('/profile', { replace: true });
     }
-  }, [isLoggedIn, login, navigate]);
+  }, [isDev, isLoggedIn, login, navigate]);
 
   const handleLogin = async () => {
     if (accessCode === 'admin') {
@@ -60,22 +58,28 @@ const Login = () => {
   return (
     <div {...stylex.props(styles.wrapper)}>
       <Card xstyle={styles.card}>
-        <Heading>{t('LOGIN')}</Heading>
-        <div {...stylex.props(styles.introMessage)}>
-          <Paragraph>{info}</Paragraph>
-        </div>
-
-        <TextInput
-          placeholder={t('ACCESS_CODE')}
-          value={accessCode}
-          onChange={handleChange}
-          type="text"
-        />
-        <div {...stylex.props(styles.nextButton)}>
-          <Button width="100%" onClick={handleLogin}>
-            {t('LOGIN')}
-          </Button>
-        </div>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
+          <Heading>{t('LOGIN')}</Heading>
+          <div {...stylex.props(styles.introMessage)}>
+            <Paragraph>{info}</Paragraph>
+          </div>
+          <TextInput
+            placeholder={t('ACCESS_CODE')}
+            value={accessCode}
+            onChange={handleChange}
+            type="text"
+          />
+          <div {...stylex.props(styles.nextButton)}>
+            <Button type="submit" width="100%">
+              {t('LOGIN')}
+            </Button>
+          </div>
+        </form>
       </Card>
     </div>
   );

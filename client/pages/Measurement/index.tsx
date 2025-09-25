@@ -120,7 +120,7 @@ const Measurement = () => {
   }, [language]);
 
   const onClear = () => {
-    navigate('/');
+    setAppError(null);
   };
 
   return <>{appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}</>;

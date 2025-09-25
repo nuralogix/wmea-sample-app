@@ -4,15 +4,15 @@ import { useSnapshot } from 'valtio';
 import state from '../../state';
 
 export const ProtectedRoute = () => {
-  const { isLoggedIn, autoLoginEnabled, login } = useSnapshot(state.auth);
+  const { isLoggedIn, isDev, login } = useSnapshot(state.auth);
 
   useEffect(() => {
-    if (autoLoginEnabled && !isLoggedIn) {
+    if (isDev && !isLoggedIn) {
       login();
     }
-  }, [autoLoginEnabled, isLoggedIn, login]);
+  }, [isDev, isLoggedIn, login]);
 
-  if (!isLoggedIn && !autoLoginEnabled) {
+  if (!isLoggedIn && !isDev) {
     return <Navigate to="/" replace />;
   }
 
