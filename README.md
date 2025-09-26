@@ -1,6 +1,6 @@
 [Back to Main README](../README.md)
 
-# Anura Online - React Sample Application
+# Web Measurement Embedded App - React Sample Application
 
 ## Create environment variables
 
@@ -65,7 +65,7 @@ yarn serve:prod
 ### Build image
 
 ```bash
-docker build -t anura-online .
+docker build -t wmea .
 ```
 
 ### Run image
@@ -73,7 +73,7 @@ docker build -t anura-online .
 First, run the following command:
 
 ```bash
-docker run --env-file .prod.env -p 3000:3000 -d anura-online
+docker run --env-file .prod.env -p 3000:3000 -d wmea
 ```
 
 Next, open the browser at `http://localhost:3000/`

@@ -83,7 +83,7 @@ export default class Server {
                 DeviceTypeID: DeviceTypeID.WIN32,
                 Name: 'Anura Web Core SDK',
                 Identifier: 'ANURA_WEB_CORE_SDK',
-                Version: '0.1.0-alpha.22',
+                Version: '0.1.0-alpha.25',
                 TokenExpiresIn: tokenExpiresIn
             };
             const registerLicense = await this.apiClient.http.organizations.registerLicense(payload, true);
@@ -104,7 +104,7 @@ export default class Server {
         });
 
         this.app.use('/', express.static(join(__dirname, distFolder)));
-        this.app.use('/', express.static(join(__dirname, distFolder, 'anura-online')));
+        this.app.use('/', express.static(join(__dirname, distFolder, 'wmea')));
         this.app.get('/*name', (_req: Request, res: Response) => {
             res.sendFile(join(__dirname, `${distFolder}/index.html`), function (err) {
                 if (err) {

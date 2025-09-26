@@ -67,8 +67,6 @@ const FormWizard = () => {
     // Update the demographics store
     state.demographics.setDemographics(demographicsData);
 
-    console.log('Set demographics from form:', demographicsData);
-
     // Navigate to measurement page
     navigate('/measurement');
   };
