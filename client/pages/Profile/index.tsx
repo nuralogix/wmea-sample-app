@@ -1,8 +1,10 @@
 import WebFormWizard from './WebFormWizard';
+import MobileFormWizard from './MobileFormWizard';
+import { useMobileDetection } from '../../hooks/useMobileDetection';
 
 const Profile = () => {
-  // TODO check device type, render MobileFormWizard if mobile
-  return <WebFormWizard />;
+  const { isMobile } = useMobileDetection();
+  return isMobile ? <MobileFormWizard /> : <WebFormWizard />;
 };
 
 export default Profile;

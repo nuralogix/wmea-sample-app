@@ -27,6 +27,13 @@ const styles = stylex.create({
     padding: '32px',
     maxWidth: '450px',
     width: '100%',
+    '@media (min-width: 640px)': {
+      maxWidth: '560px',
+      padding: '40px',
+    },
+    '@media (min-width: 900px)': {
+      maxWidth: '640px',
+    },
   },
   introMessage: {
     marginBottom: '24px',
