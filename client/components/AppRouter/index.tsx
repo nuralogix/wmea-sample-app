@@ -4,7 +4,6 @@ import Profile from '../../pages/Profile';
 import Measurement from '../../pages/Measurement';
 import Results from '../../pages/Results';
 import PageWrapper from '../PageWrapper';
-import MeasurementPageWrapper from '../MeasurementPageWrapper';
 import { ProtectedRoute } from '../ProtectedRoute';
 import Login from '../Login';
 
@@ -29,9 +28,9 @@ const protectedRoutes = [
   {
     path: '/measurement',
     element: (
-      <MeasurementPageWrapper>
+      <PageWrapper>
         <Measurement />
-      </MeasurementPageWrapper>
+      </PageWrapper>
     ),
   },
 ];
