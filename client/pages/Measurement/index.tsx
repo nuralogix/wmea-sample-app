@@ -19,12 +19,6 @@ const styles = stylex.create({
     width: '100%',
     overflow: 'hidden',
   },
-  stage: {
-    position: 'relative',
-    flex: 1,
-    width: '100%',
-    overflow: 'hidden',
-  },
 });
 
 const Measurement = () => {
@@ -150,7 +144,6 @@ const Measurement = () => {
   return (
     <div {...stylex.props(styles.container)}>
       <MeasurementHeader onRotateCamera={rotateCamera} />
-      <div id="measurement-stage" {...stylex.props(styles.stage)} />
       {appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}
     </div>
   );
