@@ -6,10 +6,11 @@ import ProfileInfo from './ProfileInfo';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState, WizardStep } from './types';
 import { isFormValid } from './utils/validationUtils';
-import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS } from './constants';
+import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS, FORM_VALUES } from './constants';
 import { convertFormStateToSDKDemographics } from './utils/utils';
 import { useNavigate } from 'react-router';
 import state from '../../state';
+import { useSnapshot } from 'valtio';
 
 const styles = stylex.create({
   wrapper: {
@@ -18,6 +19,9 @@ const styles = stylex.create({
     alignItems: 'flex-start',
     padding: '40px 20px',
     boxSizing: 'border-box',
+    height: 'calc(100vh - 64px)',
+    overflowY: 'auto',
+    width: '100%',
   },
   card: {
     padding: '32px',
@@ -26,6 +30,19 @@ const styles = stylex.create({
   },
   introMessage: {
     marginBottom: '24px',
+  },
+  skipRow: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    marginBottom: 8,
+  },
+  skipBtn: {
+    background: 'none',
+    border: 'none',
+    color: '#666',
+    cursor: 'pointer',
+    fontSize: 12,
+    textDecoration: 'underline',
   },
 });
 
@@ -45,6 +62,14 @@ const FormWizard = () => {
       [FORM_FIELDS.WEIGHT]: '',
     }));
   }, [formState.unit]);
+
+  const { isDev } = useSnapshot(state.auth);
+
+  const handleSkipProfile = () => {
+    const base = state.demographics.demographics;
+    state.demographics.setDemographics({ ...base, bypassProfile: true });
+    navigate('/measurement');
+  };
 
   const handleNextStep = () => {
     setCurrentStep(WIZARD_STEPS.MEDICAL);
@@ -74,6 +99,13 @@ const FormWizard = () => {
   return (
     <div {...stylex.props(styles.wrapper)}>
       <Card xstyle={styles.card}>
+        {isDev && (
+          <div {...stylex.props(styles.skipRow)}>
+            <button type="button" {...stylex.props(styles.skipBtn)} onClick={handleSkipProfile}>
+              Skip Profile
+            </button>
+          </div>
+        )}
         <Heading>
           {currentStep === WIZARD_STEPS.PROFILE
             ? t('PROFILE_FORM_STEP_1_TITLE')

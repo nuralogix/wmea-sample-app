@@ -1,6 +1,6 @@
 import { FormState } from '../types';
 import { FORM_VALUES } from '../constants';
-import { Demographics } from '../../../state/demographics/types';
+import type { Profile } from '@nuralogix.ai/web-measurement-embedded-app';
 
 /**
  * Converts imperial height (feet + inches) to centimeters
@@ -47,7 +47,7 @@ export const getWeightInKg = (formState: FormState): number => {
  * Form values are already aligned with SDK values, only need string-to-number conversion
  * Height and weight are always converted to metric (cm and kg)
  */
-export const convertFormStateToSDKDemographics = (formState: FormState): Demographics => {
+export const convertFormStateToSDKDemographics = (formState: FormState): Profile => {
   const { age, sex, smoking, bloodPressureMed, diabetesStatus } = formState;
 
   return {
@@ -58,5 +58,6 @@ export const convertFormStateToSDKDemographics = (formState: FormState): Demogra
     smoking: parseInt(smoking), // Form value is already SDK value as string
     bloodPressureMedication: parseInt(bloodPressureMed), // Form value is already SDK value as string
     diabetes: parseInt(diabetesStatus), // Form value is already SDK value as string
+    bypassProfile: false,
   };
 };

@@ -1168,10 +1168,10 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.11":
-  version "0.1.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.11.tgz#2bff3596f961bf994f3310fff910b4654a408291"
-  integrity sha512-g6taII5Nunwy+pOvuEeazVIBdPqCZC+uBjrnAPg7oxgoWlOK6jRMSsCglflqYlBZ25dQWwIouItVkJAYoYGz9g==
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-alpha.12":
+  version "0.1.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-alpha.12.tgz#cf7d845f01cccc54131ecb705386eec88fa5730d"
+  integrity sha512-h31gBqLsC1NhI351i1MNbeYPRA0KEB3VPI+RNyvdCekJxYPz0g7B0LZuETYOadQh8A50v4NkTfkBA5Z5lIxvwA==
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.11":
   version "0.1.0-alpha.11"
