@@ -8,6 +8,24 @@ import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import ErrorMessage from './ErrorMessage';
+import MeasurementHeader from '../../components/MeasurementHeader';
+import * as stylex from '@stylexjs/stylex';
+
+const styles = stylex.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    width: '100%',
+    overflow: 'hidden',
+  },
+  stage: {
+    position: 'relative',
+    flex: 1,
+    width: '100%',
+    overflow: 'hidden',
+  },
+});
 
 const Measurement = () => {
   const [measurementApp] = useState(() => new MeasurementEmbeddedApp());
@@ -30,7 +48,7 @@ const Measurement = () => {
       if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
         const options: MeasurementEmbeddedAppOptions = {
           container,
-          top: '93.5px',
+          top: '60px', // match measurement header height
           language,
           appPath: './wmea',
           apiUrl: 'api.deepaffex.ai',
@@ -123,7 +141,19 @@ const Measurement = () => {
     setAppError(null);
   };
 
-  return <>{appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}</>;
+  const rotateCamera = () => {
+    // TODO: SDK does not expose get/set cameraFacingMode yet in current version.
+    // Placeholder for future implementation if API becomes available.
+    console.warn('Rotate camera action not implemented in this SDK version');
+  };
+
+  return (
+    <div {...stylex.props(styles.container)}>
+      <MeasurementHeader onRotateCamera={rotateCamera} />
+      <div id="measurement-stage" {...stylex.props(styles.stage)} />
+      {appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}
+    </div>
+  );
 };
 
 export default Measurement;

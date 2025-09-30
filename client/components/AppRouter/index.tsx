@@ -27,11 +27,8 @@ const protectedRoutes = [
   },
   {
     path: '/measurement',
-    element: (
-      <PageWrapper>
-        <Measurement />
-      </PageWrapper>
-    ),
+    // Measurement now handles its own header (mobile specialized, desktop uses standard Navbar internally)
+    element: <Measurement />,
   },
 ];
 
