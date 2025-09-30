@@ -52,10 +52,19 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: 12,
   },
+  menuInnerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
   toggleWrapper: {
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
+  },
+  toggleWrapperRow: {
+    width: 'auto',
+    justifyContent: 'flex-start',
   },
 });
 
@@ -91,42 +100,48 @@ const Navbar: React.FC = () => {
 
   const closeMenu = () => setOpen(false);
 
-  const MenuContent = () => (
-    <div {...stylex.props(styles.menuInner)}>
-      <Button
-        variant="link"
-        onClick={() => {
-          toggleLanguage();
-          closeMenu();
-        }}
-      >
-        {language === 'en' ? 'Français' : 'English'}
-      </Button>
-      <div {...stylex.props(styles.toggleWrapper)}>
-        <ThemeToggle
-          isDarkMode={theme === 'dark'}
-          onToggle={() => {
-            setTheme(theme === 'light' ? 'dark' : 'light');
+  const MenuContent: React.FC<{ orientation: 'row' | 'column'; closeOnAction?: boolean }> = ({
+    orientation,
+    closeOnAction = true,
+  }) => {
+    const isRow = orientation === 'row';
+    return (
+      <div {...stylex.props(styles.menuInner, isRow && styles.menuInnerRow)}>
+        <Button
+          variant="link"
+          onClick={() => {
+            toggleLanguage();
+            if (closeOnAction) closeMenu();
           }}
-        />
+        >
+          {language === 'en' ? 'Français' : 'English'}
+        </Button>
+        <div {...stylex.props(styles.toggleWrapper, isRow && styles.toggleWrapperRow)}>
+          <ThemeToggle
+            isDarkMode={theme === 'dark'}
+            onToggle={() => {
+              setTheme(theme === 'light' ? 'dark' : 'light');
+            }}
+          />
+        </div>
+        <Button
+          variant="link"
+          onClick={() => {
+            handleLogout();
+            if (closeOnAction) closeMenu();
+          }}
+        >
+          {t('LOGOUT')}
+        </Button>
       </div>
-      <Button
-        variant="link"
-        onClick={() => {
-          handleLogout();
-          closeMenu();
-        }}
-      >
-        {t('LOGOUT')}
-      </Button>
-    </div>
-  );
+    );
+  };
 
   return (
     <header {...stylex.props(styles.header)}>
       <Heading>{t(titleKey as any)}</Heading>
       <div {...stylex.props(styles.desktopActions)}>
-        <MenuContent />
+        <MenuContent orientation="row" closeOnAction={false} />
       </div>
       <div {...stylex.props(styles.mobileMenuToggle)}>
         <Button
@@ -146,7 +161,7 @@ const Navbar: React.FC = () => {
         {open && (
           <div id="mobile-nav-menu" role="menu" {...stylex.props(styles.mobileMenuPanel)}>
             <Card width="100%" padding="s">
-              <MenuContent />
+              <MenuContent orientation="column" />
             </Card>
           </div>
         )}
