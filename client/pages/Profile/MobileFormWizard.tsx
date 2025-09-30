@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Heading, Card, Paragraph, Button } from '@nuralogix.ai/web-ui';
 import * as stylex from '@stylexjs/stylex';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +32,7 @@ const MOBILE_STEPS = {
 
 type MobileStep = (typeof MOBILE_STEPS)[keyof typeof MOBILE_STEPS];
 
-const TALL_THRESHOLD = 760; // px viewport height where we switch to comfortable layout
+// We no longer use a hard height threshold; instead we measure leftover vertical space.
 
 const styles = stylex.create({
   wrapper: {
@@ -45,9 +45,7 @@ const styles = stylex.create({
     width: '100%',
     overflow: 'hidden',
   },
-  wrapperTall: {
-    alignItems: 'center',
-  },
+
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -65,11 +63,7 @@ const styles = stylex.create({
       padding: '40px 36px 24px',
     },
   },
-  cardTall: {
-    height: 'auto',
-    minHeight: '520px',
-    justifyContent: 'center',
-  },
+
   topMeta: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -112,20 +106,13 @@ const styles = stylex.create({
   contentNoScroll: {
     overflowY: 'hidden',
   },
-  contentTall: {
-    justifyContent: 'center',
-    gap: 32,
-    paddingTop: 16,
-    paddingBottom: 8,
-  },
+
   fieldsColumn: {
     display: 'flex',
     flexDirection: 'column',
     gap: 16,
   },
-  fieldsColumnTall: {
-    gap: 28,
-  },
+  // Removed fieldsColumnTall
   footerNav: {
     marginTop: 12,
     paddingTop: 12,
@@ -141,18 +128,6 @@ const styles = stylex.create({
     '@media (min-width: 0px)': {
       // stylex placeholder to allow override if library supports className passthrough
     },
-  },
-  inlineActionsTall: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    gap: 16,
-    marginTop: 8,
-  },
-  headingCompact: {
-    marginBottom: 8,
-  },
-  introCompact: {
-    marginBottom: 16,
   },
 });
 
@@ -219,27 +194,50 @@ const MobileFormWizard = () => {
     return true;
   })();
 
-  // Track viewport height for comfortable tall layout
-  const [viewportHeight, setViewportHeight] = useState(() => window.innerHeight);
-  useEffect(() => {
-    const handler = () => setViewportHeight(window.innerHeight);
-    window.addEventListener('resize', handler);
-    window.addEventListener('orientationchange', handler);
-    return () => {
-      window.removeEventListener('resize', handler);
-      window.removeEventListener('orientationchange', handler);
-    };
-  }, []);
-
   const isSimpleStep = currentStep === MOBILE_STEPS.SEX_AGE || currentStep === MOBILE_STEPS.BODY;
-  const tallComfortable = isSimpleStep && viewportHeight >= TALL_THRESHOLD;
+  const contentRef = useRef<HTMLDivElement | null>(null);
+  const [dynamicPad, setDynamicPad] = useState<{ top: number; bottom: number }>({
+    top: 0,
+    bottom: 32,
+  });
+
+  useLayoutEffect(() => {
+    if (!isSimpleStep) {
+      setDynamicPad({ top: 0, bottom: 32 });
+      return;
+    }
+    const recalc = () => {
+      const navHeight = 60;
+      const viewport = window.innerHeight;
+      const cardChrome = 24 + 16;
+      const available = viewport - navHeight - cardChrome;
+      const node = contentRef.current;
+      if (!node) return;
+      const contentHeight = node.scrollHeight;
+      const leftover = available - contentHeight;
+      if (leftover > 240) {
+        const top = Math.min(Math.round(leftover * 0.33), 120);
+        const bottom = Math.max(leftover - top, 48);
+        setDynamicPad({ top, bottom });
+      } else {
+        setDynamicPad({ top: 0, bottom: 32 });
+      }
+    };
+    recalc();
+    window.addEventListener('resize', recalc);
+    window.addEventListener('orientationchange', recalc);
+    return () => {
+      window.removeEventListener('resize', recalc);
+      window.removeEventListener('orientationchange', recalc);
+    };
+  }, [isSimpleStep, currentStep, formState.unit]);
 
   const stepsArray = [MOBILE_STEPS.SEX_AGE, MOBILE_STEPS.BODY, MOBILE_STEPS.MEDICAL];
   const stepIndex = stepsArray.indexOf(currentStep);
 
   return (
-    <div {...stylex.props(styles.wrapper, tallComfortable && styles.wrapperTall)}>
-      <Card xstyle={[styles.card, tallComfortable && styles.cardTall] as any}>
+    <div {...stylex.props(styles.wrapper)}>
+      <Card xstyle={styles.card}>
         <div {...stylex.props(styles.topMeta)}>
           <div {...stylex.props(styles.stepDots)}>
             {stepsArray.map((s, i) => (
@@ -257,21 +255,22 @@ const MobileFormWizard = () => {
           )}
         </div>
         <div
+          ref={contentRef}
           {...stylex.props(
             styles.content,
-            currentStep === MOBILE_STEPS.BODY && styles.contentNoScroll,
-            tallComfortable && styles.contentTall
+            currentStep === MOBILE_STEPS.BODY && styles.contentNoScroll
           )}
+          style={{ paddingTop: dynamicPad.top, paddingBottom: dynamicPad.bottom }}
         >
           {currentStep !== MOBILE_STEPS.BODY && (
-            <div {...stylex.props(tallComfortable && styles.headingCompact)}>
+            <div>
               <Heading>
                 {currentStep === MOBILE_STEPS.MEDICAL
                   ? t('PROFILE_FORM_STEP_2_TITLE')
                   : t('PROFILE_FORM_STEP_1_TITLE')}
               </Heading>
               {currentStep === MOBILE_STEPS.SEX_AGE && (
-                <div {...stylex.props(tallComfortable ? styles.introCompact : styles.introMessage)}>
+                <div {...stylex.props(styles.introMessage)}>
                   <Paragraph>{t('PROFILE_FORM_INTRO_MESSAGE')}</Paragraph>
                 </div>
               )}
@@ -279,7 +278,7 @@ const MobileFormWizard = () => {
           )}
 
           {currentStep === MOBILE_STEPS.SEX_AGE && (
-            <div {...stylex.props(styles.fieldsColumn, tallComfortable && styles.fieldsColumnTall)}>
+            <div {...stylex.props(styles.fieldsColumn)}>
               <SexSelector
                 value={formState.sex}
                 onChange={(value) => setFormState((prev) => ({ ...prev, sex: value }))}
@@ -288,18 +287,11 @@ const MobileFormWizard = () => {
                 value={formState.age}
                 onChange={(value) => setFormState((prev) => ({ ...prev, age: value }))}
               />
-              {tallComfortable && (
-                <div {...stylex.props(styles.inlineActionsTall)}>
-                  <Button variant="primary" disabled={!canProceedSexAge} onClick={goNext}>
-                    {t('NEXT')}
-                  </Button>
-                </div>
-              )}
             </div>
           )}
 
           {currentStep === MOBILE_STEPS.BODY && (
-            <div {...stylex.props(styles.fieldsColumn, tallComfortable && styles.fieldsColumnTall)}>
+            <div {...stylex.props(styles.fieldsColumn)}>
               <UnitSelector
                 value={formState.unit}
                 onChange={(value) => setFormState((prev) => ({ ...prev, unit: value }))}
@@ -324,16 +316,6 @@ const MobileFormWizard = () => {
                 isMetric={formState.unit === FORM_VALUES.METRIC}
                 onChange={(value) => setFormState((prev) => ({ ...prev, weight: value }))}
               />
-              {tallComfortable && (
-                <div {...stylex.props(styles.inlineActionsTall)}>
-                  <Button variant="link" onClick={goBack}>
-                    {t('BACK')}
-                  </Button>
-                  <Button variant="primary" disabled={!canProceedBody} onClick={goNext}>
-                    {t('NEXT')}
-                  </Button>
-                </div>
-              )}
             </div>
           )}
 
@@ -348,7 +330,7 @@ const MobileFormWizard = () => {
             </div>
           )}
         </div>
-        {!tallComfortable && currentStep !== MOBILE_STEPS.MEDICAL && (
+        {currentStep !== MOBILE_STEPS.MEDICAL && (
           <div
             {...stylex.props(
               styles.footerNav,
