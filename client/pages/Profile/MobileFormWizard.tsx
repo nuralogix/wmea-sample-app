@@ -4,14 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 import { useTranslation } from 'react-i18next';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState } from './types';
-import {
-  isFormValid,
-  isAgeInvalid,
-  isProfileInfoValid,
-  isHeightInvalid,
-  isWeightInvalid,
-  showBMIError,
-} from './utils/validationUtils';
+import { isAgeInvalid, isProfileInfoValid } from './utils/validationUtils';
 import { INITIAL_FORM_STATE, FORM_FIELDS, FORM_VALUES } from './constants';
 import { useFormSubmission } from './utils/formSubmissionUtils';
 import SexSelector from './Fields/SexSelector';
@@ -20,9 +13,7 @@ import UnitSelector from './Fields/UnitSelector';
 import ImperialHeightField from './Fields/ImperialHeightField';
 import MetricHeightField from './Fields/MetricHeightField';
 import WeightField from './Fields/WeightField';
-import { useMobileDetection } from '../../hooks/useMobileDetection';
 
-// Local mobile wizard steps
 const MOBILE_STEPS = {
   SEX_AGE: 'sex_age',
   BODY: 'body',
@@ -31,8 +22,6 @@ const MOBILE_STEPS = {
 
 type MobileStep = (typeof MOBILE_STEPS)[keyof typeof MOBILE_STEPS];
 
-// We no longer use a hard height threshold; instead we measure leftover vertical space.
-
 const styles = stylex.create({
   wrapper: {
     position: 'relative',
@@ -40,7 +29,7 @@ const styles = stylex.create({
     justifyContent: 'center',
     padding: '16px 12px',
     boxSizing: 'border-box',
-    height: 'calc(100vh - 60px)', // navbar is 60px
+    height: 'calc(100vh - 60px)',
     width: '100%',
     overflow: 'hidden',
   },
@@ -111,7 +100,6 @@ const styles = stylex.create({
     flexDirection: 'column',
     gap: 16,
   },
-  // Removed fieldsColumnTall
   footerNav: {
     marginTop: 12,
     paddingTop: 12,
@@ -122,11 +110,6 @@ const styles = stylex.create({
   },
   footerNavSingle: {
     justifyContent: 'flex-end',
-  },
-  largeNextBtn: {
-    '@media (min-width: 0px)': {
-      // stylex placeholder to allow override if library supports className passthrough
-    },
   },
 });
 

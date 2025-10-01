@@ -7,9 +7,9 @@ const { SEX_ASSIGNED_MALE_AT_BIRTH, SMOKER_FALSE, BLOOD_PRESSURE_MEDICATION_FALS
 
 const demographicsState: DemographicsState = proxy({
   demographics: {
-    age: 40,
-    height: 180,
-    weight: 60,
+    age: 0,
+    height: 0,
+    weight: 0,
     sex: SEX_ASSIGNED_MALE_AT_BIRTH,
     smoking: SMOKER_FALSE,
     bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
