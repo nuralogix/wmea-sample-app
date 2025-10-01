@@ -46,13 +46,7 @@ const styles = stylex.create({
   },
   title: {
     margin: 0,
-    fontSize: 16,
-    '@media (min-width: 640px)': {
-      fontSize: 18,
-    },
-    '@media (min-width: 900px)': {
-      fontSize: 20,
-    },
+    fontSize: 18,
   },
 });
 
@@ -62,18 +56,7 @@ const MeasurementHeader: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { isMobile } = useMobileDetection();
-  const [screenWidth, setScreenWidth] = React.useState<number>(
-    typeof window !== 'undefined' ? window.innerWidth : 1024
-  );
-
-  React.useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isNarrow = screenWidth < 900;
-  const titleKey = isNarrow ? 'APP_TITLE_SHORT' : 'APP_TITLE';
+  const titleKey = isMobile ? 'APP_TITLE_SHORT' : 'APP_TITLE';
 
   const handleLogout = () => {
     logout();

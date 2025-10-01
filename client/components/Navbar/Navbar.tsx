@@ -6,6 +6,7 @@ import { Button, Heading, ThemeToggle } from '@nuralogix.ai/web-ui';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import MobileMenu from '../MobileMenu';
+import { useMobileDetection } from '../../hooks/useMobileDetection';
 
 const styles = stylex.create({
   header: {
@@ -19,13 +20,7 @@ const styles = stylex.create({
   },
   title: {
     margin: 0,
-    fontSize: 16,
-    '@media (min-width: 640px)': {
-      fontSize: 18,
-    },
-    '@media (min-width: 900px)': {
-      fontSize: 20,
-    },
+    fontSize: 18,
   },
   desktopActions: {
     display: 'none',
@@ -80,18 +75,8 @@ const Navbar: React.FC = () => {
     navigate('/');
   };
 
-  const [screenWidth, setScreenWidth] = React.useState<number>(
-    typeof window !== 'undefined' ? window.innerWidth : 1024
-  );
-
-  React.useEffect(() => {
-    const handleResize = () => setScreenWidth(window.innerWidth);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isNarrow = screenWidth < 900;
-  const titleKey = isNarrow ? 'APP_TITLE_SHORT' : 'APP_TITLE';
+  const { isMobile } = useMobileDetection();
+  const titleKey = isMobile ? 'APP_TITLE_SHORT' : 'APP_TITLE';
 
   const MenuContent: React.FC<{ orientation: 'row' | 'column' }> = ({ orientation }) => {
     const isRow = orientation === 'row';
