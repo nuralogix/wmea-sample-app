@@ -1,20 +1,12 @@
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Heading, Card, Paragraph, Button } from '@nuralogix.ai/web-ui';
 import * as stylex from '@stylexjs/stylex';
 import { useTranslation } from 'react-i18next';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState } from './types';
-import {
-  isFormValid,
-  isHeightInvalid,
-  isWeightInvalid,
-  showBMIError,
-} from './utils/validationUtils';
+import { isHeightInvalid, isWeightInvalid, showBMIError } from './utils/validationUtils';
 import { INITIAL_FORM_STATE, FORM_FIELDS, FORM_VALUES } from './constants';
-import { convertFormStateToSDKDemographics } from './utils/utils';
-import { useNavigate } from 'react-router';
-import state from '../../state';
-import { useSnapshot } from 'valtio';
+import { useFormSubmission } from './utils/formSubmissionUtils';
 import SexSelector from './Fields/SexSelector';
 import AgeField from './Fields/AgeField';
 import UnitSelector from './Fields/UnitSelector';
@@ -135,14 +127,7 @@ const MobileFormWizard = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<MobileStep>(MOBILE_STEPS.SEX_AGE);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
-  const navigate = useNavigate();
-  const { isDev } = useSnapshot(state.auth);
-  const { isMobile } = useMobileDetection();
-
-  // If not mobile, fallback to web wizard route logic (consumer chooses component, but guard anyway)
-  useEffect(() => {
-    // no redirect: parent decides what to render; but if screen grows we could stay
-  }, [isMobile]);
+  const { handleSkipProfile, handleSubmit, isDev } = useFormSubmission();
 
   // Clear height/weight when unit changes (same logic as web wizard)
   useEffect(() => {
@@ -155,12 +140,6 @@ const MobileFormWizard = () => {
     }));
   }, [formState.unit]);
 
-  const handleSkipProfile = () => {
-    const base = state.demographics.demographics;
-    state.demographics.setDemographics({ ...base, bypassProfile: true });
-    navigate('/measurement');
-  };
-
   const goNext = () => {
     if (currentStep === MOBILE_STEPS.SEX_AGE) setCurrentStep(MOBILE_STEPS.BODY);
     else if (currentStep === MOBILE_STEPS.BODY) setCurrentStep(MOBILE_STEPS.MEDICAL);
@@ -171,12 +150,7 @@ const MobileFormWizard = () => {
     else if (currentStep === MOBILE_STEPS.MEDICAL) setCurrentStep(MOBILE_STEPS.BODY);
   };
 
-  const handleSubmit = () => {
-    if (!isFormValid(formState)) return;
-    const demographicsData = convertFormStateToSDKDemographics(formState);
-    state.demographics.setDemographics(demographicsData);
-    navigate('/measurement');
-  };
+  const onSubmit = () => handleSubmit(formState);
 
   // Simple completion gating for next buttons
   const canProceedSexAge = Boolean(formState.sex && formState.age);
@@ -193,44 +167,6 @@ const MobileFormWizard = () => {
     }
     return true;
   })();
-
-  const isSimpleStep = currentStep === MOBILE_STEPS.SEX_AGE || currentStep === MOBILE_STEPS.BODY;
-  const contentRef = useRef<HTMLDivElement | null>(null);
-  const [dynamicPad, setDynamicPad] = useState<{ top: number; bottom: number }>({
-    top: 0,
-    bottom: 32,
-  });
-
-  useLayoutEffect(() => {
-    if (!isSimpleStep) {
-      setDynamicPad({ top: 0, bottom: 32 });
-      return;
-    }
-    const recalc = () => {
-      const navHeight = 60;
-      const viewport = window.innerHeight;
-      const cardChrome = 24 + 16;
-      const available = viewport - navHeight - cardChrome;
-      const node = contentRef.current;
-      if (!node) return;
-      const contentHeight = node.scrollHeight;
-      const leftover = available - contentHeight;
-      if (leftover > 240) {
-        const top = Math.min(Math.round(leftover * 0.33), 120);
-        const bottom = Math.max(leftover - top, 48);
-        setDynamicPad({ top, bottom });
-      } else {
-        setDynamicPad({ top: 0, bottom: 32 });
-      }
-    };
-    recalc();
-    window.addEventListener('resize', recalc);
-    window.addEventListener('orientationchange', recalc);
-    return () => {
-      window.removeEventListener('resize', recalc);
-      window.removeEventListener('orientationchange', recalc);
-    };
-  }, [isSimpleStep, currentStep, formState.unit]);
 
   const stepsArray = [MOBILE_STEPS.SEX_AGE, MOBILE_STEPS.BODY, MOBILE_STEPS.MEDICAL];
   const stepIndex = stepsArray.indexOf(currentStep);
@@ -255,12 +191,10 @@ const MobileFormWizard = () => {
           )}
         </div>
         <div
-          ref={contentRef}
           {...stylex.props(
             styles.content,
             currentStep === MOBILE_STEPS.BODY && styles.contentNoScroll
           )}
-          style={{ paddingTop: dynamicPad.top, paddingBottom: dynamicPad.bottom }}
         >
           {currentStep !== MOBILE_STEPS.BODY && (
             <div>
@@ -324,7 +258,7 @@ const MobileFormWizard = () => {
               <MedicalQuestionnaire
                 formState={formState}
                 setFormState={setFormState}
-                onSubmit={handleSubmit}
+                onSubmit={onSubmit}
                 onBack={goBack}
               />
             </div>

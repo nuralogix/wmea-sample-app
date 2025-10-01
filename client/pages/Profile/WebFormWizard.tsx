@@ -7,10 +7,7 @@ import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState, WizardStep } from './types';
 import { isFormValid } from './utils/validationUtils';
 import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS, FORM_VALUES } from './constants';
-import { convertFormStateToSDKDemographics } from './utils/utils';
-import { useNavigate } from 'react-router';
-import state from '../../state';
-import { useSnapshot } from 'valtio';
+import { useFormSubmission } from './utils/formSubmissionUtils';
 
 const styles = stylex.create({
   wrapper: {
@@ -57,7 +54,7 @@ const FormWizard = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<WizardStep>(WIZARD_STEPS.PROFILE);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
-  const navigate = useNavigate();
+  const { handleSkipProfile, handleSubmit, isDev } = useFormSubmission();
 
   // Clear height and weight values when unit changes
   useEffect(() => {
@@ -70,14 +67,6 @@ const FormWizard = () => {
     }));
   }, [formState.unit]);
 
-  const { isDev } = useSnapshot(state.auth);
-
-  const handleSkipProfile = () => {
-    const base = state.demographics.demographics;
-    state.demographics.setDemographics({ ...base, bypassProfile: true });
-    navigate('/measurement');
-  };
-
   const handleNextStep = () => {
     setCurrentStep(WIZARD_STEPS.MEDICAL);
   };
@@ -86,22 +75,7 @@ const FormWizard = () => {
     setCurrentStep(WIZARD_STEPS.PROFILE);
   };
 
-  const handleSubmit = () => {
-    // Defensive validation check but disabled btns should prevent this
-    if (!isFormValid(formState)) {
-      // TODO: Show error notification to user if needed
-      return;
-    }
-
-    // Convert form data to SDK format before pushing to store
-    const demographicsData = convertFormStateToSDKDemographics(formState);
-
-    // Update the demographics store
-    state.demographics.setDemographics(demographicsData);
-
-    // Navigate to measurement page
-    navigate('/measurement');
-  };
+  const onSubmit = () => handleSubmit(formState);
 
   return (
     <div {...stylex.props(styles.wrapper)}>
@@ -130,7 +104,7 @@ const FormWizard = () => {
           <MedicalQuestionnaire
             formState={formState}
             setFormState={setFormState}
-            onSubmit={handleSubmit}
+            onSubmit={onSubmit}
             onBack={handlePreviousStep}
           />
         )}
