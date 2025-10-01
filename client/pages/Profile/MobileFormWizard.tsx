@@ -4,7 +4,14 @@ import * as stylex from '@stylexjs/stylex';
 import { useTranslation } from 'react-i18next';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState } from './types';
-import { isHeightInvalid, isWeightInvalid, showBMIError } from './utils/validationUtils';
+import {
+  isFormValid,
+  isAgeInvalid,
+  isProfileInfoValid,
+  isHeightInvalid,
+  isWeightInvalid,
+  showBMIError,
+} from './utils/validationUtils';
 import { INITIAL_FORM_STATE, FORM_FIELDS, FORM_VALUES } from './constants';
 import { useFormSubmission } from './utils/formSubmissionUtils';
 import SexSelector from './Fields/SexSelector';
@@ -152,21 +159,8 @@ const MobileFormWizard = () => {
 
   const onSubmit = () => handleSubmit(formState);
 
-  // Simple completion gating for next buttons
-  const canProceedSexAge = Boolean(formState.sex && formState.age);
-  const canProceedBody = (() => {
-    // Require fields filled AND pass validators including BMI range
-    const heightFilled =
-      formState.unit === FORM_VALUES.METRIC
-        ? !!formState.heightMetric
-        : !!(formState.heightFeet && formState.heightInches !== '');
-    const weightFilled = !!formState.weight;
-    if (!heightFilled || !weightFilled) return false;
-    if (isHeightInvalid(formState) || isWeightInvalid(formState) || showBMIError(formState)) {
-      return false;
-    }
-    return true;
-  })();
+  const canProceedSexAge = formState.sex !== '' && !isAgeInvalid(formState.age);
+  const canProceedBody = isProfileInfoValid(formState);
 
   const stepsArray = [MOBILE_STEPS.SEX_AGE, MOBILE_STEPS.BODY, MOBILE_STEPS.MEDICAL];
   const stepIndex = stepsArray.indexOf(currentStep);
