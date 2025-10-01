@@ -3,7 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import { useNavigate } from 'react-router';
-import { Button, ThemeToggle } from '@nuralogix.ai/web-ui';
+import { Button, ThemeToggle, Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import MobileMenu from '../MobileMenu';
@@ -44,6 +44,16 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
   },
+  title: {
+    margin: 0,
+    fontSize: 16,
+    '@media (min-width: 640px)': {
+      fontSize: 18,
+    },
+    '@media (min-width: 900px)': {
+      fontSize: 20,
+    },
+  },
 });
 
 const MeasurementHeader: React.FC = () => {
@@ -52,6 +62,18 @@ const MeasurementHeader: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { isMobile } = useMobileDetection();
+  const [screenWidth, setScreenWidth] = React.useState<number>(
+    typeof window !== 'undefined' ? window.innerWidth : 1024
+  );
+
+  React.useEffect(() => {
+    const handleResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isNarrow = screenWidth < 900;
+  const titleKey = isNarrow ? 'APP_TITLE_SHORT' : 'APP_TITLE';
 
   const handleLogout = () => {
     logout();
@@ -65,29 +87,26 @@ const MeasurementHeader: React.FC = () => {
 
   return (
     <div {...stylex.props(styles.wrapper)}>
+      <div {...stylex.props(styles.title)}>
+        <Heading>{t(titleKey as any)}</Heading>
+      </div>
       {!isMobile ? (
-        <>
-          <div style={{ fontWeight: 600 }}>{t('APP_TITLE')}</div>
-          <div {...stylex.props(styles.desktopActions)}>
-            <Button variant="link" onClick={toggleLanguage}>
-              {language === 'en' ? 'Français' : 'English'}
-            </Button>
-            <ThemeToggle
-              isDarkMode={theme === 'dark'}
-              onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            />
-            <Button variant="link" onClick={handleLogout}>
-              {t('LOGOUT')}
-            </Button>
-          </div>
-        </>
+        <div {...stylex.props(styles.desktopActions)}>
+          <Button variant="link" onClick={toggleLanguage}>
+            {language === 'en' ? 'Français' : 'English'}
+          </Button>
+          <ThemeToggle
+            isDarkMode={theme === 'dark'}
+            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+          />
+          <Button variant="link" onClick={handleLogout}>
+            {t('LOGOUT')}
+          </Button>
+        </div>
       ) : (
-        <>
-          <div>{/* Empty left side */}</div>
-          <div {...stylex.props(styles.mobileMenuWrapper)}>
-            <MobileMenu />
-          </div>
-        </>
+        <div {...stylex.props(styles.mobileMenuWrapper)}>
+          <MobileMenu />
+        </div>
       )}
     </div>
   );

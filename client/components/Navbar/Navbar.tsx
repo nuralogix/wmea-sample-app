@@ -19,8 +19,11 @@ const styles = stylex.create({
   },
   title: {
     margin: 0,
-    fontSize: 18,
+    fontSize: 16,
     '@media (min-width: 640px)': {
+      fontSize: 18,
+    },
+    '@media (min-width: 900px)': {
       fontSize: 20,
     },
   },
@@ -112,7 +115,9 @@ const Navbar: React.FC = () => {
 
   return (
     <header {...stylex.props(styles.header)}>
-      <Heading>{t(titleKey as any)}</Heading>
+      <div {...stylex.props(styles.title)}>
+        <Heading>{t(titleKey as any)}</Heading>
+      </div>
       <div {...stylex.props(styles.desktopActions)}>
         <MenuContent orientation="row" />
       </div>
