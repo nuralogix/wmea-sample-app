@@ -16,8 +16,7 @@ const styles = stylex.create({
     justifyContent: 'space-between',
     padding: '0 12px',
     boxSizing: 'border-box',
-    borderBottom: '1px solid #ddd',
-    // Let web-ui theme handle background colors
+    borderBottom: '1px solid #e0e0e0',
   },
   leftGroup: {
     display: 'flex',
@@ -35,17 +34,7 @@ const styles = stylex.create({
       display: 'none',
     },
   },
-  desktopBar: {
-    display: 'none',
-    '@media (min-width: 900px)': {
-      display: 'flex',
-      height: 60,
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      padding: '0 16px',
-      borderBottom: '1px solid #ddd',
-    },
-  },
+
   desktopActions: {
     display: 'flex',
     alignItems: 'center',
@@ -74,33 +63,32 @@ const MeasurementHeader: React.FC = () => {
     setLanguage(newLanguage);
   };
 
-  // Desktop: reuse style similar to regular navbar (without title to emphasize camera)
-  if (!isMobile) {
-    return (
-      <div {...stylex.props(styles.desktopBar)}>
-        <div style={{ fontWeight: 600 }}>{t('APP_TITLE')}</div>
-        <div {...stylex.props(styles.desktopActions)}>
-          <Button variant="link" onClick={toggleLanguage}>
-            {language === 'en' ? 'Français' : 'English'}
-          </Button>
-          <ThemeToggle
-            isDarkMode={theme === 'dark'}
-            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-          />
-          <Button variant="link" onClick={handleLogout}>
-            {t('LOGOUT')}
-          </Button>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div {...stylex.props(styles.wrapper)}>
-      <div>{/* Empty left side */}</div>
-      <div {...stylex.props(styles.mobileMenuWrapper)}>
-        <MobileMenu />
-      </div>
+      {!isMobile ? (
+        <>
+          <div style={{ fontWeight: 600 }}>{t('APP_TITLE')}</div>
+          <div {...stylex.props(styles.desktopActions)}>
+            <Button variant="link" onClick={toggleLanguage}>
+              {language === 'en' ? 'Français' : 'English'}
+            </Button>
+            <ThemeToggle
+              isDarkMode={theme === 'dark'}
+              onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            />
+            <Button variant="link" onClick={handleLogout}>
+              {t('LOGOUT')}
+            </Button>
+          </div>
+        </>
+      ) : (
+        <>
+          <div>{/* Empty left side */}</div>
+          <div {...stylex.props(styles.mobileMenuWrapper)}>
+            <MobileMenu />
+          </div>
+        </>
+      )}
     </div>
   );
 };

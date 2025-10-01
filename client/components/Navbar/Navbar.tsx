@@ -14,7 +14,7 @@ const styles = stylex.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     height: '60px',
-    borderBottom: '1px solid #ddd',
+    borderBottom: '1px solid var(--border-color, #e0e0e0)',
     boxSizing: 'border-box',
   },
   title: {
