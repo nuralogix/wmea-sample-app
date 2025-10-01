@@ -13,22 +13,60 @@ const styles = stylex.create({
   },
   mobileMenuPanel: {
     position: 'absolute',
-    top: 60,
-    right: 8,
+    top: 68,
+    right: 12,
     zIndex: 1000,
-    minWidth: 200,
+    minWidth: 220,
+    maxWidth: 280,
     display: 'flex',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08)',
+    borderRadius: 12,
+    overflow: 'hidden',
   },
   menuInner: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
-    gap: 12,
-  },
-  toggleWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
     width: '100%',
+    padding: 8,
+    gap: 0,
+  },
+  menuItem: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px',
+    borderRadius: 8,
+    cursor: 'pointer',
+    transition: 'background-color 0.15s ease',
+    ':hover': {
+      backgroundColor: 'var(--hover-bg, rgba(0, 0, 0, 0.04))',
+    },
+    ':active': {
+      backgroundColor: 'var(--active-bg, rgba(0, 0, 0, 0.08))',
+    },
+  },
+  menuItemLabel: {
+    fontSize: 15,
+    fontWeight: 500,
+    color: 'var(--text-primary, #1a1a1a)',
+  },
+  menuItemValue: {
+    fontSize: 14,
+    color: 'var(--text-secondary, #666)',
+    fontWeight: 400,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: 'var(--border-light, #e8e8e8)',
+    margin: '4px 12px',
+  },
+  themeToggleWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  logoutItem: {
+    color: 'var(--error-color, #dc2626)',
+    fontWeight: 500,
   },
 });
 
@@ -53,32 +91,40 @@ const MobileMenu: React.FC = () => {
 
   const MenuContent = () => (
     <div {...stylex.props(styles.menuInner)}>
-      <Button
-        variant="link"
-        onClick={() => {
-          toggleLanguage();
-          closeMenu();
-        }}
-      >
-        {language === 'en' ? 'Français' : 'English'}
-      </Button>
-      <div {...stylex.props(styles.toggleWrapper)}>
-        <ThemeToggle
-          isDarkMode={theme === 'dark'}
-          onToggle={() => {
-            setTheme(theme === 'light' ? 'dark' : 'light');
+      <div {...stylex.props(styles.menuItem)}>
+        <Button
+          variant="link"
+          onClick={() => {
+            toggleLanguage();
           }}
-        />
+        >
+          {language === 'en' ? 'Français' : 'English'}
+        </Button>
       </div>
-      <Button
-        variant="link"
-        onClick={() => {
-          handleLogout();
-          closeMenu();
-        }}
-      >
-        {t('LOGOUT')}
-      </Button>
+
+      <div {...stylex.props(styles.separator)} />
+
+      <div {...stylex.props(styles.menuItem)}>
+        <div {...stylex.props(styles.themeToggleWrapper)}>
+          <ThemeToggle
+            isDarkMode={theme === 'dark'}
+            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+          />
+        </div>
+      </div>
+
+      <div {...stylex.props(styles.separator)} />
+
+      <div {...stylex.props(styles.menuItem)}>
+        <Button
+          variant="link"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          {t('LOGOUT')}
+        </Button>
+      </div>
     </div>
   );
 
@@ -96,7 +142,7 @@ const MobileMenu: React.FC = () => {
       </Button>
       {open && (
         <div id="mobile-nav-menu" role="menu" {...stylex.props(styles.mobileMenuPanel)}>
-          <Card width="100%" padding="s">
+          <Card width="100%">
             <MenuContent />
           </Card>
         </div>
