@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 import { Button, ThemeToggle } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
+import MobileMenu from '../MobileMenu';
 
 const styles = stylex.create({
   wrapper: {
@@ -15,8 +16,8 @@ const styles = stylex.create({
     justifyContent: 'space-between',
     padding: '0 12px',
     boxSizing: 'border-box',
-    borderBottom: '1px solid #2a2f35',
-    background: 'var(--header-bg, #2d3339)',
+    borderBottom: '1px solid #ddd',
+    // Let web-ui theme handle background colors
   },
   leftGroup: {
     display: 'flex',
@@ -49,6 +50,10 @@ const styles = stylex.create({
     display: 'flex',
     alignItems: 'center',
     gap: 16,
+  },
+  mobileMenuWrapper: {
+    display: 'flex',
+    alignItems: 'center',
   },
 });
 
@@ -92,10 +97,9 @@ const MeasurementHeader: React.FC = () => {
 
   return (
     <div {...stylex.props(styles.wrapper)}>
-      <div {...stylex.props(styles.leftGroup)}>
-        <Button variant="link" aria-label="Logout" onClick={handleLogout}>
-          ×
-        </Button>
+      <div>{/* Empty left side */}</div>
+      <div {...stylex.props(styles.mobileMenuWrapper)}>
+        <MobileMenu />
       </div>
     </div>
   );

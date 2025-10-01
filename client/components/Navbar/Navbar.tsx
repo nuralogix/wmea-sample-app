@@ -2,9 +2,10 @@ import React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
-import { Button, Heading, ThemeToggle, HamburgerMenu, Cross, Card } from '@nuralogix.ai/web-ui';
+import { Button, Heading, ThemeToggle } from '@nuralogix.ai/web-ui';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
+import MobileMenu from '../MobileMenu';
 
 const styles = stylex.create({
   header: {
@@ -31,20 +32,12 @@ const styles = stylex.create({
       gap: '1rem',
     },
   },
-  mobileMenuToggle: {
+  mobileMenuWrapper: {
     display: 'flex',
     alignItems: 'center',
     '@media (min-width: 900px)': {
       display: 'none',
     },
-  },
-  mobileMenuPanel: {
-    position: 'absolute',
-    top: 60,
-    right: 8,
-    zIndex: 1000,
-    minWidth: 200,
-    display: 'flex',
   },
   menuInner: {
     display: 'flex',
@@ -84,7 +77,6 @@ const Navbar: React.FC = () => {
     navigate('/');
   };
 
-  const [open, setOpen] = React.useState(false);
   const [screenWidth, setScreenWidth] = React.useState<number>(
     typeof window !== 'undefined' ? window.innerWidth : 1024
   );
@@ -98,39 +90,20 @@ const Navbar: React.FC = () => {
   const isNarrow = screenWidth < 900;
   const titleKey = isNarrow ? 'APP_TITLE_SHORT' : 'APP_TITLE';
 
-  const closeMenu = () => setOpen(false);
-
-  const MenuContent: React.FC<{ orientation: 'row' | 'column'; closeOnAction?: boolean }> = ({
-    orientation,
-    closeOnAction = true,
-  }) => {
+  const MenuContent: React.FC<{ orientation: 'row' | 'column' }> = ({ orientation }) => {
     const isRow = orientation === 'row';
     return (
       <div {...stylex.props(styles.menuInner, isRow && styles.menuInnerRow)}>
-        <Button
-          variant="link"
-          onClick={() => {
-            toggleLanguage();
-            if (closeOnAction) closeMenu();
-          }}
-        >
+        <Button variant="link" onClick={toggleLanguage}>
           {language === 'en' ? 'Français' : 'English'}
         </Button>
         <div {...stylex.props(styles.toggleWrapper, isRow && styles.toggleWrapperRow)}>
           <ThemeToggle
             isDarkMode={theme === 'dark'}
-            onToggle={() => {
-              setTheme(theme === 'light' ? 'dark' : 'light');
-            }}
+            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
           />
         </div>
-        <Button
-          variant="link"
-          onClick={() => {
-            handleLogout();
-            if (closeOnAction) closeMenu();
-          }}
-        >
+        <Button variant="link" onClick={handleLogout}>
           {t('LOGOUT')}
         </Button>
       </div>
@@ -141,30 +114,10 @@ const Navbar: React.FC = () => {
     <header {...stylex.props(styles.header)}>
       <Heading>{t(titleKey as any)}</Heading>
       <div {...stylex.props(styles.desktopActions)}>
-        <MenuContent orientation="row" closeOnAction={false} />
+        <MenuContent orientation="row" />
       </div>
-      <div {...stylex.props(styles.mobileMenuToggle)}>
-        <Button
-          variant="link"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-haspopup="true"
-          aria-expanded={open}
-          aria-controls="mobile-nav-menu"
-          onClick={() => setOpen((o) => !o)}
-        >
-          {open ? (
-            <Cross width="15px" height="15px" />
-          ) : (
-            <HamburgerMenu width="24px" height="24px" />
-          )}
-        </Button>
-        {open && (
-          <div id="mobile-nav-menu" role="menu" {...stylex.props(styles.mobileMenuPanel)}>
-            <Card width="100%" padding="s">
-              <MenuContent orientation="column" />
-            </Card>
-          </div>
-        )}
+      <div {...stylex.props(styles.mobileMenuWrapper)}>
+        <MobileMenu />
       </div>
     </header>
   );
