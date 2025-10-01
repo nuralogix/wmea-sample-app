@@ -135,15 +135,9 @@ const Measurement = () => {
     setAppError(null);
   };
 
-  const rotateCamera = () => {
-    // TODO: SDK does not expose get/set cameraFacingMode yet in current version.
-    // Placeholder for future implementation if API becomes available.
-    console.warn('Rotate camera action not implemented in this SDK version');
-  };
-
   return (
     <div {...stylex.props(styles.container)}>
-      <MeasurementHeader onRotateCamera={rotateCamera} />
+      <MeasurementHeader />
       {appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}
     </div>
   );

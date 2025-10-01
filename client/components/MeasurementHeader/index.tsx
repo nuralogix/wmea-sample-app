@@ -3,7 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import { useNavigate } from 'react-router';
-import { Button, Rotate, ThemeToggle } from '@nuralogix.ai/web-ui';
+import { Button, ThemeToggle } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 
@@ -28,17 +28,7 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: 12,
   },
-  rotateBtn: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    background: 'transparent',
-    border: '1px solid rgba(255,255,255,0.15)',
-    cursor: 'pointer',
-  },
+
   hiddenDesktop: {
     '@media (min-width: 900px)': {
       display: 'none',
@@ -60,14 +50,9 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: 16,
   },
-  // Removed mobile slide-out menu styles
 });
 
-interface MeasurementHeaderProps {
-  onRotateCamera?: () => void;
-}
-
-const MeasurementHeader: React.FC<MeasurementHeaderProps> = ({ onRotateCamera }) => {
+const MeasurementHeader: React.FC = () => {
   const { logout } = useSnapshot(state.auth);
   const { theme, setTheme, language, setLanguage } = useSnapshot(state.general);
   const navigate = useNavigate();
@@ -111,16 +96,6 @@ const MeasurementHeader: React.FC<MeasurementHeaderProps> = ({ onRotateCamera })
         <Button variant="link" aria-label="Logout" onClick={handleLogout}>
           ×
         </Button>
-      </div>
-      <div {...stylex.props(styles.rightGroup)}>
-        <button
-          type="button"
-          aria-label="Rotate Camera"
-          onClick={onRotateCamera}
-          {...stylex.props(styles.rotateBtn)}
-        >
-          <Rotate width="20px" height="20px" />
-        </button>
       </div>
     </div>
   );
