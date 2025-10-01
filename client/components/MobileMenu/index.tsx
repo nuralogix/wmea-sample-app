@@ -13,11 +13,11 @@ const styles = stylex.create({
   },
   mobileMenuPanel: {
     position: 'absolute',
-    top: 68,
-    right: 12,
+    top: 64,
+    right: 8,
     zIndex: 1000,
-    minWidth: 220,
-    maxWidth: 280,
+    minWidth: 180,
+    maxWidth: 220,
     display: 'flex',
     boxShadow: '0 8px 24px rgba(0, 0, 0, 0.12), 0 4px 8px rgba(0, 0, 0, 0.08)',
     borderRadius: 12,
@@ -27,15 +27,15 @@ const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    padding: 8,
+    padding: 4,
     gap: 0,
   },
   menuItem: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: '12px 16px',
-    borderRadius: 8,
+    padding: '8px 12px',
+    borderRadius: 6,
     cursor: 'pointer',
     transition: 'background-color 0.15s ease',
     ':hover': {
@@ -58,7 +58,7 @@ const styles = stylex.create({
   separator: {
     height: 1,
     backgroundColor: 'var(--border-light, #e8e8e8)',
-    margin: '4px 12px',
+    margin: '2px 8px',
   },
   themeToggleWrapper: {
     display: 'flex',
