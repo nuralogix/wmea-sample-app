@@ -18,23 +18,6 @@ const styles = stylex.create({
     boxSizing: 'border-box',
     borderBottom: '1px solid #e0e0e0',
   },
-  leftGroup: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-  },
-  rightGroup: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 12,
-  },
-
-  hiddenDesktop: {
-    '@media (min-width: 900px)': {
-      display: 'none',
-    },
-  },
-
   desktopActions: {
     display: 'flex',
     alignItems: 'center',
