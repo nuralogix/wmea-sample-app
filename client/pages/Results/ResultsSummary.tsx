@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
 import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
+import { Heading, Paragraph, Card } from '@nuralogix.ai/web-ui';
 import MetricCard from './MetricCard';
 import { getGroupsFromResults, getPointsForGroup } from './utils';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
+import state from '../../state';
 
 const styles = stylex.create({
   container: {
     height: '100vh',
     overflowY: 'auto',
-    backgroundColor: '#f8fafc',
     padding: 20,
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  },
+  containerLight: {
+    backgroundColor: '#f8fafc',
+  },
+  containerDark: {
+    backgroundColor: '#0f172a',
   },
   wrapper: {
     maxWidth: 1200,
     margin: '0 auto',
   },
-  header: {
+  headerLight: {
     backgroundColor: 'white',
     borderRadius: 16,
     padding: 32,
@@ -30,26 +38,39 @@ const styles = stylex.create({
       marginBottom: 16,
     },
   },
-  title: {
-    margin: '0 0 8px 0',
-    fontSize: 32,
-    fontWeight: 700,
-    color: '#1f2937',
+  headerDark: {
+    backgroundColor: '#1e293b',
+    borderRadius: 16,
+    padding: 32,
+    marginBottom: 24,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+    textAlign: 'center',
     '@media (max-width: 640px)': {
-      fontSize: 24,
+      padding: 20,
+      marginBottom: 16,
     },
   },
-  snrInfo: {
-    fontSize: 16,
-    color: '#6b7280',
-    marginTop: 8,
-  },
-  tabContainer: {
+
+  tabContainerLight: {
     backgroundColor: 'white',
     borderRadius: 12,
     padding: 8,
     marginBottom: 24,
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    display: 'flex',
+    gap: 4,
+    flexWrap: 'wrap',
+    '@media (max-width: 640px)': {
+      marginBottom: 16,
+      padding: 4,
+    },
+  },
+  tabContainerDark: {
+    backgroundColor: '#1e293b',
+    borderRadius: 12,
+    padding: 8,
+    marginBottom: 24,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
     display: 'flex',
     gap: 4,
     flexWrap: 'wrap',
@@ -79,7 +100,7 @@ const styles = stylex.create({
     backgroundColor: '#3b82f6',
     color: 'white',
   },
-  tabInactive: {
+  tabInactiveLight: {
     backgroundColor: 'transparent',
     color: '#6b7280',
     ':hover': {
@@ -87,15 +108,31 @@ const styles = stylex.create({
       color: '#374151',
     },
   },
+  tabInactiveDark: {
+    backgroundColor: 'transparent',
+    color: '#94a3b8',
+    ':hover': {
+      backgroundColor: '#334155',
+      color: '#e2e8f0',
+    },
+  },
   groupSection: {
     marginBottom: 32,
   },
-  groupTitle: {
+  groupTitleLight: {
     fontSize: 18,
     fontWeight: 600,
     color: '#374151',
     marginBottom: 16,
     borderBottom: '1px solid #e5e7eb',
+    paddingBottom: 4,
+  },
+  groupTitleDark: {
+    fontSize: 18,
+    fontWeight: 600,
+    color: '#e2e8f0',
+    marginBottom: 16,
+    borderBottom: '1px solid #475569',
     paddingBottom: 4,
   },
   grid: {
@@ -116,6 +153,8 @@ interface ResultsSummaryProps {
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const { t } = useTranslation();
   const { isMobile } = useMobileDetection();
+  const { theme } = useSnapshot(state.general);
+  const isDark = theme === 'dark';
 
   // Utility: convert group keys to readable labels
   const getGroupLabel = (groupKey: string): string => {
@@ -148,28 +187,32 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
 
   return (
-    <div {...stylex.props(styles.container)}>
+    <div {...stylex.props(styles.container, isDark ? styles.containerDark : styles.containerLight)}>
       <div {...stylex.props(styles.wrapper)}>
         {/* Header */}
-        <div {...stylex.props(styles.header)}>
-          <h1 {...stylex.props(styles.title)}>{t('HEALTH_RESULTS')}</h1>
+        <div {...stylex.props(isDark ? styles.headerDark : styles.headerLight)}>
+          <Heading>{t('HEALTH_RESULTS')}</Heading>
           {snr && (
-            <div {...stylex.props(styles.snrInfo)}>
+            <Paragraph>
               {t('RESULTS_SNR_LABEL')}: {snr.value}
               {snr.info.unit && ` ${snr.info.unit}`}
-            </div>
+            </Paragraph>
           )}
         </div>
 
         {/* Navigation Tabs */}
-        <div {...stylex.props(styles.tabContainer)}>
+        <div {...stylex.props(isDark ? styles.tabContainerDark : styles.tabContainerLight)}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               {...stylex.props(
                 styles.tab,
-                activeTab === tab.id ? styles.tabActive : styles.tabInactive
+                activeTab === tab.id
+                  ? styles.tabActive
+                  : isDark
+                    ? styles.tabInactiveDark
+                    : styles.tabInactiveLight
               )}
             >
               {tab.name}
@@ -185,7 +228,9 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
               if (pointsForGroup.length === 0) return null;
               return (
                 <div key={group} {...stylex.props(styles.groupSection)}>
-                  <h2 {...stylex.props(styles.groupTitle)}>{getGroupLabel(group)}</h2>
+                  <div {...stylex.props(isDark ? styles.groupTitleDark : styles.groupTitleLight)}>
+                    <Heading>{getGroupLabel(group)}</Heading>
+                  </div>
                   <div {...stylex.props(styles.grid)}>
                     {pointsForGroup.map(([dfxPointId, pt]) => (
                       <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
