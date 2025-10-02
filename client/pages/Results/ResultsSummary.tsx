@@ -82,10 +82,10 @@ const styles = stylex.create({
   tabInactive: {
     backgroundColor: 'transparent',
     color: '#6b7280',
-  },
-  tabHover: {
-    backgroundColor: '#f3f4f6',
-    color: '#374151',
+    ':hover': {
+      backgroundColor: '#f3f4f6',
+      color: '#374151',
+    },
   },
   groupSection: {
     marginBottom: 32,
@@ -171,18 +171,6 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                 styles.tab,
                 activeTab === tab.id ? styles.tabActive : styles.tabInactive
               )}
-              onMouseEnter={(e) => {
-                if (activeTab !== tab.id) {
-                  e.currentTarget.style.backgroundColor = '#f3f4f6';
-                  e.currentTarget.style.color = '#374151';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (activeTab !== tab.id) {
-                  e.currentTarget.style.backgroundColor = 'transparent';
-                  e.currentTarget.style.color = '#6b7280';
-                }
-              }}
             >
               {tab.name}
             </button>
