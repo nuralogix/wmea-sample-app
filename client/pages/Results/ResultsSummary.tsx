@@ -3,10 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
 import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
-import { Heading, Paragraph, Card } from '@nuralogix.ai/web-ui';
+import { Heading, Paragraph } from '@nuralogix.ai/web-ui';
 import MetricCard from './MetricCard';
 import { getGroupsFromResults, getPointsForGroup } from './utils';
-import { useMobileDetection } from '../../hooks/useMobileDetection';
 import state from '../../state';
 
 const styles = stylex.create({
@@ -152,7 +151,6 @@ interface ResultsSummaryProps {
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const { t } = useTranslation();
-  const { isMobile } = useMobileDetection();
   const { theme } = useSnapshot(state.general);
   const isDark = theme === 'dark';
 
