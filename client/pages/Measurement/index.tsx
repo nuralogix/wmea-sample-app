@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import MeasurementEmbeddedApp,
-  { appEvents,
-    type MeasurementEmbeddedAppError,
-    type MeasurementEmbeddedAppOptions
-  }
-from '@nuralogix.ai/web-measurement-embedded-app';
+import MeasurementEmbeddedApp, {
+  appEvents,
+  type MeasurementEmbeddedAppError,
+  type MeasurementEmbeddedAppOptions,
+} from '@nuralogix.ai/web-measurement-embedded-app';
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import ErrorMessage from './ErrorMessage';
+import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 
 const Measurement = () => {
-  const [measurementApp ] = useState(() => new MeasurementEmbeddedApp());
+  const [measurementApp] = useState(() => new MeasurementEmbeddedApp());
   const { setResults } = useSnapshot(state.measurement);
   const { theme, language } = useSnapshot(state.general);
   const { demographics } = useSnapshot(state.demographics);
@@ -21,10 +21,6 @@ const Measurement = () => {
   useEffect(() => {
     (async function () {
       const container = document.createElement('div');
-      const profile = {
-        ...demographics,
-        bypassProfile: false,
-      };
 
       const apiUrl = '/api';
       const studyId = await fetch(`${apiUrl}/studyId`);
@@ -44,7 +40,7 @@ const Measurement = () => {
             refreshToken: tokenResponse.refreshToken,
             studyId: studyIdResponse.studyId,
           },
-          profile,
+          profile: demographics,
           config: {
             checkConstraints: true,
             cameraFacingMode: 'user',
@@ -54,19 +50,25 @@ const Measurement = () => {
           loadError: function (error) {
             console.error('load error', error);
           },
-        }
+        };
         measurementApp.init(options);
 
         measurementApp.on.results = (results) => {
           setResults(results);
           navigate('/results');
         };
-        measurementApp.on.error = (error) => {
-          // Update only if null to avoid overwriting the first error
-          setAppError(prev => {
-            return prev === null ? error : prev;
-          });
-          console.log('Error received', error);
+        measurementApp.on.error = async (error) => {
+          if (isCancelOnErrorCode(error.code)) {
+            try {
+              await measurementApp.cancel(true);
+            } catch (e) {
+              console.warn('Failed to cancel after error code', error.code, e);
+            }
+          }
+          if (isUiErrorCode(error.code)) {
+            setAppError(error);
+          }
+          console.log('Error received: ', error.code, error.message);
         };
         measurementApp.on.event = (appEvent) => {
           switch (appEvent) {
@@ -112,7 +114,7 @@ const Measurement = () => {
       };
       cleanup();
     };
-  }, []);
+  }, [demographics.bypassProfile]);
 
   // Listen for theme changes and update the measurement app
   useEffect(() => {
@@ -125,17 +127,10 @@ const Measurement = () => {
   }, [language]);
 
   const onClear = () => {
-    navigate('/');
-  }
+    setAppError(null);
+  };
 
-  return (
-    <>
-      {appError
-        ? <ErrorMessage error={appError} onClear={onClear} />
-        : null
-      }
-    </>
-  );
+  return <>{appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}</>;
 };
 
 export default Measurement;
