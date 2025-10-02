@@ -7,11 +7,16 @@ const Results = () => {
   const measurementSnap = useSnapshot(state.measurement);
   const { results } = measurementSnap;
 
-  if (!results) {
+  // Show error if no results OR if only SNR point exists
+  const pointKeys = results ? Object.keys(results.points) : [];
+  const onlySnrExists = pointKeys.length === 1 && pointKeys[0] === 'SNR';
+
+  if (!results || onlySnrExists) {
     return <ResultsError />;
   }
 
-  return <ResultsSummary results={results} />;
+  const mutableResults = JSON.parse(JSON.stringify(results));
+  return <ResultsSummary results={mutableResults} />;
 };
 
 export default Results;
