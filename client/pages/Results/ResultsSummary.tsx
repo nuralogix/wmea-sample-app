@@ -1,8 +1,113 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import * as stylex from '@stylexjs/stylex';
 import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
 import MetricCard from './MetricCard';
 import { getGroupsFromResults, getPointsForGroup } from './utils';
+import { useMobileDetection } from '../../hooks/useMobileDetection';
+
+const styles = stylex.create({
+  container: {
+    height: '100vh',
+    overflowY: 'auto',
+    backgroundColor: '#f8fafc',
+    padding: 20,
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+  },
+  wrapper: {
+    maxWidth: 1200,
+    margin: '0 auto',
+  },
+  header: {
+    backgroundColor: 'white',
+    borderRadius: 16,
+    padding: 32,
+    marginBottom: 24,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    textAlign: 'center',
+    '@media (max-width: 640px)': {
+      padding: 20,
+      marginBottom: 16,
+    },
+  },
+  title: {
+    margin: '0 0 8px 0',
+    fontSize: 32,
+    fontWeight: 700,
+    color: '#1f2937',
+    '@media (max-width: 640px)': {
+      fontSize: 24,
+    },
+  },
+  snrInfo: {
+    fontSize: 16,
+    color: '#6b7280',
+    marginTop: 8,
+  },
+  tabContainer: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 8,
+    marginBottom: 24,
+    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    display: 'flex',
+    gap: 4,
+    flexWrap: 'wrap',
+    '@media (max-width: 640px)': {
+      marginBottom: 16,
+      padding: 4,
+    },
+  },
+  tab: {
+    padding: '12px 16px',
+    border: 'none',
+    borderRadius: 8,
+    fontSize: 14,
+    fontWeight: 500,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    whiteSpace: 'nowrap',
+    minWidth: 'fit-content',
+    '@media (max-width: 640px)': {
+      padding: '8px 12px',
+      fontSize: 13,
+      flex: '1 1 auto',
+      textAlign: 'center',
+    },
+  },
+  tabActive: {
+    backgroundColor: '#3b82f6',
+    color: 'white',
+  },
+  tabInactive: {
+    backgroundColor: 'transparent',
+    color: '#6b7280',
+  },
+  tabHover: {
+    backgroundColor: '#f3f4f6',
+    color: '#374151',
+  },
+  groupSection: {
+    marginBottom: 32,
+  },
+  groupTitle: {
+    fontSize: 18,
+    fontWeight: 600,
+    color: '#374151',
+    marginBottom: 16,
+    borderBottom: '1px solid #e5e7eb',
+    paddingBottom: 4,
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+    gap: 20,
+    '@media (max-width: 640px)': {
+      gridTemplateColumns: '1fr',
+      gap: 16,
+    },
+  },
+});
 
 interface ResultsSummaryProps {
   results: Results;
@@ -10,6 +115,7 @@ interface ResultsSummaryProps {
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const { t } = useTranslation();
+  const { isMobile } = useMobileDetection();
 
   // Utility: convert group keys to readable labels
   const getGroupLabel = (groupKey: string): string => {
@@ -42,50 +148,13 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
 
   return (
-    <div
-      style={{
-        height: '100vh',
-        overflowY: 'auto',
-        backgroundColor: '#f8fafc',
-        padding: '20px',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-        }}
-      >
+    <div {...stylex.props(styles.container)}>
+      <div {...stylex.props(styles.wrapper)}>
         {/* Header */}
-        <div
-          style={{
-            backgroundColor: 'white',
-            borderRadius: '16px',
-            padding: '32px',
-            marginBottom: '24px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            textAlign: 'center',
-          }}
-        >
-          <h1
-            style={{
-              margin: '0 0 8px 0',
-              fontSize: '32px',
-              fontWeight: '700',
-              color: '#1f2937',
-            }}
-          >
-            {t('HEALTH_RESULTS')}
-          </h1>
+        <div {...stylex.props(styles.header)}>
+          <h1 {...stylex.props(styles.title)}>{t('HEALTH_RESULTS')}</h1>
           {snr && (
-            <div
-              style={{
-                fontSize: '16px',
-                color: '#6b7280',
-                marginTop: '8px',
-              }}
-            >
+            <div {...stylex.props(styles.snrInfo)}>
               {t('RESULTS_SNR_LABEL')}: {snr.value}
               {snr.info.unit && ` ${snr.info.unit}`}
             </div>
@@ -93,35 +162,15 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
         </div>
 
         {/* Navigation Tabs */}
-        <div
-          style={{
-            backgroundColor: 'white',
-            borderRadius: '12px',
-            padding: '8px',
-            marginBottom: '24px',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-            display: 'flex',
-            gap: '4px',
-            flexWrap: 'wrap',
-          }}
-        >
+        <div {...stylex.props(styles.tabContainer)}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              style={{
-                padding: '12px 16px',
-                border: 'none',
-                borderRadius: '8px',
-                backgroundColor: activeTab === tab.id ? '#3b82f6' : 'transparent',
-                color: activeTab === tab.id ? 'white' : '#6b7280',
-                fontSize: '14px',
-                fontWeight: '500',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                whiteSpace: 'nowrap',
-                minWidth: 'fit-content',
-              }}
+              {...stylex.props(
+                styles.tab,
+                activeTab === tab.id ? styles.tabActive : styles.tabInactive
+              )}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.id) {
                   e.currentTarget.style.backgroundColor = '#f3f4f6';
@@ -135,9 +184,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                 }
               }}
             >
-              <span style={{ display: window.innerWidth < 640 ? 'none' : 'inline' }}>
-                {tab.name}
-              </span>
+              {tab.name}
             </button>
           ))}
         </div>
@@ -149,27 +196,9 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
               const pointsForGroup = getPointsForGroup(results.points, group);
               if (pointsForGroup.length === 0) return null;
               return (
-                <div key={group} style={{ marginBottom: '32px' }}>
-                  <h2
-                    style={{
-                      fontSize: '18px',
-                      fontWeight: '600',
-                      color: '#374151',
-                      marginBottom: '16px',
-                      borderBottom: '1px solid #e5e7eb',
-                      paddingBottom: '4px',
-                    }}
-                  >
-                    {getGroupLabel(group)}
-                  </h2>
-                  <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns:
-                        window.innerWidth < 640 ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-                      gap: '20px',
-                    }}
-                  >
+                <div key={group} {...stylex.props(styles.groupSection)}>
+                  <h2 {...stylex.props(styles.groupTitle)}>{getGroupLabel(group)}</h2>
+                  <div {...stylex.props(styles.grid)}>
                     {pointsForGroup.map(([dfxPointId, pt]) => (
                       <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
                     ))}
@@ -179,14 +208,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
             })}
           </>
         ) : (
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns:
-                window.innerWidth < 640 ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))',
-              gap: '20px',
-            }}
-          >
+          <div {...stylex.props(styles.grid)}>
             {getPointsForGroup(results.points, activeTab).map(([dfxPointId, pt]) => (
               <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
             ))}
