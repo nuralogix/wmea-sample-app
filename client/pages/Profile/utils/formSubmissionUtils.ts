@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router';
-import { useSnapshot } from 'valtio';
 import state from '../../../state';
 import { FormState } from '../types';
 import { isFormValid } from './validationUtils';
@@ -7,13 +6,6 @@ import { convertFormStateToSDKDemographics } from './utils';
 
 export const useFormSubmission = () => {
   const navigate = useNavigate();
-  const { isDev } = useSnapshot(state.auth);
-
-  const handleSkipProfile = () => {
-    const base = state.demographics.demographics;
-    state.demographics.setDemographics({ ...base, bypassProfile: true });
-    navigate('/measurement');
-  };
 
   const handleSubmit = (formState: FormState) => {
     // Defensive validation check but disabled btns should prevent this
@@ -33,8 +25,6 @@ export const useFormSubmission = () => {
   };
 
   return {
-    handleSkipProfile,
     handleSubmit,
-    isDev,
   };
 };

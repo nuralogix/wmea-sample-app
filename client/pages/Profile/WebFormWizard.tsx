@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 import ProfileInfo from './ProfileInfo';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState, WizardStep } from './types';
-import { isFormValid } from './utils/validationUtils';
-import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS, FORM_VALUES } from './constants';
+import { INITIAL_FORM_STATE, WIZARD_STEPS, FORM_FIELDS } from './constants';
 import { useFormSubmission } from './utils/formSubmissionUtils';
 
 const styles = stylex.create({
@@ -35,26 +34,13 @@ const styles = stylex.create({
   introMessage: {
     marginBottom: '24px',
   },
-  skipRow: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    marginBottom: 8,
-  },
-  skipBtn: {
-    background: 'none',
-    border: 'none',
-    color: '#666',
-    cursor: 'pointer',
-    fontSize: 12,
-    textDecoration: 'underline',
-  },
 });
 
 const FormWizard = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<WizardStep>(WIZARD_STEPS.PROFILE);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
-  const { handleSkipProfile, handleSubmit, isDev } = useFormSubmission();
+  const { handleSubmit } = useFormSubmission();
 
   // Clear height and weight values when unit changes
   useEffect(() => {
@@ -80,13 +66,6 @@ const FormWizard = () => {
   return (
     <div {...stylex.props(styles.wrapper)}>
       <Card xstyle={styles.card}>
-        {isDev && (
-          <div {...stylex.props(styles.skipRow)}>
-            <button type="button" {...stylex.props(styles.skipBtn)} onClick={handleSkipProfile}>
-              Skip Profile
-            </button>
-          </div>
-        )}
         <Heading>
           {currentStep === WIZARD_STEPS.PROFILE
             ? t('PROFILE_FORM_STEP_1_TITLE')

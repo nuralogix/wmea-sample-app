@@ -3,7 +3,7 @@ import { useSnapshot } from 'valtio';
 import { useNavigate } from 'react-router';
 import * as stylex from '@stylexjs/stylex';
 import { Button, Card, Heading, Paragraph, TextInput } from '@nuralogix.ai/web-ui';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const styles = stylex.create({
@@ -32,16 +32,8 @@ const Login = () => {
   const [accessCode, setAccessCode] = useState('');
   const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
 
-  const { login, isLoggedIn, isDev } = useSnapshot(state.auth);
+  const { login } = useSnapshot(state.auth);
   const navigate = useNavigate();
-
-  // Dev-mode auto login/redirect
-  useEffect(() => {
-    if (isDev) {
-      if (!isLoggedIn) login();
-      navigate('/profile', { replace: true });
-    }
-  }, [isDev, isLoggedIn, login, navigate]);
 
   const handleLogin = async () => {
     if (accessCode === 'admin') {

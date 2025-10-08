@@ -58,14 +58,6 @@ const styles = stylex.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  skipBtn: {
-    background: 'none',
-    border: 'none',
-    color: '#666',
-    cursor: 'pointer',
-    fontSize: 12,
-    textDecoration: 'underline',
-  },
   stepDots: {
     display: 'flex',
     gap: 8,
@@ -117,7 +109,7 @@ const MobileFormWizard = () => {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState<MobileStep>(MOBILE_STEPS.SEX_AGE);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
-  const { handleSkipProfile, handleSubmit, isDev } = useFormSubmission();
+  const { handleSubmit } = useFormSubmission();
 
   // Clear height/weight when unit changes (same logic as web wizard)
   useEffect(() => {
@@ -161,11 +153,6 @@ const MobileFormWizard = () => {
               />
             ))}
           </div>
-          {isDev && currentStep !== MOBILE_STEPS.MEDICAL && (
-            <button type="button" {...stylex.props(styles.skipBtn)} onClick={handleSkipProfile}>
-              Skip Profile
-            </button>
-          )}
         </div>
         <div
           {...stylex.props(
