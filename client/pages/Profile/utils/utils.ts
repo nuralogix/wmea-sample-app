@@ -43,7 +43,7 @@ export const getWeightInKg = (formState: FormState): number => {
 };
 
 /**
- * Converts form state to SDK Demographics format
+ * Converts form state to SDK Profile format
  * Form values are already aligned with SDK values, only need string-to-number conversion
  * Height and weight are always converted to metric (cm and kg)
  */

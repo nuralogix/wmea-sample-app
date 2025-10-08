@@ -20,6 +20,7 @@ const styles = stylex.create({
     overflow: 'hidden',
   },
 });
+import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 
 const Measurement = () => {
   const [measurementApp] = useState(() => new MeasurementEmbeddedApp());
@@ -68,12 +69,18 @@ const Measurement = () => {
           setResults(results);
           navigate('/results');
         };
-        measurementApp.on.error = (error) => {
-          // Update only if null to avoid overwriting the first error
-          setAppError((prev) => {
-            return prev === null ? error : prev;
-          });
-          console.log('Error received', error);
+        measurementApp.on.error = async (error) => {
+          if (isCancelOnErrorCode(error.code)) {
+            try {
+              await measurementApp.cancel(true);
+            } catch (e) {
+              console.warn('Failed to cancel after error code', error.code, e);
+            }
+          }
+          if (isUiErrorCode(error.code)) {
+            setAppError(error);
+          }
+          console.log('Error received: ', error.code, error.message);
         };
         measurementApp.on.event = (appEvent) => {
           switch (appEvent) {
@@ -117,7 +124,7 @@ const Measurement = () => {
       };
       cleanup();
     };
-  }, []);
+  }, [demographics.bypassProfile]);
 
   // Listen for theme changes and update the measurement app
   useEffect(() => {
