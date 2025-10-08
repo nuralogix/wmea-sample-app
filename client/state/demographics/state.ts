@@ -14,6 +14,7 @@ const demographicsState: DemographicsState = proxy({
     smoking: SMOKER_FALSE,
     bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,
     diabetes: DIABETES_NONE,
+    bypassProfile: false,
   },
   setDemographics: (demographics) => {
     demographicsState.demographics = demographics;
