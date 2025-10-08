@@ -4,7 +4,7 @@ import { Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import MobileMenu from '../MobileMenu';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
-import UserControls from '../UserControls';
+import { LanguageToggleButton, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
 
 const styles = stylex.create({
   header: {
@@ -37,12 +37,6 @@ const styles = stylex.create({
   },
   menuInner: {
     display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 12,
-  },
-  menuInnerRow: {
-    flexDirection: 'row',
     alignItems: 'center',
     gap: 16,
   },
@@ -53,22 +47,17 @@ const Navbar: React.FC = () => {
 
   const { titleKey } = useMobileDetection();
 
-  const MenuContent: React.FC<{ orientation: 'row' | 'column' }> = ({ orientation }) => {
-    const isRow = orientation === 'row';
-    return (
-      <div {...stylex.props(styles.menuInner, isRow && styles.menuInnerRow)}>
-        <UserControls orientation={orientation} />
-      </div>
-    );
-  };
-
   return (
     <header {...stylex.props(styles.header)}>
       <div {...stylex.props(styles.title)}>
         <Heading>{t(titleKey as any)}</Heading>
       </div>
       <div {...stylex.props(styles.desktopActions)}>
-        <MenuContent orientation="row" />
+        <div {...stylex.props(styles.menuInner)}>
+          <LanguageToggleButton />
+          <ThemeToggleControl />
+          <LogoutButton />
+        </div>
       </div>
       <div {...stylex.props(styles.mobileMenuWrapper)}>
         <MobileMenu />

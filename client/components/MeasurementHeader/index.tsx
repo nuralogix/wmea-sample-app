@@ -4,7 +4,7 @@ import { Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import MobileMenu from '../MobileMenu';
-import UserControls from '../UserControls';
+import { LanguageToggleButton, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
 
 const styles = stylex.create({
   wrapper: {
@@ -42,7 +42,9 @@ const MeasurementHeader: React.FC = () => {
       </div>
       {!isMobile ? (
         <div {...stylex.props(styles.desktopActions)}>
-          <UserControls />
+          <LanguageToggleButton />
+          <ThemeToggleControl />
+          <LogoutButton />
         </div>
       ) : (
         <div {...stylex.props(styles.mobileMenuWrapper)}>

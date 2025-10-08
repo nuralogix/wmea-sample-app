@@ -1,7 +1,7 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { Button, HamburgerMenu, Cross, Card } from '@nuralogix.ai/web-ui';
-import UserControls, { type RenderItemParams } from '../UserControls';
+import { LanguageToggleButton, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
 
 const styles = stylex.create({
   mobileMenuToggle: {
@@ -60,23 +60,6 @@ const styles = stylex.create({
 const MobileMenu: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
-  const renderMenuItem = ({ key, element, index, count }: RenderItemParams) => {
-    let content = element;
-
-    if (key === 'theme') {
-      content = <div {...stylex.props(styles.themeToggleWrapper)}>{element}</div>;
-    }
-
-    return (
-      <>
-        <div {...stylex.props(styles.menuItem, key === 'logout' && styles.logoutItem)}>
-          {content}
-        </div>
-        {index < count - 1 ? <div {...stylex.props(styles.separator)} /> : null}
-      </>
-    );
-  };
-
   return (
     <div {...stylex.props(styles.mobileMenuToggle)}>
       <Button
@@ -93,7 +76,19 @@ const MobileMenu: React.FC = () => {
         <div id="mobile-nav-menu" role="menu" {...stylex.props(styles.mobileMenuPanel)}>
           <Card width="100%">
             <div {...stylex.props(styles.menuInner)}>
-              <UserControls orientation="column" renderItem={renderMenuItem} />
+              <div {...stylex.props(styles.menuItem)}>
+                <LanguageToggleButton />
+              </div>
+              <div {...stylex.props(styles.separator)} />
+              <div {...stylex.props(styles.menuItem)}>
+                <div {...stylex.props(styles.themeToggleWrapper)}>
+                  <ThemeToggleControl />
+                </div>
+              </div>
+              <div {...stylex.props(styles.separator)} />
+              <div {...stylex.props(styles.menuItem, styles.logoutItem)}>
+                <LogoutButton />
+              </div>
             </div>
           </Card>
         </div>
