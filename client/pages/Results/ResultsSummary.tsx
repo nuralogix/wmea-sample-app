@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSnapshot } from 'valtio';
+import type { Snapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
 import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
 import { Heading, Paragraph } from '@nuralogix.ai/web-ui';
@@ -145,8 +146,10 @@ const styles = stylex.create({
   },
 });
 
+type ResultsSnapshot = Snapshot<Results>;
+
 interface ResultsSummaryProps {
-  results: Results;
+  results: ResultsSnapshot;
 }
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {

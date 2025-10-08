@@ -15,8 +15,7 @@ const Results = () => {
     return <ResultsError />;
   }
 
-  const mutableResults = JSON.parse(JSON.stringify(results));
-  return <ResultsSummary results={mutableResults} />;
+  return <ResultsSummary results={results} />;
 };
 
 export default Results;

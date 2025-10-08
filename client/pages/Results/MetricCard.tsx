@@ -1,6 +1,7 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
+import type { Snapshot } from 'valtio';
 import { DfxPointId, Results } from '@nuralogix.ai/web-measurement-embedded-app';
 import { Heading, Paragraph } from '@nuralogix.ai/web-ui';
 import { BAND_COLOR_MAP } from './constants';
@@ -61,8 +62,8 @@ const styles = stylex.create({
   },
 });
 
-type PointsType = Results['points'];
-type DefinedPoint = NonNullable<PointsType['SNR']>;
+type PointsSnapshot = Snapshot<Results>['points'];
+type DefinedPoint = NonNullable<PointsSnapshot[DfxPointId]>;
 
 const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: DefinedPoint }) => {
   const { info, value, dial } = point;
