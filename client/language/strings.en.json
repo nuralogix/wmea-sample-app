@@ -76,5 +76,8 @@
   "LOGOUT": "Logout",
   "APP_TITLE": "Web Measurement Embedded Sample App",
   "APP_TITLE_SHORT": "Sample App",
-  "HEALTH_RESULTS": "Health Assessment Results"
+  "HEALTH_RESULTS": "Health Assessment Results",
+  "CAMERA_START_FAILED": "There was an error starting your camera, please try again.",
+  "WORKER_ERROR": "Something went wrong while processing your measurement. Please try taking your measurement again.",
+  "COLLECTOR": "Something went wrong while analyzing your data. Please try taking your measurement again."
 }
