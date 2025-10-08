@@ -110,8 +110,6 @@ const Measurement = () => {
     })();
     return () => {
       const cleanup = async () => {
-        // Close the camera and hide the mask but not reset the SDK
-        await measurementApp.cancel(false);
         const logs = await measurementApp.getLogs();
         console.log('WMEA Logs:', logs);
         // Destroy the instance and free up resources

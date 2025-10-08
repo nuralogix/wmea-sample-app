@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 interface MobileDetection {
   isMobile: boolean;
   screenWidth: number;
+  titleKey: 'APP_TITLE' | 'APP_TITLE_SHORT';
 }
 
 const MOBILE_BREAKPOINT = 768;
@@ -21,9 +22,11 @@ export const useMobileDetection = (): MobileDetection => {
   }, []);
 
   const isMobile = screenWidth < TABLET_BREAKPOINT;
+  const titleKey: MobileDetection['titleKey'] = isMobile ? 'APP_TITLE_SHORT' : 'APP_TITLE';
 
   return {
     isMobile,
     screenWidth,
+    titleKey,
   };
 };

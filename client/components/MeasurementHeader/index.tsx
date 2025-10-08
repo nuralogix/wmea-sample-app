@@ -1,12 +1,10 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import { useSnapshot } from 'valtio';
-import state from '../../state';
-import { useNavigate } from 'react-router';
-import { Button, ThemeToggle, Heading } from '@nuralogix.ai/web-ui';
+import { Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import MobileMenu from '../MobileMenu';
+import UserControls from '../UserControls';
 
 const styles = stylex.create({
   wrapper: {
@@ -34,22 +32,8 @@ const styles = stylex.create({
 });
 
 const MeasurementHeader: React.FC = () => {
-  const { logout } = useSnapshot(state.auth);
-  const { theme, setTheme, language, setLanguage } = useSnapshot(state.general);
-  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { isMobile } = useMobileDetection();
-  const titleKey = isMobile ? 'APP_TITLE_SHORT' : 'APP_TITLE';
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  const toggleLanguage = () => {
-    const newLanguage = language === 'en' ? 'fr' : 'en';
-    setLanguage(newLanguage);
-  };
+  const { isMobile, titleKey } = useMobileDetection();
 
   return (
     <div {...stylex.props(styles.wrapper)}>
@@ -58,16 +42,7 @@ const MeasurementHeader: React.FC = () => {
       </div>
       {!isMobile ? (
         <div {...stylex.props(styles.desktopActions)}>
-          <Button variant="link" onClick={toggleLanguage}>
-            {language === 'en' ? 'Français' : 'English'}
-          </Button>
-          <ThemeToggle
-            isDarkMode={theme === 'dark'}
-            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-          />
-          <Button variant="link" onClick={handleLogout}>
-            {t('LOGOUT')}
-          </Button>
+          <UserControls />
         </div>
       ) : (
         <div {...stylex.props(styles.mobileMenuWrapper)}>

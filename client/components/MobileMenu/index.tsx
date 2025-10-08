@@ -1,10 +1,7 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import { useSnapshot } from 'valtio';
-import state from '../../state';
-import { useNavigate } from 'react-router';
-import { Button, ThemeToggle, HamburgerMenu, Cross, Card } from '@nuralogix.ai/web-ui';
-import { useTranslation } from 'react-i18next';
+import { Button, HamburgerMenu, Cross, Card } from '@nuralogix.ai/web-ui';
+import UserControls, { type RenderItemParams } from '../UserControls';
 
 const styles = stylex.create({
   mobileMenuToggle: {
@@ -45,88 +42,40 @@ const styles = stylex.create({
       backgroundColor: 'var(--active-bg, rgba(0, 0, 0, 0.08))',
     },
   },
-  menuItemLabel: {
-    fontSize: 15,
-    fontWeight: 500,
-    color: 'var(--text-primary, #1a1a1a)',
-  },
-  menuItemValue: {
-    fontSize: 14,
-    color: 'var(--text-secondary, #666)',
-    fontWeight: 400,
-  },
   separator: {
     height: 1,
     backgroundColor: 'var(--border-light, #e8e8e8)',
     margin: '2px 8px',
   },
-  themeToggleWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-  },
   logoutItem: {
     color: 'var(--error-color, #dc2626)',
     fontWeight: 500,
   },
+  themeToggleWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 });
 
 const MobileMenu: React.FC = () => {
-  const { logout } = useSnapshot(state.auth);
-  const { theme, setTheme, language, setLanguage } = useSnapshot(state.general);
-  const navigate = useNavigate();
-  const { t } = useTranslation();
   const [open, setOpen] = React.useState(false);
 
-  const closeMenu = () => setOpen(false);
+  const renderMenuItem = ({ key, element, index, count }: RenderItemParams) => {
+    let content = element;
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
+    if (key === 'theme') {
+      content = <div {...stylex.props(styles.themeToggleWrapper)}>{element}</div>;
+    }
 
-  const toggleLanguage = () => {
-    const newLanguage = language === 'en' ? 'fr' : 'en';
-    setLanguage(newLanguage);
-  };
-
-  const MenuContent = () => (
-    <div {...stylex.props(styles.menuInner)}>
-      <div {...stylex.props(styles.menuItem)}>
-        <Button
-          variant="link"
-          onClick={() => {
-            toggleLanguage();
-          }}
-        >
-          {language === 'en' ? 'Français' : 'English'}
-        </Button>
-      </div>
-
-      <div {...stylex.props(styles.separator)} />
-
-      <div {...stylex.props(styles.menuItem)}>
-        <div {...stylex.props(styles.themeToggleWrapper)}>
-          <ThemeToggle
-            isDarkMode={theme === 'dark'}
-            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-          />
+    return (
+      <>
+        <div {...stylex.props(styles.menuItem, key === 'logout' && styles.logoutItem)}>
+          {content}
         </div>
-      </div>
-
-      <div {...stylex.props(styles.separator)} />
-
-      <div {...stylex.props(styles.menuItem)}>
-        <Button
-          variant="link"
-          onClick={() => {
-            handleLogout();
-          }}
-        >
-          {t('LOGOUT')}
-        </Button>
-      </div>
-    </div>
-  );
+        {index < count - 1 ? <div {...stylex.props(styles.separator)} /> : null}
+      </>
+    );
+  };
 
   return (
     <div {...stylex.props(styles.mobileMenuToggle)}>
@@ -143,7 +92,9 @@ const MobileMenu: React.FC = () => {
       {open && (
         <div id="mobile-nav-menu" role="menu" {...stylex.props(styles.mobileMenuPanel)}>
           <Card width="100%">
-            <MenuContent />
+            <div {...stylex.props(styles.menuInner)}>
+              <UserControls orientation="column" renderItem={renderMenuItem} />
+            </div>
           </Card>
         </div>
       )}

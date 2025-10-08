@@ -1,12 +1,10 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import { useSnapshot } from 'valtio';
-import state from '../../state';
-import { Button, Heading, ThemeToggle } from '@nuralogix.ai/web-ui';
-import { useNavigate } from 'react-router';
+import { Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import MobileMenu from '../MobileMenu';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
+import UserControls from '../UserControls';
 
 const styles = stylex.create({
   header: {
@@ -48,52 +46,18 @@ const styles = stylex.create({
     alignItems: 'center',
     gap: 16,
   },
-  toggleWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  toggleWrapperRow: {
-    width: 'auto',
-    justifyContent: 'flex-start',
-  },
 });
 
 const Navbar: React.FC = () => {
-  const { theme, setTheme, language, setLanguage } = useSnapshot(state.general);
-  const { logout } = useSnapshot(state.auth);
-  const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const toggleLanguage = () => {
-    const newLanguage = language === 'en' ? 'fr' : 'en';
-    setLanguage(newLanguage);
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-  };
-
-  const { isMobile } = useMobileDetection();
-  const titleKey = isMobile ? 'APP_TITLE_SHORT' : 'APP_TITLE';
+  const { titleKey } = useMobileDetection();
 
   const MenuContent: React.FC<{ orientation: 'row' | 'column' }> = ({ orientation }) => {
     const isRow = orientation === 'row';
     return (
       <div {...stylex.props(styles.menuInner, isRow && styles.menuInnerRow)}>
-        <Button variant="link" onClick={toggleLanguage}>
-          {language === 'en' ? 'Français' : 'English'}
-        </Button>
-        <div {...stylex.props(styles.toggleWrapper, isRow && styles.toggleWrapperRow)}>
-          <ThemeToggle
-            isDarkMode={theme === 'dark'}
-            onToggle={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-          />
-        </div>
-        <Button variant="link" onClick={handleLogout}>
-          {t('LOGOUT')}
-        </Button>
+        <UserControls orientation={orientation} />
       </div>
     );
   };
