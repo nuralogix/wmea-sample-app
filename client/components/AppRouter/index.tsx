@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NotFound from '../../pages/NotFound';
 import Profile from '../../pages/Profile';
 import Measurement from '../../pages/Measurement';
@@ -7,10 +7,29 @@ import PageWrapper from '../PageWrapper';
 import { ProtectedRoute } from '../ProtectedRoute';
 import Login from '../Login';
 
-const routes = [
-  { path: '/profile', element: <Profile /> },
-  { path: '/measurement', element: <Measurement /> },
-  { path: '/results', element: <Results /> },
+// Single list of protected routes, each already wrapped in its layout component.
+const protectedRoutes = [
+  {
+    path: '/profile',
+    element: (
+      <PageWrapper>
+        <Profile />
+      </PageWrapper>
+    ),
+  },
+  {
+    path: '/results',
+    element: (
+      <PageWrapper>
+        <Results />
+      </PageWrapper>
+    ),
+  },
+  {
+    path: '/measurement',
+    // Measurement now handles its own header (mobile specialized, desktop uses standard Navbar internally)
+    element: <Measurement />,
+  },
 ];
 
 const AppRouter = () => (
@@ -18,8 +37,8 @@ const AppRouter = () => (
     <Routes>
       <Route path="/" element={<Login />} />
       <Route element={<ProtectedRoute />}>
-        {routes.map(({ path, element }) => (
-          <Route key={path} path={path} element={<PageWrapper>{element}</PageWrapper>} />
+        {protectedRoutes.map(({ path, element }) => (
+          <Route key={path} path={path} element={element} />
         ))}
       </Route>
       <Route path="*" element={<NotFound />} />

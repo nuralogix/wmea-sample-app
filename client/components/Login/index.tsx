@@ -28,49 +28,54 @@ const styles = stylex.create({
 });
 
 const Login = () => {
-    const { t } = useTranslation();
-    const [accessCode, setAccessCode] = useState('');
-    const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
-    const { login } = useSnapshot(state.auth);
-    const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [accessCode, setAccessCode] = useState('');
+  const [info, setInfo] = useState(t('ENTER_ACCESS_CODE'));
 
-    const handleLogin = async () => {
-        if (accessCode === 'admin') {
-            login();
-            navigate('/profile');
-        } else {
-            setInfo(t('INVALID_ACCESS_CODE'));
-        }
-    };
+  const { login } = useSnapshot(state.auth);
+  const navigate = useNavigate();
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setAccessCode(e.target.value);
-    };
+  const handleLogin = async () => {
+    if (accessCode === 'admin') {
+      login();
+      navigate('/profile');
+    } else {
+      setInfo(t('INVALID_ACCESS_CODE'));
+    }
+  };
 
-    return (
-        <div {...stylex.props(styles.wrapper)}>
-            <Card xstyle={styles.card}>
-                <Heading>
-                    {t('LOGIN')}
-                </Heading>
-                <div {...stylex.props(styles.introMessage)}>
-                <Paragraph>{info}</Paragraph>
-                </div>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAccessCode(e.target.value);
+  };
 
-                <TextInput
-                    placeholder={t('ACCESS_CODE')}
-                    value={accessCode}
-                    onChange={handleChange}
-                    type="text"
-                />
-                <div {...stylex.props(styles.nextButton)}>
-                    <Button width="100%" onClick={handleLogin}>
-                        {t('LOGIN')}
-                    </Button>
-                </div>
-            </Card>
-        </div>
-    );
-}
+  return (
+    <div {...stylex.props(styles.wrapper)}>
+      <Card xstyle={styles.card}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleLogin();
+          }}
+        >
+          <Heading>{t('LOGIN')}</Heading>
+          <div {...stylex.props(styles.introMessage)}>
+            <Paragraph>{info}</Paragraph>
+          </div>
+          <TextInput
+            placeholder={t('ACCESS_CODE')}
+            value={accessCode}
+            onChange={handleChange}
+            type="text"
+          />
+          <div {...stylex.props(styles.nextButton)}>
+            <Button type="submit" width="100%">
+              {t('LOGIN')}
+            </Button>
+          </div>
+        </form>
+      </Card>
+    </div>
+  );
+};
 
 export default Login;

@@ -9,11 +9,16 @@ const styles = stylex.create({
     justifyContent: 'center',
     width: '100%',
     marginTop: 48,
+    padding: '0 16px', // Add horizontal padding for mobile
+    boxSizing: 'border-box',
   },
   card: {
     padding: '32px',
     maxWidth: '450px',
     width: '100%',
+    '@media (max-width: 640px)': {
+      padding: '24px 20px', // Reduce padding on mobile for better use of space
+    },
   },
   helpRow: {
     display: 'flex',

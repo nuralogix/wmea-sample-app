@@ -2,68 +2,57 @@ import React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
-import MobileMenu from '../MobileMenu';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
+import MobileMenu from '../MobileMenu';
 import { LanguageToggleButton, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
 
 const styles = stylex.create({
-  header: {
-    padding: '0 1rem',
+  wrapper: {
+    height: 60,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: '60px',
-    borderBottom: '1px solid var(--border-color, #e0e0e0)',
+    padding: '0 12px',
     boxSizing: 'border-box',
+    borderBottom: '1px solid #e0e0e0',
+  },
+  desktopActions: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 16,
+  },
+  mobileMenuWrapper: {
+    display: 'flex',
+    alignItems: 'center',
   },
   title: {
     margin: 0,
     fontSize: 18,
   },
-  desktopActions: {
-    display: 'none',
-    '@media (min-width: 900px)': {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '1rem',
-    },
-  },
-  mobileMenuWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    '@media (min-width: 900px)': {
-      display: 'none',
-    },
-  },
-  menuInner: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 16,
-  },
 });
 
-const Navbar: React.FC = () => {
+const MeasurementHeader: React.FC = () => {
   const { t } = useTranslation();
-
-  const { titleKey } = useMobileDetection();
+  const { isMobile, titleKey } = useMobileDetection();
 
   return (
-    <header {...stylex.props(styles.header)}>
+    <div {...stylex.props(styles.wrapper)}>
       <div {...stylex.props(styles.title)}>
         <Heading>{t(titleKey as any)}</Heading>
       </div>
-      <div {...stylex.props(styles.desktopActions)}>
-        <div {...stylex.props(styles.menuInner)}>
+      {!isMobile ? (
+        <div {...stylex.props(styles.desktopActions)}>
           <LanguageToggleButton />
           <ThemeToggleControl />
           <LogoutButton />
         </div>
-      </div>
-      <div {...stylex.props(styles.mobileMenuWrapper)}>
-        <MobileMenu />
-      </div>
-    </header>
+      ) : (
+        <div {...stylex.props(styles.mobileMenuWrapper)}>
+          <MobileMenu />
+        </div>
+      )}
+    </div>
   );
 };
 
-export default Navbar;
+export default MeasurementHeader;

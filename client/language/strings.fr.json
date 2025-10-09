@@ -75,5 +75,9 @@
   "ACCESS_CODE": "Code d’accès",
   "LOGOUT": "Déconnexion",
   "APP_TITLE": "Application d’exemple intégrée de mesure Web",
-  "HEALTH_RESULTS": "Résultats de l’évaluation de santé"
+  "APP_TITLE_SHORT": "Appli exemple",
+  "HEALTH_RESULTS": "Résultats de l’évaluation de santé",
+  "CAMERA_START_FAILED": "Une erreur est survenue lors du démarrage de votre caméra, veuillez réessayer.",
+  "WORKER_ERROR": "Une erreur s'est produite lors du traitement de votre mesure. Veuillez réessayer.",
+  "COLLECTOR": "Une erreur s'est produite lors de l'analyse de vos données. Veuillez réessayer."
 }

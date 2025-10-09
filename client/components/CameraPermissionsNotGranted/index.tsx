@@ -8,13 +8,19 @@ const styles = stylex.create({
     display: 'flex',
     justifyContent: 'center',
     width: '100%',
-    marginTop: 48,
+    padding: '24px 16px 32px',
+    boxSizing: 'border-box',
     zIndex: 1000,
+
+    marginTop: 0,
   },
   card: {
-    padding: '32px',
-    maxWidth: '450px',
+    padding: '28px 24px 32px',
+    maxWidth: 480,
     width: '100%',
+    '@media (min-width: 480px)': {
+      padding: '32px 32px 40px',
+    },
   },
   mb16: {
     marginBottom: '16px',
@@ -35,6 +41,21 @@ const styles = stylex.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  cameraIconWrap: {
+    width: 72,
+    height: 72,
+    borderRadius: 72,
+    background: 'rgba(255,255,255,0.04)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 12,
+  },
+  actionsRow: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: 12,
+  },
 });
 
 const CameraPermissionsNotGranted = () => {
@@ -48,8 +69,10 @@ const CameraPermissionsNotGranted = () => {
   return (
     <div {...stylex.props(styles.wrapper)}>
       <Card xstyle={styles.card}>
-        <div {...stylex.props(styles.center, styles.mb16)}>
-          <Camera height="45px" width="45px" />
+        <div {...stylex.props(styles.center)}>
+          <div {...stylex.props(styles.cameraIconWrap)}>
+            <Camera height="40px" width="40px" />
+          </div>
         </div>
         <div {...stylex.props(styles.mb16)}>
           <Paragraph variant="error" fontWeight="bold">
@@ -59,7 +82,7 @@ const CameraPermissionsNotGranted = () => {
         <div {...stylex.props(styles.mb24)}>
           <Paragraph>{t('CAMERA_PERMISSION_INSTRUCTIONS')}</Paragraph>
         </div>
-        <div {...stylex.props(styles.mt12)}>
+        <div {...stylex.props(styles.actionsRow)}>
           <Paragraph>
             {t('CAMERA_PERMISSION_DENY_TEXT')}
             <Button variant="link" onClick={handleDenyPermissions}>

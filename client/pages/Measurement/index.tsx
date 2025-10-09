@@ -8,6 +8,18 @@ import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 import ErrorMessage from './ErrorMessage';
+import MeasurementHeader from '../../components/MeasurementHeader';
+import * as stylex from '@stylexjs/stylex';
+
+const styles = stylex.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100vh',
+    width: '100%',
+    overflow: 'hidden',
+  },
+});
 import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 
 const Measurement = () => {
@@ -31,7 +43,7 @@ const Measurement = () => {
       if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
         const options: MeasurementEmbeddedAppOptions = {
           container,
-          top: '93.5px',
+          top: '60px', // match measurement header height
           language,
           appPath: './wmea',
           apiUrl: 'api.deepaffex.ai',
@@ -44,8 +56,8 @@ const Measurement = () => {
           config: {
             checkConstraints: true,
             cameraFacingMode: 'user',
-            cameraAutoStart: true,
-            measurementAutoStart: true,
+            cameraAutoStart: false,
+            measurementAutoStart: false,
           },
           loadError: function (error) {
             console.error('load error', error);
@@ -105,8 +117,6 @@ const Measurement = () => {
     })();
     return () => {
       const cleanup = async () => {
-        // Close the camera and hide the mask but not reset the SDK
-        await measurementApp.cancel(false);
         const logs = await measurementApp.getLogs();
         console.log('WMEA Logs:', logs);
         // Destroy the instance and free up resources
@@ -130,7 +140,12 @@ const Measurement = () => {
     setAppError(null);
   };
 
-  return <>{appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}</>;
+  return (
+    <div {...stylex.props(styles.container)}>
+      <MeasurementHeader />
+      {appError ? <ErrorMessage error={appError} onClear={onClear} /> : null}
+    </div>
+  );
 };
 
 export default Measurement;
