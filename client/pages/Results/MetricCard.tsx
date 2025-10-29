@@ -1,8 +1,6 @@
-import React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
-import type { Snapshot } from 'valtio';
-import { DfxPointId, Results } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { DfxPointId, Point } from '@nuralogix.ai/web-measurement-embedded-app';
 import { Heading, Paragraph } from '@nuralogix.ai/web-ui';
 import { BAND_COLOR_MAP } from './constants';
 import { MetricIcon } from './MetricIcon';
@@ -62,10 +60,7 @@ const styles = stylex.create({
   },
 });
 
-type PointsSnapshot = Snapshot<Results>['points'];
-type DefinedPoint = NonNullable<PointsSnapshot[DfxPointId]>;
-
-const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: DefinedPoint }) => {
+const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Point }) => {
   const { info, value, dial } = point;
   const { theme } = useSnapshot(state.general);
   const isDark = theme === 'dark';

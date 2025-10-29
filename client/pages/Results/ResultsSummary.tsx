@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useSnapshot } from 'valtio';
-import type { Snapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
-import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
-import { Heading, Paragraph } from '@nuralogix.ai/web-ui';
+import type { Results, ResultsTabId, PointGroupType } from './types';
+import { getOrderedGroupIds, getPointsForGroup } from './utils';
+import { Heading, Paragraph, Button } from '@nuralogix.ai/web-ui';
 import MetricCard from './MetricCard';
-import { getGroupsFromResults, getPointsForGroup } from './utils';
+import { handleMeasureAgain } from './utils/measureAgain';
 import state from '../../state';
+import { GROUP_I18N_KEY_MAP } from './constants';
 
 const styles = stylex.create({
   container: {
     height: '100vh',
     overflowY: 'auto',
     padding: 20,
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   },
   containerLight: {
     backgroundColor: '#f8fafc',
@@ -144,48 +145,33 @@ const styles = stylex.create({
       gap: 16,
     },
   },
+  measureAgainWrapper: {
+    marginTop: 16,
+  },
 });
 
-type ResultsSnapshot = Snapshot<Results>;
-
 interface ResultsSummaryProps {
-  results: ResultsSnapshot;
+  results: Results;
 }
 
 const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const { t } = useTranslation();
   const { theme } = useSnapshot(state.general);
   const isDark = theme === 'dark';
+  const navigate = useNavigate();
 
-  // Utility: convert group keys to readable labels
-  const getGroupLabel = (groupKey: string): string => {
-    const keyMap = {
-      metadata: 'RESULTS_GROUP_METADATA',
-      physical: 'RESULTS_GROUP_PHYSICAL',
-      generalRisks: 'RESULTS_GROUP_GENERAL_RISKS',
-      vitals: 'RESULTS_GROUP_VITALS',
-      physiological: 'RESULTS_GROUP_PHYSIOLOGICAL',
-      metabolicRisks: 'RESULTS_GROUP_METABOLIC_RISKS',
-      bloodBiomarkers: 'RESULTS_GROUP_BLOOD_BIOMARKERS',
-      overall: 'RESULTS_GROUP_OVERALL',
-      mental: 'RESULTS_GROUP_MENTAL',
-      surveys: 'RESULTS_GROUP_SURVEYS',
-    } as const;
+  const getGroupLabel = (group: PointGroupType): string => t(GROUP_I18N_KEY_MAP[group]);
 
-    return t(keyMap[groupKey as keyof typeof keyMap]);
-  };
-
-  // Dynamically generate tabs from groups present in results.points
-  const groups = getGroupsFromResults(results.points);
-  // Filter out metadata group as it will be displayed in header
-  const visibleGroups = groups.filter((group) => group !== 'metadata');
-  const tabs = [
+  const orderedVisibleGroups = getOrderedGroupIds(results);
+  const tabs: { id: ResultsTabId; name: string }[] = [
+    ...orderedVisibleGroups.map((group) => ({ id: group, name: getGroupLabel(group) })),
     { id: 'All', name: t('RESULTS_ALL_RESULTS') },
-    ...visibleGroups.map((group) => ({ id: group, name: getGroupLabel(group) })),
   ];
 
   const snr = results.points.SNR;
-  const [activeTab, setActiveTab] = useState<string>('All');
+  const [activeTab, setActiveTab] = useState<ResultsTabId>(tabs[0].id);
+
+  const isAllTab = (tab: ResultsTabId): tab is 'All' => tab === 'All';
 
   return (
     <div {...stylex.props(styles.container, isDark ? styles.containerDark : styles.containerLight)}>
@@ -199,6 +185,11 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
               {snr.info.unit && ` ${snr.info.unit}`}
             </Paragraph>
           )}
+          <div {...stylex.props(styles.measureAgainWrapper)}>
+            <Button variant="outline" onClick={handleMeasureAgain}>
+              {t('MEASURE_AGAIN')}
+            </Button>
+          </div>
         </div>
 
         {/* Navigation Tabs */}
@@ -222,10 +213,10 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
         </div>
 
         {/* Content */}
-        {activeTab === 'All' ? (
+        {isAllTab(activeTab) ? (
           <>
-            {visibleGroups.map((group) => {
-              const pointsForGroup = getPointsForGroup(results.points, group);
+            {orderedVisibleGroups.map((group) => {
+              const pointsForGroup = getPointsForGroup(results, group);
               if (pointsForGroup.length === 0) return null;
               return (
                 <div key={group} {...stylex.props(styles.groupSection)}>
@@ -243,7 +234,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
           </>
         ) : (
           <div {...stylex.props(styles.grid)}>
-            {getPointsForGroup(results.points, activeTab).map(([dfxPointId, pt]) => (
+            {getPointsForGroup(results, activeTab).map(([dfxPointId, pt]) => (
               <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
             ))}
           </div>

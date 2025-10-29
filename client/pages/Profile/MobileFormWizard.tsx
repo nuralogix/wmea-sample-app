@@ -1,18 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Heading, Card, Paragraph, Button } from '@nuralogix.ai/web-ui';
 import * as stylex from '@stylexjs/stylex';
 import { useTranslation } from 'react-i18next';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState } from './types';
 import { isAgeInvalid, isProfileInfoValid } from './utils/validationUtils';
-import { INITIAL_FORM_STATE, FORM_FIELDS, FORM_VALUES } from './constants';
+import { INITIAL_FORM_STATE, FORM_VALUES } from './constants';
 import { useFormSubmission } from './utils/formSubmissionUtils';
+import useUnitConversion from './hooks/useUnitConversion';
+import { usePrepopulateForm } from './hooks/usePrepopulateForm';
 import SexSelector from './Fields/SexSelector';
 import AgeField from './Fields/AgeField';
 import UnitSelector from './Fields/UnitSelector';
 import ImperialHeightField from './Fields/ImperialHeightField';
 import MetricHeightField from './Fields/MetricHeightField';
 import WeightField from './Fields/WeightField';
+import { useNavigate } from 'react-router';
+import state from '../../state';
 
 const MOBILE_STEPS = {
   SEX_AGE: 'sex_age',
@@ -110,17 +114,10 @@ const MobileFormWizard = () => {
   const [currentStep, setCurrentStep] = useState<MobileStep>(MOBILE_STEPS.SEX_AGE);
   const [formState, setFormState] = useState<FormState>(INITIAL_FORM_STATE);
   const { handleSubmit } = useFormSubmission();
+  const navigate = useNavigate();
 
-  // Clear height/weight when unit changes (same logic as web wizard)
-  useEffect(() => {
-    setFormState((prev) => ({
-      ...prev,
-      [FORM_FIELDS.HEIGHT_METRIC]: '',
-      [FORM_FIELDS.HEIGHT_FEET]: '',
-      [FORM_FIELDS.HEIGHT_INCHES]: '',
-      [FORM_FIELDS.WEIGHT]: '',
-    }));
-  }, [formState.unit]);
+  useUnitConversion(formState, setFormState);
+  usePrepopulateForm(setFormState);
 
   const goNext = () => {
     if (currentStep === MOBILE_STEPS.SEX_AGE) setCurrentStep(MOBILE_STEPS.BODY);
@@ -153,6 +150,19 @@ const MobileFormWizard = () => {
               />
             ))}
           </div>
+          <Button
+            variant="link"
+            type="button"
+            onClick={() => {
+              state.demographics.setDemographics({
+                ...state.demographics.demographics,
+                bypassProfile: true,
+              });
+              navigate('/measurement');
+            }}
+          >
+            {t('SKIP_PROFILE')}
+          </Button>
         </div>
         <div
           {...stylex.props(
