@@ -4,7 +4,7 @@ import { Heading } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import MobileMenu from '../MobileMenu';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
-import { LanguageToggleButton, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
+import { LanguageSelector, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
 
 const styles = stylex.create({
   header: {
@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
       </div>
       <div {...stylex.props(styles.desktopActions)}>
         <div {...stylex.props(styles.menuInner)}>
-          <LanguageToggleButton />
+          <LanguageSelector />
           <ThemeToggleControl />
           <LogoutButton />
         </div>

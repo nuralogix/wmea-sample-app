@@ -38,7 +38,6 @@ const ProfileInfo: React.FC<ProfileInfoProps> = ({ formState, setFormState, onNe
   const isMetric = formState.unit === FORM_VALUES.METRIC;
 
   const { sex, age, unit, heightMetric, heightFeet, heightInches, weight } = formState;
-
   return (
     <WizardStepWrapper onSubmit={onNext} isEnabled={isProfileInfoValid(formState)}>
       <SexSelector value={sex} onChange={createFieldHandler(FORM_FIELDS.SEX, setFormState)} />

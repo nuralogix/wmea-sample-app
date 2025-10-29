@@ -5,20 +5,7 @@ import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
 import state from '../../state';
 
-export const LanguageToggleButton: React.FC = () => {
-  const { language, setLanguage } = useSnapshot(state.general);
-
-  const handleClick = () => {
-    const nextLanguage = language === 'en' ? 'fr' : 'en';
-    setLanguage(nextLanguage);
-  };
-
-  return (
-    <Button variant="link" onClick={handleClick}>
-      {language === 'en' ? 'Français' : 'English'}
-    </Button>
-  );
-};
+export { LanguageSelector } from '../LanguageChange';
 
 export const ThemeToggleControl: React.FC = () => {
   const { theme, setTheme } = useSnapshot(state.general);

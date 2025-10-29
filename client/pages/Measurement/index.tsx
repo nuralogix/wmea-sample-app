@@ -44,9 +44,10 @@ const Measurement = () => {
         const options: MeasurementEmbeddedAppOptions = {
           container,
           top: '60px', // match measurement header height
-          language,
+          ...(language && { language }),
           appPath: './wmea',
-          apiUrl: 'api.deepaffex.ai',
+
+          // apiUrl: 'api.deepaffex.ai',
           settings: {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
@@ -124,7 +125,7 @@ const Measurement = () => {
       };
       cleanup();
     };
-  }, [demographics.bypassProfile]);
+  }, []);
 
   // Listen for theme changes and update the measurement app
   useEffect(() => {
@@ -133,7 +134,9 @@ const Measurement = () => {
 
   // Listen for language changes and update the measurement app
   useEffect(() => {
-    measurementApp.setLanguage(language);
+    if (language) {
+      measurementApp.setLanguage(language);
+    }
   }, [language]);
 
   const onClear = () => {

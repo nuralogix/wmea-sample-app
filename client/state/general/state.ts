@@ -15,8 +15,12 @@ const generalState: GeneralState = proxy({
   language: savedLanguage,
   setLanguage: (language) => {
     generalState.language = language;
-    localStorage.setItem('language', language);
-    i18n.changeLanguage(language);
+    if (language === null) {
+      localStorage.setItem('language', 'null');
+    } else {
+      localStorage.setItem('language', language);
+      i18n.changeLanguage(language);
+    }
   },
 });
 

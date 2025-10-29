@@ -21,6 +21,7 @@ export const CANCEL_ON_ERROR_CODES: ErrorCodes[] = [
   ErrorCodes.PAGE_NOT_VISIBLE,
   ErrorCodes.WORKER_ERROR,
   ErrorCodes.COLLECTOR,
+  ErrorCodes.WEBSOCKET_DISCONNECTED,
 ] as const;
 export type CancelOnErrorCode = (typeof CANCEL_ON_ERROR_CODES)[number];
 

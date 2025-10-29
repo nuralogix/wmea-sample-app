@@ -2,6 +2,7 @@ import { Card, Button, Paragraph, Camera, Glasses, Stopwatch, Warning } from '@n
 import { useTranslation } from 'react-i18next';
 import * as stylex from '@stylexjs/stylex';
 import { useNavigate } from 'react-router';
+import { handleMeasureAgain } from './utils/measureAgain';
 
 const styles = stylex.create({
   wrapper: {
@@ -74,7 +75,7 @@ const ResultsError = () => {
             <Paragraph>{t(textKey)}</Paragraph>
           </div>
         ))}
-        <Button width="100%" variant="primary" onClick={() => navigate('/measurement')}>
+        <Button width="100%" variant="primary" onClick={handleMeasureAgain}>
           {t('MEASURE_AGAIN')}
         </Button>
         <div {...stylex.props(styles.center, styles.mt12)}>

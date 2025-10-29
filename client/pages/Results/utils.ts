@@ -1,28 +1,45 @@
-import type { Results, DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
-import type { Snapshot } from 'valtio';
+import type { PointGroupType, DfxPointId, Point, Results } from './types';
 
-type PointsSnapshot = Snapshot<Results>['points'];
+/** Preferred display order for result point groups (others follow afterward). */
+export const PREFERRED_GROUP_ORDER: PointGroupType[] = [
+  'vitals',
+  'generalRisks',
+  'metabolicRisks',
+  'bloodBiomarkers',
+  'physical',
+  'physiological',
+  'mental',
+];
 
-// Utility: get all unique groups present in results.points
-export function getGroupsFromResults(points: PointsSnapshot) {
-  const groupSet = new Set<string>();
-  Object.values(points).forEach((pt) => {
-    if (pt.meta.group) groupSet.add(pt.meta.group);
-  });
-  return Array.from(groupSet);
+/** Collect distinct non-metadata group ids present in a Results object. */
+export function getGroupsFromResults(results: Results): PointGroupType[] {
+  const groups: Set<PointGroupType> = new Set();
+  for (const pt of Object.values(results.points)) {
+    const g = pt?.meta?.group;
+    if (g && g !== 'metadata') groups.add(g);
+  }
+  return Array.from(groups);
 }
 
-// Utility: get all points for a group
-export function getPointsForGroup(points: PointsSnapshot, group: string) {
-  return Object.entries(points).filter(
-    (
-      entry
-    ): entry is [
-      DfxPointId,
-      PointsSnapshot[DfxPointId] & NonNullable<Results['points'][DfxPointId]>,
-    ] => {
-      const [, pt] = entry;
-      return Boolean(pt && pt.meta.group === group);
+/** Return group ids ordered by preference first, then remaining in discovery order. */
+export function getOrderedGroupIds(results: Results): PointGroupType[] {
+  const groups = getGroupsFromResults(results);
+  if (groups.length === 0) return [];
+  const groupSet = new Set(groups);
+  // 1. Add in preferred order
+  const ordered = PREFERRED_GROUP_ORDER.filter((g) => groupSet.has(g));
+  // 2. Append any remaining (non-preferred) groups in original discovery order
+  const remaining = groups.filter((g) => !PREFERRED_GROUP_ORDER.includes(g));
+  return [...ordered, ...remaining];
+}
+
+/** All point entries for a given group as [id, point] tuples. */
+export function getPointsForGroup(results: Results, group: PointGroupType): [DfxPointId, Point][] {
+  const out: [DfxPointId, Point][] = [];
+  for (const [id, pt] of Object.entries(results.points)) {
+    if (pt && pt.meta.group === group) {
+      out.push([id as DfxPointId, pt]);
     }
-  );
+  }
+  return out;
 }

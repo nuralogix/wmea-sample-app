@@ -16,7 +16,7 @@ const styles = stylex.create({
     margin: 0,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'hidden',
+    overflowX: 'hidden',
   },
 });
 
@@ -41,13 +41,13 @@ const App = () => {
   if (!isLangInitialized) return null;
 
   return (
-      <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-        <Container>
-          <div {...stylex.props(styles.wrapper)}>
-            <AppRouter />
-          </div>
-        </Container>
-      </ThemeProvider>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <Container>
+        <div {...stylex.props(styles.wrapper)}>
+          <AppRouter />
+        </div>
+      </Container>
+    </ThemeProvider>
   );
 };
 

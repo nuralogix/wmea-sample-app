@@ -1,7 +1,7 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { Button, HamburgerMenu, Cross, Card } from '@nuralogix.ai/web-ui';
-import { LanguageToggleButton, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
+import { LanguageSelector, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
 
 const styles = stylex.create({
   mobileMenuToggle: {
@@ -77,7 +77,7 @@ const MobileMenu: React.FC = () => {
           <Card width="100%">
             <div {...stylex.props(styles.menuInner)}>
               <div {...stylex.props(styles.menuItem)}>
-                <LanguageToggleButton />
+                <LanguageSelector />
               </div>
               <div {...stylex.props(styles.separator)} />
               <div {...stylex.props(styles.menuItem)}>
