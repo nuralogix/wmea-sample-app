@@ -54,7 +54,7 @@ Create `.dev.env` and `.prod.env` in root with:
 
 ```
 NODE_ENV=development|production
-API_URL=api.deepaffex.ai
+API_URL=api.na-east.deepaffex.ai
 STUDY_ID=your_study_id
 LICENSE_KEY=your_license_key
 ```

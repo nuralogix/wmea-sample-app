@@ -47,7 +47,7 @@ const Measurement = () => {
           ...(language && { language }),
           appPath: './wmea',
 
-          // apiUrl: 'api.deepaffex.ai',
+          // apiUrl: 'api.na-east.deepaffex.ai',
           settings: {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
