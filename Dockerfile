@@ -1,5 +1,5 @@
 # Stage 1 - base setup for both client and server
-ARG NODE_IMAGE="node:24.3.0-bookworm-slim"
+ARG NODE_IMAGE="node:25.0.0-trixie-slim"
 
 # Stage 1 - Install dependencies only when needed
 FROM ${NODE_IMAGE} AS dependencies

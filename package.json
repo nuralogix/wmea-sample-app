@@ -59,7 +59,7 @@
     "typescript-eslint": "^8.25.0"
   },
   "dependencies": {
-    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-alpha.19",
+    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-beta.1",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.13",
     "@stylexjs/stylex": "0.9.3",
     "i18next": "^25.3.2",
@@ -75,7 +75,7 @@
     "node": ">=24"
   },
   "browserslist": [
-    "Safari >= 17",
+    "Safari >= 18",
     "last 3 versions"
   ]
 }
