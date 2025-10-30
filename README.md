@@ -2,6 +2,8 @@
 
 # Web Measurement Embedded App - React Sample Application
 
+![Sample App Screenshot](./wmea_sample_app_customer_view.png)
+
 ## Create environment variables
 
 Create two env files. One for production and one for development.
@@ -49,13 +51,13 @@ yarn serve:dev
 
 Open a terminal windows and run:
 
-``` bash
+```bash
 yarn build
 ```
 
 Open another terminal windows and run:
 
-``` bash
+```bash
 cd server
 yarn serve:prod
 ```
@@ -108,7 +110,7 @@ If the backend only registers a license and returns a device token to perform an
 
 You can see the exact list of browser versions that match your config by running:
 
-``` bash
+```bash
 npx browserslist
 ```
 
@@ -123,4 +125,3 @@ In the package.json, modify the browserslist section to update the list of suppo
 
 - `Safari >= 18` tells build tools: don’t support Safari below 18.
 - `last 3 versions` still covers other browsers (Chrome, Firefox, Edge).
-
