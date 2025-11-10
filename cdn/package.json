@@ -1,0 +1,12 @@
+{
+  "name": "wmea-sample-app-cdn",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning index.mjs"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

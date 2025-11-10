@@ -14,40 +14,37 @@ const sharedRules = {
   ...tseslint.configs.strictTypeChecked.rules,
   ...tseslint.configs.stylisticTypeChecked.rules,
   ...valtio.configs['flat/recommended'].rules,
-  "no-console": "error",
-  "semi": "error",
-  '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
-}
+  'no-console': 'error',
+  semi: 'error',
+  '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+};
 
 export default [
   {
-    ignores: [
-      '**/node_modules/**',
-      '**/dist/**',
-    ],
+    ignores: ['**/node_modules/**', '**/dist/**'],
   },
-  // linting client folder
+  // linting react folder
   {
-    files: ["client/**/*.{ts,tsx}"],
+    files: ['react/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       parser: tsParser,
-      "parserOptions": {
-        project: "client/tsconfig.json",
-        "ecmaFeatures": {
-          "jsx": true
-        }
-      }, 
+      parserOptions: {
+        project: 'react/tsconfig.json',
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
       globals: {
         ...globals.es2022,
         ...globals.browser,
-        ...globals.node
-      }      
+        ...globals.node,
+      },
     },
     plugins: {
-      'react': eslintPluginReact,
+      react: eslintPluginReact,
       'react-hooks': eslintPluginReactHooks,
-      'jsx-a11y': jsxA11yPlugin
+      'jsx-a11y': jsxA11yPlugin,
     },
     settings: {
       react: {
@@ -69,18 +66,18 @@ export default [
   },
   // linting server folder
   {
-    files: ["server/**/*.ts"],
+    files: ['server/**/*.ts'],
     languageOptions: {
       parser: tsParser,
-      "parserOptions": {
-        project: "server/tsconfig.json",
+      parserOptions: {
+        project: 'server/tsconfig.json',
       },
       globals: {
-        ...globals.node
-      }      
+        ...globals.node,
+      },
     },
     rules: {
       ...sharedRules,
-    }    
-  },  
+    },
+  },
 ];

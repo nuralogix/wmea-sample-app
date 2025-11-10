@@ -1,10 +1,10 @@
-# Stage 1 - base setup for both client and server
+# Stage 1 - base setup for both react app and server
 ARG NODE_IMAGE="node:25.0.0-trixie-slim"
 
 # Stage 1 - Install dependencies only when needed
 FROM ${NODE_IMAGE} AS dependencies
 
-# Build client dependencies
+# Build react app dependencies
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
@@ -16,10 +16,11 @@ RUN cd server && yarn install --frozen-lockfile --production
 FROM ${NODE_IMAGE} AS builder
 
 ENV NODE_ENV=production
-COPY client ./client
+COPY react ./react
 COPY --from=dependencies /node_modules ./node_modules
 COPY package.json yarn.lock tsconfig.json ./
-RUN yarn rollup --config ./client/config/rollup.config.mjs
+RUN printf "NODE_ENV=production\n" > .prod.env
+RUN yarn build
 
 # Stage 3 - the production environment
 FROM ${NODE_IMAGE} AS deploy

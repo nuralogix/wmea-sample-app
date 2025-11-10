@@ -9,13 +9,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "node --env-file=.prod.env ./node_modules/rollup/dist/bin/rollup --config ./client/config/rollup.config.mjs",
-    "watch": "node --env-file=.dev.env ./node_modules/rollup/dist/bin/rollup --config ./client/config/rollup.config.mjs --watch",
+    "build": "node --env-file=.prod.env ./node_modules/rollup/dist/bin/rollup --config ./react/config/rollup.config.mjs",
+    "watch": "node --env-file=.dev.env ./node_modules/rollup/dist/bin/rollup --config ./react/config/rollup.config.mjs --watch",
     "lint": "eslint",
-    "typecheck:client": "tsc --noEmit --project client/tsconfig.json",
+    "typecheck:react": "tsc --noEmit --project react/tsconfig.json",
     "typecheck:server": "tsc --noEmit --project server/tsconfig.json",
-    "typecheck": "yarn run typecheck:client && yarn run typecheck:server",
-    "format:client": "prettier --write 'client/**/*.{ts,tsx}'",
+    "typecheck": "yarn run typecheck:react && yarn run typecheck:server",
+    "format:react": "prettier --write 'react/**/*.{ts,tsx}'",
     "format:server": "prettier --write 'server/**/*.{ts,tsx}'"
   },
   "keywords": [

@@ -21,7 +21,7 @@ if (!isDevelopment) deleteTargets.push(`${distFolder}/.build-done`);
 
 const config = [
   {
-    input: './client/index.tsx',
+  input: './react/index.tsx',
     output: [
       {
         dir: `./${distFolder}`,
@@ -78,7 +78,7 @@ const config = [
       // Copy WMEA to wmea folder inside dist folder
       copy({
         targets: [
-          { src: 'client/language/*.json', dest: 'dist/language' },
+          { src: 'react/language/*.json', dest: 'dist/language' },
           {
             src: 'node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
             dest: `${distFolder}/wmea`,
