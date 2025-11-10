@@ -57,12 +57,39 @@ The production server uses `.prod.env` to register licenses and issue measuremen
 
 Containerize the React + Express stack with the provided multi-stage `Dockerfile`:
 
+### Build image
+
 ```bash
 docker build -t wmea .
+```
+
+### Run image
+
+```bash
 docker run --env-file .prod.env -p 3000:3000 -d wmea
 ```
 
-Open http://localhost:3000, then use `docker logs <container>` or `docker stop <container>` as needed.
+When the container is up, open http://localhost:3000/ to load the app.
+
+### View logs
+
+```bash
+# list running containers to find the id or name
+docker ps
+
+# stream application log output
+docker logs <container id>
+```
+
+### Stop image
+
+```bash
+# list running containers
+docker ps
+
+# stop the container
+docker stop <container id>
+```
 
 ## SDK region handling
 

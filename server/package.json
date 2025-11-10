@@ -31,7 +31,6 @@
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
     "@types/livereload": "^0.9.5",
-    "@types/minimatch": "^6.0.0",
     "@types/node": "^24.0.6",
     "cross-env": "^7.0.3"
   }
