@@ -19,8 +19,7 @@ ENV NODE_ENV=production
 COPY react ./react
 COPY --from=dependencies /node_modules ./node_modules
 COPY package.json yarn.lock tsconfig.json ./
-RUN printf "NODE_ENV=production\n" > .prod.env
-RUN yarn build
+RUN yarn rollup --config ./react/config/rollup.config.mjs
 
 # Stage 3 - the production environment
 FROM ${NODE_IMAGE} AS deploy
