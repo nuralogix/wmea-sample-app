@@ -4,9 +4,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node --disable-warning=ExperimentalWarning index.mjs"
+    "start": "node --env-file=.dev.env index.mjs"
   },
   "dependencies": {
+    "@nuralogix.ai/dfx-api-client": "^1.0.73",
+    "compression": "^1.8.0",
+    "cors": "^2.8.5",
     "express": "^5.1.0"
   }
 }

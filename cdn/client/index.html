@@ -23,7 +23,7 @@
         const container = document.getElementById('measurement-embedded-app-container');
 
         if (container) {
-            const apiUrl = 'http://localhost:3000/api';
+            const apiUrl = `${window.location.origin}/api`;
 
             try {
                 const studyId = await fetch(`${apiUrl}/studyId`);

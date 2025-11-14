@@ -1,24 +1,45 @@
+
 # CDN Sample App
 
-Minimal static demo that loads the Web Measurement Embedded App (WMEA) straight from the public CDN.
+Minimal static demo that loads the Web Measurement Embedded App (WMEA) straight from the public CDN. Everything needed to run the widget and exchange credentials with the DeepAffex APIs lives inside this folder: static assets plus a tiny Express proxy.
 
 ## Prerequisites
 
-- Node.js 18+
-- `.dev.env` populated in the repository root
-- Proxy server running (`cd server && yarn serve:dev`) to handle `/api/studyId` and `/api/token`
+- Node.js 20 or newer
+- Yarn 1.x or npm 9+
 
-## Run the demo
+## Environment Variables
+
+Copy the example env file and populate it with your DeepAffex credentials:
 
 ```bash
-cd cdn
+cp .dev.env.example .dev.env
+```
+
+Required values:
+
+- `API_URL` – DeepAffex API hostname (for example `api.na-east.deepaffex.ai`)
+- `STUDY_ID` – Study identifier configured in DeepAffex
+- `LICENSE_KEY` – License key registered for the study
+- `PORT` (optional) – Port for the local server (`7000` default)
+
+## Install Dependencies
+
+```bash
+yarn install
+```
+
+## Run the Demo
+
+```bash
 yarn start
 ```
 
-Open `http://localhost:7000` in a browser while the proxy at `http://localhost:3000` is running.
+Then open <http://localhost:7000> (or the port you configured). The Express server serves `client/index.html` and exposes `/api/studyId` plus `/api/token`.
 
-## File layout
+## File Layout
 
-- `client/index.html` – Inline script that imports the WMEA package via an import map and points `appPath` to the CDN assets
-- `index.mjs` – Small static file server that serves the `client/` folder
-- `package.json` – Single `start` script for the server
+- `client/index.html` – Inline script that imports the WMEA package via an import map and boots the widget
+- `index.mjs` – Express server that serves static assets and proxies DeepAffex credential calls
+- `.dev.env.example` – Sample environment file
+- `package.json` – Scripts and dependencies for the CDN demo

@@ -21,7 +21,7 @@ if (!isDevelopment) deleteTargets.push(`${distFolder}/.build-done`);
 
 const config = [
   {
-  input: './react/index.tsx',
+    input: './index.tsx',
     output: [
       {
         dir: `./${distFolder}`,
@@ -72,13 +72,17 @@ const config = [
       html({
         fileName: 'index.html',
         template: ({ bundle, files }) => {
-          return getpageTemplate('Web Measurement Embedded App', Object.keys(bundle)[0], files.css[0].fileName);
+          return getpageTemplate(
+            'Web Measurement Embedded App',
+            Object.keys(bundle)[0],
+            files.css[0].fileName
+          );
         },
       }),
       // Copy WMEA to wmea folder inside dist folder
       copy({
         targets: [
-          { src: 'react/language/*.json', dest: 'dist/language' },
+          { src: 'language/*.json', dest: `${distFolder}/language` },
           {
             src: 'node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
             dest: `${distFolder}/wmea`,

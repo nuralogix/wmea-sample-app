@@ -6,8 +6,10 @@ import eslintPluginReact from 'eslint-plugin-react';
 import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 import globals from 'globals';
 import valtio from 'eslint-plugin-valtio';
+import { fileURLToPath } from 'url';
 
-// shared rules
+const tsconfigRootDir = fileURLToPath(new URL('.', import.meta.url));
+
 const sharedRules = {
   ...eslint.configs.recommended.rules,
   ...tseslint.configs.recommendedTypeChecked.rules,
@@ -21,16 +23,16 @@ const sharedRules = {
 
 export default [
   {
-    ignores: ['**/node_modules/**', '**/dist/**'],
+    ignores: ['dist/**', 'node_modules/**'],
   },
-  // linting react folder
   {
-    files: ['react/**/*.{ts,tsx}'],
+    files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2022,
       parser: tsParser,
       parserOptions: {
-        project: 'react/tsconfig.json',
+        project: ['./tsconfig.json'],
+        tsconfigRootDir,
         ecmaFeatures: {
           jsx: true,
         },
@@ -64,13 +66,13 @@ export default [
       'valtio/avoid-this-in-proxy': 'warn',
     },
   },
-  // linting server folder
   {
     files: ['server/**/*.ts'],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
-        project: 'server/tsconfig.json',
+        project: ['./server/tsconfig.json'],
+        tsconfigRootDir,
       },
       globals: {
         ...globals.node,

@@ -2,100 +2,39 @@
 
 ![Sample App Screenshot](./wmea_sample_app_customer_view.png)
 
-## Repository overview
+This repository contains two fully self-contained examples of the Web Measurement Embedded App (WMEA). Each folder includes everything needed to run independently—source code, server, dependencies, environment templates, and documentation.
 
-This repo contains two example apps:
+## Sample Applications
 
-- **React app (default)** – Located under `react/`, this is the comprehensive SPA with (mock) authentication, demographic profile form, measurement workflow, and rich results dashboard. The root `package.json` scripts (`yarn watch`, `yarn build`, etc.) operate on this app, and the Express proxy in `server/` serves it.
-- **CDN demo** – Found in `cdn/`, this minimal static example embeds the WMEA widget directly from a CDN. See `cdn/README.md` for usage notes.
+- **`react/`** – Full-featured React SPA with (mock) authentication, demographic capture, measurement workflow, and results dashboard. Includes Rollup build pipeline and Express proxy server. See `react/README.md` for details.
 
-## React app quickstart
+- **`cdn/`** – Minimal static example that loads the WMEA widget directly from the CDN. Includes a lightweight Express server for token exchange. See `cdn/README.md` for details.
 
-### 1. Environment variables
 
-Create `.dev.env` and `.prod.env` in the repository root:
+## Getting Started
 
-```
-# .dev.env
-NODE_ENV=development
-API_URL=api.na-east.deepaffex.ai
-STUDY_ID=
-LICENSE_KEY=
+1. Clone the repository
+2. Choose which sample you want to run (`react/` or `cdn/`)
+3. Navigate to that folder and follow its README for:
+   - Environment variable setup (both use `.dev.env.example` and `.prod.env.example`)
+   - Dependency installation
+   - Development and production workflows
 
-# .prod.env
-NODE_ENV=production
-API_URL=api.na-east.deepaffex.ai
-STUDY_ID=
-LICENSE_KEY=
-```
+## Common Configuration
 
-### 2. Install dependencies
+Both samples require DeepAffex API credentials configured via environment files:
 
-```bash
-yarn
-```
+- `API_URL` – DeepAffex API hostname (e.g., `api.na-east.deepaffex.ai`)
+- `STUDY_ID` – Study identifier from DeepAffex portal
+- `LICENSE_KEY` – License key registered for your study
 
-### 3. Run in development
+Each sample folder contains `.dev.env.example` and `.prod.env.example` templates—copy and populate them with your credentials.
 
-```bash
-yarn watch            # Builds the React app with live reload
-cd server && yarn serve:dev
-```
+## SDK Region Handling
 
-Visit http://localhost:3000 once both processes are running. The React build writes to `dist/`, and the Express server proxies API requests while serving those assets.
+When `apiUrl` is omitted during WMEA widget initialization, the SDK automatically derives the region from the authentication token. This ensures the frontend stays aligned with your backend license region and is recommended for most deployments.
 
-### 4. Build for production
-
-```bash
-yarn build            # Produces dist/ assets
-cd server && yarn serve:prod
-```
-
-The production server uses `.prod.env` to register licenses and issue measurement tokens.
-
-## Docker workflow
-
-Containerize the React + Express stack with the provided multi-stage `Dockerfile`:
-
-### Build image
-
-```bash
-docker build -t wmea .
-```
-
-### Run image
-
-```bash
-docker run --env-file .prod.env -p 3000:3000 -d wmea
-```
-
-When the container is up, open http://localhost:3000/ to load the app.
-
-### View logs
-
-```bash
-# list running containers to find the id or name
-docker ps
-
-# stream application log output
-docker logs <container id>
-```
-
-### Stop image
-
-```bash
-# list running containers
-docker ps
-
-# stop the container
-docker stop <container id>
-```
-
-## SDK region handling
-
-If `apiUrl` is omitted when initializing the WMEA widget, the SDK derives it from the token’s region. That keeps the frontend aligned with the backend license region and is suitable for most deployments. Setting `apiUrl` explicitly forces requests to a specific region, but you are responsible for ensuring regulatory and latency requirements. Measurements are stored in the token’s region; computation occurs wherever the frontend communicates.
-
-When your backend simply registers a license and returns a device token for anonymous measurements, the token region mirrors the `API_URL` passed to the backend.
+If you set `apiUrl` explicitly, you're responsible for ensuring it matches regulatory and latency requirements. Measurements are always stored in the token's region; computation occurs wherever the frontend communicates.
 
 ## Browserslist reminder
 
