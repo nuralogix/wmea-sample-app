@@ -5,6 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Measurement Embedded App Demo</title>
+    <style>
+        #measurement-embedded-app-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 60px);
+        }
+    </style>
     <script type="importmap">
         {
             "imports": {
@@ -34,13 +43,19 @@
                 if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
                     measurementApp.init({
                         container,
-                        top: '0px',
                         appPath: 'https://unpkg.com/@nuralogix.ai/web-measurement-embedded-app/dist',
                         // language: 'fr',
                         settings: {
                             token: tokenResponse.token,
                             refreshToken: tokenResponse.refreshToken,
                             studyId: studyIdResponse.studyId,
+                        },
+                        config: {
+                            checkConstraints: true,
+                            cameraFacingMode: 'user',
+                            cameraAutoStart: false,
+                            measurementAutoStart: false,
+                            cancelWhenLowSNR: true,
                         },
                         profile: {
                             age: 40,

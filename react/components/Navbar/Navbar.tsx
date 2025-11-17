@@ -1,10 +1,11 @@
 import React from 'react';
 import * as stylex from '@stylexjs/stylex';
-import { Heading } from '@nuralogix.ai/web-ui';
+import { Heading, Label } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
 import MobileMenu from '../MobileMenu';
 import { useMobileDetection } from '../../hooks/useMobileDetection';
 import { LanguageSelector, ThemeToggleControl, LogoutButton } from '../UserControlButtons';
+import MeasurementEmbeddedApp from '@nuralogix.ai/web-measurement-embedded-app';
 
 const styles = stylex.create({
   header: {
@@ -15,6 +16,10 @@ const styles = stylex.create({
     height: '60px',
     borderBottom: '1px solid var(--border-color, #e0e0e0)',
     boxSizing: 'border-box',
+  },
+  titleRow: {
+    display: 'flex',
+    alignItems: 'baseline',
   },
   title: {
     margin: 0,
@@ -49,8 +54,11 @@ const Navbar: React.FC = () => {
 
   return (
     <header {...stylex.props(styles.header)}>
-      <div {...stylex.props(styles.title)}>
-        <Heading>{t(titleKey as any)}</Heading>
+      <div {...stylex.props(styles.titleRow)}>
+        <div {...stylex.props(styles.title)}>
+          <Heading>{t(titleKey as any)}</Heading>
+        </div>
+        <Label>v{MeasurementEmbeddedApp.VERSION}</Label>
       </div>
       <div {...stylex.props(styles.desktopActions)}>
         <div {...stylex.props(styles.menuInner)}>

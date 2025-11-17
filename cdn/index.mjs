@@ -1,5 +1,4 @@
 import express from 'express';
-import compression from 'compression';
 import cors from 'cors';
 import client, { enums } from '@nuralogix.ai/dfx-api-client';
 import { resolve, join } from 'path';
@@ -9,7 +8,6 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const clientRoot = resolve(__dirname, 'client');
 const { DeviceTypeID } = enums;
 const { API_URL, LICENSE_KEY, STUDY_ID } = process.env;
-const NODE_ENV = process.env.NODE_ENV ?? 'development';
 
 function assertEnv(name, value) {
   if (!value) {
@@ -33,9 +31,6 @@ export function createApp() {
   const apiClient = createApiClient();
 
   app.use(cors({ credentials: true, origin: '*' }));
-  if (NODE_ENV === 'production') {
-    app.use(compression());
-  }
 
   app.get('/health', (_req, res) => {
     res.json({ status: 'ok' });
@@ -50,17 +45,18 @@ export function createApp() {
 
   app.get('/api/token', async (_req, res) => {
     try {
-      const registerLicense = await apiClient.http.organizations.registerLicense(
-        {
-          Key: assertEnv('LICENSE_KEY', LICENSE_KEY),
-          DeviceTypeID: DeviceTypeID.WIN32,
-          Name: 'Anura Web Core SDK',
-          Identifier: 'ANURA_WEB_CORE_SDK',
-          Version: '0.1.0-alpha.36',
-          TokenExpiresIn: 60 * 60,
-        },
-        false
-      );
+      const registerLicense =
+        await apiClient.http.organizations.registerLicense(
+          {
+            Key: assertEnv('LICENSE_KEY', LICENSE_KEY),
+            DeviceTypeID: DeviceTypeID.WIN32,
+            Name: 'Anura Web Core SDK',
+            Identifier: 'ANURA_WEB_CORE_SDK',
+            Version: '0.1.0-alpha.36',
+            TokenExpiresIn: 60 * 60,
+          },
+          false
+        );
 
       const { status, body } = registerLicense;
       if (status === '200') {
@@ -94,6 +90,9 @@ export function startServer() {
   return server;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(process.argv[1]).href
+) {
   startServer();
 }

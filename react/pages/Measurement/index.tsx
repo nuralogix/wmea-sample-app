@@ -33,6 +33,7 @@ const Measurement = () => {
   useEffect(() => {
     (async function () {
       const container = document.createElement('div');
+      container.id = 'measurement-embedded-app-container';
 
       const apiUrl = '/api';
       const studyId = await fetch(`${apiUrl}/studyId`);
@@ -43,10 +44,8 @@ const Measurement = () => {
       if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
         const options: MeasurementEmbeddedAppOptions = {
           container,
-          top: '60px', // match measurement header height
           ...(language && { language }),
           appPath: './wmea',
-
           // apiUrl: 'api.na-east.deepaffex.ai',
           settings: {
             token: tokenResponse.token,
@@ -59,6 +58,7 @@ const Measurement = () => {
             cameraFacingMode: 'user',
             cameraAutoStart: false,
             measurementAutoStart: false,
+            cancelWhenLowSNR: true,
           },
           loadError: function (error) {
             console.error('load error', error);

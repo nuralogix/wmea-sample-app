@@ -5,10 +5,7 @@ import state from './state';
 import AppRouter from './components/AppRouter';
 import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
-import initI18n from './language/i18n';
-import { supportedLanguages } from './language/constants';
-import { useEffect, useState } from 'react';
-import { type SupportedLanguage } from './types';
+import { useInitializeLanguage } from './hooks/useInitializeLanguage';
 
 const styles = stylex.create({
   wrapper: {
@@ -21,22 +18,8 @@ const styles = stylex.create({
 });
 
 const App = () => {
-  const { theme, language } = useSnapshot(state.general);
-  const [isLangInitialized, setIsLangInitialized] = useState(false);
-
-  useEffect(() => {
-    const browserLanguage = navigator.language.split('-')[0];
-    const matchedLanguage = (
-      supportedLanguages.includes(browserLanguage) ? browserLanguage : 'en'
-    ) as SupportedLanguage;
-    const languageToSet = language || matchedLanguage;
-
-    const languageFilesPath = `./language/strings.{{lng}}.json`;
-
-    initI18n(`${languageFilesPath}`, languageToSet).then(() => {
-      setIsLangInitialized(true);
-    });
-  }, []);
+  const { theme } = useSnapshot(state.general);
+  const isLangInitialized = useInitializeLanguage();
 
   if (!isLangInitialized) return null;
 

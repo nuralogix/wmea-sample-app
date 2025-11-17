@@ -8,8 +8,7 @@ This repository contains two fully self-contained examples of the Web Measuremen
 
 - **`react/`** – Full-featured React SPA with (mock) authentication, demographic capture, measurement workflow, and results dashboard. Includes Rollup build pipeline and Express proxy server. See `react/README.md` for details.
 
-- **`cdn/`** – Minimal static example that loads the WMEA widget directly from the CDN. Includes a lightweight Express server for token exchange. See `cdn/README.md` for details.
-
+- **`cdn/`** – Minimal static example that loads the WMEA directly from the CDN. Includes a lightweight Express server for token exchange. See `cdn/README.md` for details.
 
 ## Getting Started
 
@@ -32,7 +31,7 @@ Each sample folder contains `.dev.env.example` and `.prod.env.example` templates
 
 ## SDK Region Handling
 
-When `apiUrl` is omitted during WMEA widget initialization, the SDK automatically derives the region from the authentication token. This ensures the frontend stays aligned with your backend license region and is recommended for most deployments.
+When `apiUrl` is omitted during WMEA initialization, the SDK automatically derives the region from the authentication token. This ensures the frontend stays aligned with your backend license region and is recommended for most deployments.
 
 If you set `apiUrl` explicitly, you're responsible for ensuring it matches regulatory and latency requirements. Measurements are always stored in the token's region; computation occurs wherever the frontend communicates.
 

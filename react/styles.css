@@ -10,3 +10,11 @@ body,
   margin: 0;
   height: 100vh;
 }
+
+#measurement-embedded-app-container {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 60px);
+}

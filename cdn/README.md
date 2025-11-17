@@ -1,12 +1,6 @@
-
 # CDN Sample App
 
-Minimal static demo that loads the Web Measurement Embedded App (WMEA) straight from the public CDN. Everything needed to run the widget and exchange credentials with the DeepAffex APIs lives inside this folder: static assets plus a tiny Express proxy.
-
-## Prerequisites
-
-- Node.js 20 or newer
-- Yarn 1.x or npm 9+
+Minimal static demo that loads the Web Measurement Embedded App (WMEA) straight from the public CDN.
 
 ## Environment Variables
 
@@ -39,7 +33,7 @@ Then open <http://localhost:7000> (or the port you configured). The Express serv
 
 ## File Layout
 
-- `client/index.html` – Inline script that imports the WMEA package via an import map and boots the widget
+- `client/index.html` – Inline script that imports the WMEA package via an import map and boots the app
 - `index.mjs` – Express server that serves static assets and proxies DeepAffex credential calls
 - `.dev.env.example` – Sample environment file
 - `package.json` – Scripts and dependencies for the CDN demo

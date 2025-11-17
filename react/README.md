@@ -1,11 +1,6 @@
 # React Sample App
 
-This folder contains the complete React implementation of the Web Measurement Embedded App (WMEA) sample. The app bundles the React client, build tooling, and an Express server that proxies the Nuralogix APIs.
-
-## Prerequisites
-
-- Node.js 20 or newer (Node 22/24 are recommended)
-- Yarn 1.x or npm 9+
+This folder contains the complete React implementation of the Web Measurement Embedded App (WMEA) sample.
 
 ## Environment Variables
 
@@ -91,21 +86,3 @@ To stop the container:
 docker ps                    # find container id
 docker stop <container_id>
 ```
-
-## Project Structure
-
-```
-react/
-├── App.tsx                 # Application entry component
-├── Dockerfile              # Production image that builds + serves the app
-├── .dev.env.example        # Sample development env values
-├── .prod.env.example       # Sample production env values
-├── config/                 # Rollup configuration & plugins
-├── language/               # i18n resources
-├── pages/, components/, …  # React feature code
-├── server/                 # Express proxy server
-├── dist/                   # Generated at build time
-└── scripts/                # HTML template helpers
-```
-
-Everything needed to run the React experience lives inside this directory. If you only need the React application you can copy or clone this folder independently of the rest of the repository.
