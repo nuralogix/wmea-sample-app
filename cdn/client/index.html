@@ -32,7 +32,7 @@
         const container = document.getElementById('measurement-embedded-app-container');
 
         if (container) {
-            const apiUrl = `${window.location.origin}/api`;
+            const apiUrl = '/api';
 
             try {
                 const studyId = await fetch(`${apiUrl}/studyId`);

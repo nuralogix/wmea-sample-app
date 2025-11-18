@@ -15,7 +15,7 @@ import postcssImport from 'postcss-import';
 import stylexPlugin from '@stylexjs/rollup-plugin';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const distFolder = 'dist';
+const distFolder = '../dist';
 const deleteTargets = [`${distFolder}/*`];
 if (!isDevelopment) deleteTargets.push(`${distFolder}/.build-done`);
 
@@ -24,14 +24,14 @@ const config = [
     input: './index.tsx',
     output: [
       {
-        dir: `./${distFolder}`,
+        dir: `${distFolder}`,
         format: 'es',
         sourcemap: isDevelopment,
         entryFileNames: 'bundle-[hash].mjs',
       },
     ],
     plugins: [
-      del({ targets: deleteTargets }),
+      del({ targets: deleteTargets, force: true }),
       // React checks process.env.NODE_ENV for a production or development value and
       // Rollup isn’t providing any. @rollup/plugin-replace is used to provide this information
       replace({
@@ -67,6 +67,8 @@ const config = [
       esbuild({
         target: 'ES2022',
         minify: process.env.NODE_ENV === 'production',
+        jsx: 'automatic',
+        jsxImportSource: 'react',
       }),
       // generate index.html file and add it to dist folder
       html({
@@ -84,10 +86,11 @@ const config = [
         targets: [
           { src: 'language/*.json', dest: `${distFolder}/language` },
           {
-            src: 'node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
+            src: '../node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
             dest: `${distFolder}/wmea`,
           },
         ],
+        copyOnce: true,
       }),
     ],
   },

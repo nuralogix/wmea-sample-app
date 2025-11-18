@@ -1,6 +1,6 @@
 {
   "name": "wmea-sample-app-cdn",
-  "version": "0.1.0",
+  "version": "0.1.0-beta.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,5 +10,12 @@
     "@nuralogix.ai/dfx-api-client": "^1.0.73",
     "cors": "^2.8.5",
     "express": "^5.1.0"
-  }
+  },
+  "engines": {
+    "node": ">=25"
+  },
+  "browserslist": [
+    "Safari >= 18",
+    "last 3 versions"
+  ]
 }

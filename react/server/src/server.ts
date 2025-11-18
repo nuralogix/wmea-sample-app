@@ -5,7 +5,7 @@ import { join } from 'path';
 import { fileURLToPath } from 'url';
 import client, { enums } from '@nuralogix.ai/dfx-api-client';
 import connectLivereload from 'connect-livereload';
-import LiveReload from './livereload.js';
+import LiveReload from './livereload.ts';
 
 const { DeviceTypeID } = enums;
 const distPath = fileURLToPath(new URL('../../dist/', import.meta.url));
@@ -54,9 +54,7 @@ export default class Server {
   middlewares() {
     this.app.use(cors({ credentials: true, origin: '*' }));
     if (NODE_ENV === 'production') {
-      this.app.use(
-        compression() as unknown as (req: Request, res: Response, next: NextFunction) => void
-      );
+      this.app.use(compression() as unknown as express.RequestHandler);
     }
   }
 
@@ -80,7 +78,7 @@ export default class Server {
           DeviceTypeID: DeviceTypeID.WIN32,
           Name: 'Anura Web Core SDK',
           Identifier: 'ANURA_WEB_CORE_SDK',
-          Version: '0.1.0-alpha.36',
+          Version: '0.1.0-beta.2',
           TokenExpiresIn: tokenExpiresIn,
         };
         const registerLicense = await this.apiClient.http.organizations.registerLicense(

@@ -64,7 +64,7 @@ yarn typecheck        # runs both client and server type checks
 Build and run the React app with Docker using the included `Dockerfile`:
 
 ```bash
-# Build the image
+# Build the image (from the react folder)
 docker build -t wmea-react .
 
 # Run the container
