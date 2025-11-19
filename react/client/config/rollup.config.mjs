@@ -15,13 +15,13 @@ import postcssImport from 'postcss-import';
 import stylexPlugin from '@stylexjs/rollup-plugin';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
-const distFolder = '../dist';
+const distFolder = './dist';
 const deleteTargets = [`${distFolder}/*`];
 if (!isDevelopment) deleteTargets.push(`${distFolder}/.build-done`);
 
 const config = [
   {
-    input: './index.tsx',
+    input: './client/index.tsx',
     output: [
       {
         dir: `${distFolder}`,
@@ -67,8 +67,6 @@ const config = [
       esbuild({
         target: 'ES2022',
         minify: process.env.NODE_ENV === 'production',
-        jsx: 'automatic',
-        jsxImportSource: 'react',
       }),
       // generate index.html file and add it to dist folder
       html({
@@ -84,9 +82,9 @@ const config = [
       // Copy WMEA to wmea folder inside dist folder
       copy({
         targets: [
-          { src: 'language/*.json', dest: `${distFolder}/language` },
+          { src: 'client/language/*.json', dest: `${distFolder}/language` },
           {
-            src: '../node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
+            src: 'node_modules/@nuralogix.ai/web-measurement-embedded-app/dist/*',
             dest: `${distFolder}/wmea`,
           },
         ],

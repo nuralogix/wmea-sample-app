@@ -11,9 +11,10 @@ FROM ${NODE_IMAGE} AS builder
 WORKDIR /app
 ENV NODE_ENV=production
 COPY package.json ./
+COPY tsconfig.json ./
 COPY client ./client
 COPY --from=dependencies /app/node_modules ./node_modules
-RUN printf "NODE_ENV=production\n" > .prod.env && yarn build
+RUN yarn rollup --config ./client/config/rollup.config.mjs
 
 # Stage 3 - production image with Express proxy
 FROM ${NODE_IMAGE} AS deploy

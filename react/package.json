@@ -6,8 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently \"yarn watch\" \"yarn server:dev\"",
-    "watch": "cd client && node --env-file=../.dev.env ../node_modules/rollup/dist/bin/rollup --config ./config/rollup.config.mjs --watch",
-    "build": "cd client && node --env-file=../.prod.env ../node_modules/rollup/dist/bin/rollup --config ./config/rollup.config.mjs",
+    "watch": "node --env-file=.dev.env ./node_modules/rollup/dist/bin/rollup --config ./client/config/rollup.config.mjs --watch",
+    "build": "node --env-file=.prod.env ./node_modules/rollup/dist/bin/rollup --config ./client/config/rollup.config.mjs",
     "lint": "eslint",
     "typecheck:react": "tsc --noEmit --project tsconfig.json",
     "typecheck:server": "tsc --noEmit --project server/tsconfig.json",
