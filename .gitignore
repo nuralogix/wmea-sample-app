@@ -1,5 +1,7 @@
-*.env
+*.env*
+!.dev.env.example
+!.prod.env.example
 node_modules/
-/dist/
+dist/
 .DS_Store
 **/mockResults.ts

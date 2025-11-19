@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Measurement Embedded App Demo</title>
+    <style>
+        #measurement-embedded-app-container {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 60px);
+        }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "@nuralogix.ai/web-measurement-embedded-app": "https://unpkg.com/@nuralogix.ai/web-measurement-embedded-app"
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div id="measurement-embedded-app-container"></div>
+    <script type="module">
+        import MeasurementEmbeddedApp, { faceAttributeValue } from '@nuralogix.ai/web-measurement-embedded-app';
+
+        const measurementApp = new MeasurementEmbeddedApp();
+        const container = document.getElementById('measurement-embedded-app-container');
+
+        if (container) {
+            const apiUrl = '/api';
+
+            try {
+                const studyId = await fetch(`${apiUrl}/studyId`);
+                const studyIdResponse = await studyId.json();
+                const token = await fetch(`${apiUrl}/token`);
+                const tokenResponse = await token.json();
+
+                if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
+                    measurementApp.init({
+                        container,
+                        appPath: 'https://unpkg.com/@nuralogix.ai/web-measurement-embedded-app/dist',
+                        // language: 'fr',
+                        settings: {
+                            token: tokenResponse.token,
+                            refreshToken: tokenResponse.refreshToken,
+                            studyId: studyIdResponse.studyId,
+                        },
+                        config: {
+                            checkConstraints: true,
+                            cameraFacingMode: 'user',
+                            cameraAutoStart: false,
+                            measurementAutoStart: false,
+                            cancelWhenLowSNR: true,
+                        },
+                        profile: {
+                            age: 40,
+                            height: 180,
+                            weight: 60,
+                            sex: faceAttributeValue.SEX_ASSIGNED_MALE_AT_BIRTH,
+                            smoking: faceAttributeValue.SMOKER_FALSE,
+                            bloodPressureMedication: faceAttributeValue.BLOOD_PRESSURE_MEDICATION_FALSE,
+                            diabetes: faceAttributeValue.DIABETES_NONE,
+                            bypassProfile: true,
+                        },
+                        // apiUrl: 'api.deepaffex.ai',
+                        loadError(error) {
+                            console.error('load error', error);
+                        },
+                    });
+
+                    measurementApp.on.results = (results) => {
+                        console.log('Results received', results);
+                        measurementApp.destroy();
+                    };
+
+                    measurementApp.on.error = (error) => {
+                        console.log('error received', error);
+                    };
+
+                    measurementApp.on.event = (appEvent) => {
+                        console.log('App event received', appEvent);
+                    };
+                } else {
+                    console.error('Failed to get Study ID and Token pair');
+                }
+            } catch (error) {
+                console.error('Initialization failure', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

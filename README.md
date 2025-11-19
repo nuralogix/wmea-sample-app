@@ -1,127 +1,55 @@
-[Back to Main README](../README.md)
-
-# Web Measurement Embedded App - React Sample Application
+# Web Measurement Embedded App – Sample Applications
 
 ![Sample App Screenshot](./wmea_sample_app_customer_view.png)
 
-## Create environment variables
+This repository contains two fully self-contained examples of the Web Measurement Embedded App (WMEA). Each folder includes everything needed to run independently—source code, server, dependencies, environment templates, and documentation.
 
-Create two env files. One for production and one for development.
+## Sample Applications
 
-.prod.env
+- **`react/`** – Full-featured React SPA with (mock) authentication, demographic capture, measurement workflow, and results dashboard. Includes Rollup build pipeline and Express proxy server. See `react/README.md` for details.
 
-```
-NODE_ENV=production
-API_URL=api.na-east.deepaffex.ai
-STUDY_ID=
-LICENSE_KEY=
-```
+- **`cdn/`** – Minimal static example that loads the WMEA directly from the CDN. Includes a lightweight Express server for token exchange. See `cdn/README.md` for details.
 
-.dev.env
+## Getting Started
 
-```
-NODE_ENV=development
-API_URL=api.na-east.deepaffex.ai
-STUDY_ID=
-LICENSE_KEY=
-```
+1. Clone the repository
+2. Choose which sample you want to run (`react/` or `cdn/`)
+3. Navigate to that folder and follow its README for:
+   - Environment variable setup (both use `.dev.env.example` and `.prod.env.example`)
+   - Dependency installation
+   - Development and production workflows
 
-## Install dependencies
+## Common Configuration
 
-```bash
-yarn
-```
+Both samples require DeepAffex API credentials configured via environment files:
 
-## Run in development mode
+- `API_URL` – DeepAffex API hostname (e.g., `api.na-east.deepaffex.ai`)
+- `STUDY_ID` – Study identifier from DeepAffex portal
+- `LICENSE_KEY` – License key registered for your study
 
-Open a terminal windows and run:
+Each sample folder contains `.dev.env.example` and `.prod.env.example` templates—copy and populate them with your credentials.
 
-```bash
-yarn watch
-```
+## SDK Region Handling
 
-Open another terminal windows and run:
+When `apiUrl` is omitted during WMEA initialization, the SDK automatically derives the region from the authentication token. This ensures the frontend stays aligned with your backend license region and is recommended for most deployments.
 
-```bash
-cd server
-yarn serve:dev
-```
+If you set `apiUrl` explicitly, you're responsible for ensuring it matches regulatory and latency requirements. Measurements are always stored in the token's region; computation occurs wherever the frontend communicates.
 
-## Run in production mode
+## Browserslist reminder
 
-Open a terminal windows and run:
-
-```bash
-yarn build
-```
-
-Open another terminal windows and run:
-
-```bash
-cd server
-yarn serve:prod
-```
-
-## Test the image in Docker
-
-### Build image
-
-```bash
-docker build -t wmea .
-```
-
-### Run image
-
-First, run the following command:
-
-```bash
-docker run --env-file .prod.env -p 3000:3000 -d wmea
-```
-
-Next, open the browser at `http://localhost:3000/`
-
-### View logs
-
-```bash
-# Get container ID
-docker ps
-
-# Print logs
-docker logs <container id>
-```
-
-### Stop image
-
-```bash
-# Get container ID
-docker ps
-
-# Stop containter
-docker stop <container id>
-```
-
-## SDK Region Handling Note
-
-Note: If the optional apiUrl is not set in the SDK, it will be automatically determined based on the token's region. This effectively ties the frontend region to the token's region, which should be suitable for most use cases. If the optional apiUrl is explicitly set in the SDK, the frontend will communicate with that URL, regardless of the token's region. In this case, it is the implementor’s responsibility to ensure compatibility and prevent potential issues. Results will always be stored in the token's region. Data processing will occur in the frontend's region, as determined by your implementation.
-
-If the backend only registers a license and returns a device token to perform an anonymous measurement, the token’s region will match the region specified in the backend's API_URL.
-
-## Check Which Browsers Your Config Targets
-
-You can see the exact list of browser versions that match your config by running:
+Check which browsers your current targets include with:
 
 ```bash
 npx browserslist
 ```
 
-In the package.json, modify the browserslist section to update the list of supported browsers:
+Update the `browserslist` entry in `package.json` to adjust support levels. For example:
 
-```javascript
+```json
 "browserslist": [
   "Safari >= 18",
-  "last 3 versions",
+  "last 3 versions"
 ]
 ```
 
-- `Safari >= 18` tells build tools: don’t support Safari below 18.
-- `last 3 versions` still covers other browsers (Chrome, Firefox, Edge).
+`Safari >= 18` removes unsupported legacy Safari releases, while `last 3 versions` covers the latest stable Chrome, Edge, and Firefox channels.

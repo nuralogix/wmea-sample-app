@@ -8,13 +8,13 @@ This is a Web Measurement Embedded App (WMEA) built with React + TypeScript, dem
 
 ### Client-Server Split
 
-- **Client**: React app built with Rollup (`client/`) - handles UI, state management, measurement embedding
+- **Client**: React app built with Rollup (`react/`) - handles UI, state management, measurement embedding
 - **Server**: Express proxy (`server/`) - handles Nuralogix API authentication and static file serving
 - **Development**: Two processes required - `yarn watch` (client) + `cd server && yarn serve:dev` (server)
 
 ### State Management (Valtio Pattern)
 
-Global state uses Valtio proxy pattern in `client/state/`:
+Global state uses Valtio proxy pattern in `react/state/`:
 
 ```typescript
 // State modules: auth, demographics, general, measurement
@@ -61,7 +61,7 @@ LICENSE_KEY=your_license_key
 
 ### TypeScript Configuration
 
-- **Monorepo setup**: Separate `tsconfig.json` for client/server
+- **Monorepo setup**: Separate `tsconfig.json` for react/server
 - **Module system**: ES2022 modules throughout, `type: "module"` in package.json
 - **Build targets**: Client targets bundlers, server targets Node.js 24+
 
@@ -69,8 +69,8 @@ LICENSE_KEY=your_license_key
 
 ### Component Structure
 
-- **Page components**: In `client/pages/` with index.tsx pattern
-- **Reusable components**: In `client/components/` with folder-per-component
+- **Page components**: In `react/pages/` with index.tsx pattern
+- **Reusable components**: In `react/components/` with folder-per-component
 - **Protected routes**: Use `<ProtectedRoute />` wrapper for authenticated pages
 - **Styling**: Always use StyleX, never traditional CSS files (except global styles.css)
 
@@ -95,7 +95,7 @@ const { setResults } = useSnapshot(state.measurement); // Anti-pattern
 
 - **i18next**: Configured with fetch backend for JSON translation files
 - **Language detection**: Automatic browser language detection with fallback to English
-- **File pattern**: `client/language/strings.{lng}.json`
+- **File pattern**: `react/language/strings.{lng}.json`
 
 ## Docker & Production
 
@@ -107,11 +107,11 @@ const { setResults } = useSnapshot(state.measurement); // Anti-pattern
 ## Testing & Quality
 
 - **ESLint**: Strict TypeScript + React hooks + Valtio rules enabled
-- **Type checking**: Separate commands for client/server (`yarn typecheck:client`)
+- **Type checking**: Separate commands for react/server (`yarn typecheck:react`)
 - **No console**: Production builds fail on console.log (use structured logging)
 
 ## File Organization Patterns
 
-- **Barrel exports**: Use `index.ts` files for clean imports (`client/pages/Profile/Fields/index.ts`)
+- **Barrel exports**: Use `index.ts` files for clean imports (`react/pages/Profile/Fields/index.ts`)
 - **Co-location**: Keep related files together (utils, types, constants in same folder)
 - **Feature folders**: Group by feature rather than file type where logical

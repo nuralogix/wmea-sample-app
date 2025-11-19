@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import '@nuralogix.ai/web-ui/lib/stylex.css';
+@import '@nuralogix.ai/web-ui/lib/themes/dark/stylex.css';
+@import '@nuralogix.ai/web-ui/lib/themes/light/stylex.css';
+
+html,
+body,
+#root {
+  margin: 0;
+  height: 100vh;
+}
+
+#measurement-embedded-app-container {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 60px);
+}
