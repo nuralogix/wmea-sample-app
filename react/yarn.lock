@@ -1198,10 +1198,10 @@
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/dfx-api-client/-/dfx-api-client-1.0.73.tgz#529782d7348dd9bcdb1dcef72f8217ad0f53bd2f"
   integrity sha512-2R1gYZ/smrqvvIXVO8sQfqslfHyini0lVMRnB5YVzpYHZhxHPLp5zJCU1sCFNCY/zZHh4bBfo4gVDy3O+6FGxw==
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.3":
-  version "0.1.0-beta.3"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.3.tgz#d81131076ba2cd4aa22427ad7813763e56795e84"
-  integrity sha512-F1rJADIJdSpw55ZaN0ggsnkd+1al9rs9FcGVlNq1bwvz1RbxXuelxZM410muiy6ELhZsbr1keQxIkzxNuUI+RQ==
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.4":
+  version "0.1.0-beta.4"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.4.tgz#cbd4ff283e7f45b03ee6aca1b42d5bd1f10326df"
+  integrity sha512-41yaQNn0w6wo6YKViFheawZeqPaEmu+K1sFem0Z/meV1xA3ulClruDHVfL7UmEPbVl2CvFwqX/ZNl5mzKttNOQ==
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.13":
   version "0.1.0-alpha.13"

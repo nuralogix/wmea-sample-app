@@ -41,38 +41,6 @@
                 const tokenResponse = await token.json();
 
                 if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
-                    measurementApp.init({
-                        container,
-                        appPath: 'https://unpkg.com/@nuralogix.ai/web-measurement-embedded-app/dist',
-                        // language: 'fr',
-                        settings: {
-                            token: tokenResponse.token,
-                            refreshToken: tokenResponse.refreshToken,
-                            studyId: studyIdResponse.studyId,
-                        },
-                        config: {
-                            checkConstraints: true,
-                            cameraFacingMode: 'user',
-                            cameraAutoStart: false,
-                            measurementAutoStart: false,
-                            cancelWhenLowSNR: true,
-                        },
-                        profile: {
-                            age: 40,
-                            height: 180,
-                            weight: 60,
-                            sex: faceAttributeValue.SEX_ASSIGNED_MALE_AT_BIRTH,
-                            smoking: faceAttributeValue.SMOKER_FALSE,
-                            bloodPressureMedication: faceAttributeValue.BLOOD_PRESSURE_MEDICATION_FALSE,
-                            diabetes: faceAttributeValue.DIABETES_NONE,
-                            bypassProfile: true,
-                        },
-                        // apiUrl: 'api.deepaffex.ai',
-                        loadError(error) {
-                            console.error('load error', error);
-                        },
-                    });
-
                     measurementApp.on.results = (results) => {
                         console.log('Results received', results);
                         measurementApp.destroy();
@@ -85,6 +53,42 @@
                     measurementApp.on.event = (appEvent) => {
                         console.log('App event received', appEvent);
                     };
+
+                    try {
+                        await measurementApp.init({
+                            container,
+                            appPath: 'https://unpkg.com/@nuralogix.ai/web-measurement-embedded-app/dist',
+                            // language: 'fr',
+                            settings: {
+                                token: tokenResponse.token,
+                                refreshToken: tokenResponse.refreshToken,
+                                studyId: studyIdResponse.studyId,
+                            },
+                            config: {
+                                checkConstraints: true,
+                                cameraFacingMode: 'user',
+                                cameraAutoStart: false,
+                                measurementAutoStart: false,
+                                cancelWhenLowSNR: true,
+                            },
+                            profile: {
+                                age: 40,
+                                height: 180,
+                                weight: 60,
+                                sex: faceAttributeValue.SEX_ASSIGNED_MALE_AT_BIRTH,
+                                smoking: faceAttributeValue.SMOKER_FALSE,
+                                bloodPressureMedication: faceAttributeValue.BLOOD_PRESSURE_MEDICATION_FALSE,
+                                diabetes: faceAttributeValue.DIABETES_NONE,
+                                bypassProfile: true,
+                            },
+                            // apiUrl: 'api.deepaffex.ai',
+                            loadError(error) {
+                                console.error('load error', error);
+                            },
+                        });
+                    } catch (error) {
+                        console.error('Failed to initialize MeasurementEmbeddedApp:', error);
+                    }
                 } else {
                     console.error('Failed to get Study ID and Token pair');
                 }
