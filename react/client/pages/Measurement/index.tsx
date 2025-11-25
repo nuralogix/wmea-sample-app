@@ -24,6 +24,7 @@ import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 
 const Measurement = () => {
   const [measurementApp] = useState(() => new MeasurementEmbeddedApp());
+  const [isInit, setIsInit] = useState(false);
   const { setResults } = useSnapshot(state.measurement);
   const { theme, language } = useSnapshot(state.general);
   const { demographics } = useSnapshot(state.demographics);
@@ -34,6 +35,7 @@ const Measurement = () => {
     (async function () {
       const container = document.createElement('div');
       container.id = 'measurement-embedded-app-container';
+      document.body.appendChild(container);
 
       const apiUrl = '/api';
       const studyId = await fetch(`${apiUrl}/studyId`);
@@ -60,11 +62,7 @@ const Measurement = () => {
             measurementAutoStart: false,
             cancelWhenLowSNR: true,
           },
-          loadError: function (error) {
-            console.error('load error', error);
-          },
         };
-        measurementApp.init(options);
 
         measurementApp.on.results = (results) => {
           setResults(results);
@@ -87,6 +85,8 @@ const Measurement = () => {
           switch (appEvent) {
             case appEvents.APP_LOADED:
               break;
+            case appEvents.ASSETS_DOWNLOADED:
+              break;
             case appEvents.CAMERA_PERMISSION_GRANTED:
               break;
             case appEvents.CAMERA_STARTED:
@@ -98,6 +98,8 @@ const Measurement = () => {
             case appEvents.MEASUREMENT_CANCELED:
               break;
             case appEvents.MEASUREMENT_COMPLETED:
+              break;
+            case appEvents.MEASUREMENT_PREPARED:
               break;
             case appEvents.MEASUREMENT_STARTED:
               break;
@@ -112,6 +114,13 @@ const Measurement = () => {
           }
           console.log('App event received', appEvent);
         };
+        try {
+          await measurementApp.init(options);
+          setIsInit(true);
+          measurementApp.setTheme(theme);
+        } catch (error) {
+          console.error('Failed to initialize MeasurementEmbeddedApp:', error);
+        }
       } else {
         console.error('Failed to get Study ID and Token pair');
       }
@@ -121,7 +130,12 @@ const Measurement = () => {
         const logs = await measurementApp.getLogs();
         console.log('WMEA Logs:', logs);
         // Destroy the instance and free up resources
-        measurementApp.destroy();
+        await measurementApp.destroy();
+        setIsInit(false);
+        const container = document.getElementById('measurement-embedded-app-container');
+        if (container) {
+          document.body.removeChild(container);
+        }
       };
       cleanup();
     };
@@ -129,15 +143,17 @@ const Measurement = () => {
 
   // Listen for theme changes and update the measurement app
   useEffect(() => {
-    measurementApp.setTheme(theme);
-  }, [theme]);
+    if (isInit) {
+      measurementApp.setTheme(theme);
+    }
+  }, [theme, isInit]);
 
   // Listen for language changes and update the measurement app
   useEffect(() => {
-    if (language) {
+    if (isInit && language) {
       measurementApp.setLanguage(language);
     }
-  }, [language]);
+  }, [language, isInit]);
 
   const onClear = () => {
     setAppError(null);
