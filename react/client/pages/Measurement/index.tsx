@@ -116,12 +116,11 @@ const Measurement = () => {
         };
         try {
           await measurementApp.init(options);
+          setIsInit(true);
+          measurementApp.setTheme(theme);
         } catch (error) {
           console.error('Failed to initialize MeasurementEmbeddedApp:', error);
         }
-
-        setIsInit(true);
-        measurementApp.setTheme(theme);
       } else {
         console.error('Failed to get Study ID and Token pair');
       }
