@@ -41,9 +41,9 @@
                 const tokenResponse = await token.json();
 
                 if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
-                    measurementApp.on.results = (results) => {
+                    measurementApp.on.results = async (results) => {
                         console.log('Results received', results);
-                        measurementApp.destroy();
+                        await measurementApp.destroy();
                     };
 
                     measurementApp.on.error = (error) => {
