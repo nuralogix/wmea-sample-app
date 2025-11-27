@@ -19,7 +19,7 @@ const styles = stylex.create({
     alignItems: 'flex-start',
     padding: '40px 20px',
     boxSizing: 'border-box',
-    height: 'calc(100vh - 64px)',
+    height: 'calc(100dvh - 64px)',
     overflowY: 'auto',
     width: '100%',
   },

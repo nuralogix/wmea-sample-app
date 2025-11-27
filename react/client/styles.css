@@ -8,7 +8,7 @@ html,
 body,
 #root {
   margin: 0;
-  height: 100vh;
+  height: 100dvh;
 }
 
 #measurement-embedded-app-container {
@@ -16,5 +16,5 @@ body,
   top: 60px;
   left: 0;
   width: 100vw;
-  height: calc(100vh - 60px);
+  height: calc(100dvh - 60px);
 }
