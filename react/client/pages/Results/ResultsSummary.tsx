@@ -13,7 +13,7 @@ import { GROUP_I18N_KEY_MAP } from './constants';
 
 const styles = stylex.create({
   container: {
-    height: '100vh',
+    height: '100dvh',
     overflowY: 'auto',
     padding: 20,
   },
