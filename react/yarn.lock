@@ -1170,20 +1170,20 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nuralogix.ai/anura-web-core-sdk@^0.1.0-beta.2":
-  version "0.1.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-beta.2.tgz#6cbd4ba54f84db0b2c61fb0074728adc3e3d884b"
-  integrity sha512-i0rp5xnG2Gah6SK3hft7JfTG2Cd5Pjt4gSg9/H5DRwISOmF7X/xpOQwPzMnaRPziFjAHTKMwyIKJSayXt7zOwA==
+"@nuralogix.ai/anura-web-core-sdk@^0.1.0-beta.3":
+  version "0.1.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-beta.3.tgz#2d4f8224467d895764bed89bdc9e7779b519e241"
+  integrity sha512-ZBgimCm5j2bM023wjXY/N8Ik1ixgJrhmhuDuNsEF7YKvtNAxA6cSXwWOTIYAdkR+lXmIUR7Z4viqA+FvLt4AtA==
 
 "@nuralogix.ai/dfx-api-client@^1.0.73":
   version "1.0.73"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/dfx-api-client/-/dfx-api-client-1.0.73.tgz#529782d7348dd9bcdb1dcef72f8217ad0f53bd2f"
   integrity sha512-2R1gYZ/smrqvvIXVO8sQfqslfHyini0lVMRnB5YVzpYHZhxHPLp5zJCU1sCFNCY/zZHh4bBfo4gVDy3O+6FGxw==
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.7":
-  version "0.1.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.7.tgz#3e2adb350827dbf51f37b1264edf4c4def1a4510"
-  integrity sha512-5nXZ8z3XvSHYWUjEKGpuhOkN55EDR50S/h4U0G7KoiYhgb9mfEDp/aARYx39Ujh6y2oFof0IkHBD0I6CRTcRSA==
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.9":
+  version "0.1.0-beta.9"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.9.tgz#c5a4a1a34e653a96a06ba39058fe5db4876cb216"
+  integrity sha512-Lr7hM4OzAMak88noKySzZHJ/rm3I+iEb9EHyekk3mRtsmyzTLfo8ncwG4gsDoreOd83OBLEqovqFRG8G/M8xJQ==
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.13":
   version "0.1.0-alpha.13"

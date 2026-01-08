@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import MeasurementEmbeddedApp, {
   appEvents,
+  ErrorCodes,
   type MeasurementEmbeddedAppError,
   type MeasurementEmbeddedAppOptions,
 } from '@nuralogix.ai/web-measurement-embedded-app';
+
 import { useNavigate } from 'react-router';
 import { useSnapshot } from 'valtio';
+import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 import state from '../../state';
 import ErrorMessage from './ErrorMessage';
 import MeasurementHeader from '../../components/MeasurementHeader';
@@ -20,7 +23,6 @@ const styles = stylex.create({
     overflow: 'hidden',
   },
 });
-import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 
 const Measurement = () => {
   const [measurementApp] = useState(() => new MeasurementEmbeddedApp());
@@ -79,13 +81,22 @@ const Measurement = () => {
           if (isUiErrorCode(error.code)) {
             setAppError(error);
           }
-          console.log('Error received: ', error.code, error.message);
+          switch (error.code) {
+            case ErrorCodes.MEASUREMENT_PREPARE_FAILED:
+              console.error('Credentials are invalid or missing');
+              console.error('Check your token, refreshToken, or studyId');
+              break;
+            default:
+              console.log('Error received: ', error.code, error.message);
+              break;
+          }
         };
         measurementApp.on.event = (appEvent) => {
           switch (appEvent) {
             case appEvents.APP_LOADED:
               break;
             case appEvents.ASSETS_DOWNLOADED:
+              console.log('Assets downloaded, ready to measure!');
               break;
             case appEvents.CAMERA_PERMISSION_GRANTED:
               break;
@@ -96,10 +107,13 @@ const Measurement = () => {
             case appEvents.INTERMEDIATE_RESULTS:
               break;
             case appEvents.MEASUREMENT_CANCELED:
+              console.log('User manually canceled the measurement or closed the camera');
+              console.log('Measurement ID: ', appEvent.payload.measurementId);
               break;
             case appEvents.MEASUREMENT_COMPLETED:
               break;
             case appEvents.MEASUREMENT_PREPARED:
+              console.log('Credentials are valid!');
               break;
             case appEvents.MEASUREMENT_STARTED:
               break;
