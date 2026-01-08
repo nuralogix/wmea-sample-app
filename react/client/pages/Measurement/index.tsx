@@ -113,7 +113,9 @@ const Measurement = () => {
             case appEvents.MEASUREMENT_COMPLETED:
               break;
             case appEvents.MEASUREMENT_PREPARED:
-              console.log('Credentials are valid!');
+              console.log(
+                'Token pairs have been validated and renewed. The study config file has been downloaded.'
+              );
               break;
             case appEvents.MEASUREMENT_STARTED:
               break;
