@@ -70,6 +70,7 @@
   "CAMERA_START_FAILED": "Hubo un error al iniciar su cámara, por favor inténtelo de nuevo.",
   "WORKER_ERROR": "Algo salió mal al procesar su medición. Intente realizar su medición nuevamente.",
   "COLLECTOR": "Algo salió mal al analizar sus datos. Intente realizar su medición nuevamente.",
+  "FACE_NONE": "No se detectó ningún rostro. Mantenga su rostro centrado dentro del contorno durante toda la medición.",
   "PAGE_NOT_VISIBLE": "La medición falló porque se cambió la pestaña o se minimizó la ventana del navegador. Asegúrese de que la pestaña permanezca abierta y activa.",
   "ENTER_ACCESS_CODE": "Ingrese el código de acceso",
   "LOGIN": "Iniciar sesión",

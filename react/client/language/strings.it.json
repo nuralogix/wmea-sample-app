@@ -70,6 +70,7 @@
   "CAMERA_START_FAILED": "Si è verificato un errore nell'avvio della fotocamera, si prega di riprovare.",
   "WORKER_ERROR": "Qualcosa è andato storto durante l'elaborazione della misurazione. Si prega di riprovare a effettuare la misurazione.",
   "COLLECTOR": "Qualcosa è andato storto durante l'analisi dei dati. Si prega di riprovare a effettuare la misurazione.",
+  "FACE_NONE": "Nessun volto rilevato. Mantieni il viso centrato all'interno del contorno durante tutta la misurazione.",
   "PAGE_NOT_VISIBLE": "La misurazione è fallita perché la scheda è stata cambiata o la finestra del browser è stata minimizzata. Si prega di assicurarsi che la scheda rimanga aperta e attiva.",
   "ENTER_ACCESS_CODE": "Inserisci il codice di accesso",
   "LOGIN": "Accedi",

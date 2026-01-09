@@ -70,6 +70,7 @@
   "CAMERA_START_FAILED": "Une erreur est survenue lors du démarrage de votre caméra, veuillez réessayer.",
   "WORKER_ERROR": "Une erreur s'est produite lors du traitement de votre mesure. Veuillez réessayer.",
   "COLLECTOR": "Une erreur s'est produite lors de l'analyse de vos données. Veuillez réessayer.",
+  "FACE_NONE": "Aucun visage détecté. Veuillez garder votre visage centré dans le contour pendant toute la mesure.",
   "PAGE_NOT_VISIBLE": "La mesure a échoué car l’onglet a été changé ou la fenêtre du navigateur a été minimisée. Veuillez vous assurer que l’onglet reste ouvert et actif.",
   "ENTER_ACCESS_CODE": "Entrez le code d’accès",
   "LOGIN": "Connexion",
