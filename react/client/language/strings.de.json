@@ -70,6 +70,7 @@
   "CAMERA_START_FAILED": "Beim Starten Ihrer Kamera ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
   "WORKER_ERROR": "Bei der Verarbeitung Ihrer Messung ist ein Fehler aufgetreten. Bitte versuchen Sie, Ihre Messung erneut durchzuführen.",
   "COLLECTOR": "Bei der Analyse Ihrer Daten ist ein Fehler aufgetreten. Bitte versuchen Sie, Ihre Messung erneut durchzuführen.",
+  "FACE_NONE": "Kein Gesicht erkannt. Bitte halten Sie Ihr Gesicht während der gesamten Messung zentriert innerhalb der Kontur.",
   "PAGE_NOT_VISIBLE": "Die Messung ist fehlgeschlagen, weil der Tab gewechselt oder das Browserfenster minimiert wurde. Bitte stellen Sie sicher, dass der Tab geöffnet und aktiv bleibt.",
   "ENTER_ACCESS_CODE": "Zugangscode eingeben",
   "LOGIN": "Anmelden",

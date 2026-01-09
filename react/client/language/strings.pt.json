@@ -70,6 +70,7 @@
   "CAMERA_START_FAILED": "Houve um erro ao iniciar a sua câmara, por favor tente novamente.",
   "WORKER_ERROR": "Algo correu mal ao processar a sua medição. Por favor, tente fazer a sua medição novamente.",
   "COLLECTOR": "Algo correu mal ao analisar os seus dados. Por favor, tente fazer a sua medição novamente.",
+  "FACE_NONE": "Nenhum rosto detetado. Mantenha o rosto centrado dentro do contorno durante toda a medição.",
   "PAGE_NOT_VISIBLE": "A medição falhou porque o separador foi mudado ou a janela do navegador foi minimizada. Por favor, certifique-se de que o separador permanece aberto e ativo.",
   "ENTER_ACCESS_CODE": "Introduza o código de acesso",
   "LOGIN": "Entrar",

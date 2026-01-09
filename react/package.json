@@ -1,6 +1,6 @@
 {
   "name": "wmea-sample-app-react",
-  "version": "0.1.0-beta.8",
+  "version": "0.1.0-beta.9",
   "description": "Nuralogix WMEA Sample App - React",
   "private": true,
   "type": "module",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@nuralogix.ai/dfx-api-client": "^1.0.73",
-    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-beta.9",
+    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-beta.10",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.13",
     "@stylexjs/stylex": "0.9.3",
     "compression": "^1.8.0",

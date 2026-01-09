@@ -7,6 +7,7 @@ export const MODAL_ERROR_CODES: ErrorCodes[] = [
   ErrorCodes.CAMERA_START_FAILED,
   ErrorCodes.WORKER_ERROR,
   ErrorCodes.COLLECTOR,
+  ErrorCodes.FACE_NONE,
 ] as const;
 
 // Error codes that should surface some UI to the user (modal + custom components)
@@ -22,6 +23,7 @@ export const CANCEL_ON_ERROR_CODES: ErrorCodes[] = [
   ErrorCodes.WORKER_ERROR,
   ErrorCodes.COLLECTOR,
   ErrorCodes.WEBSOCKET_DISCONNECTED,
+  ErrorCodes.FACE_NONE,
 ] as const;
 export type CancelOnErrorCode = (typeof CANCEL_ON_ERROR_CODES)[number];
 
