@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
 import type { Results, ResultsTabId, PointGroupType } from './types';
 import { getOrderedGroupIds, getPointsForGroup } from './utils';
-import { Heading, Paragraph, Button } from '@nuralogix.ai/web-ui';
+import { Heading, Paragraph, Button, Modal } from '@nuralogix.ai/web-ui';
 import MetricCard from './MetricCard';
 import { handleMeasureAgain } from './utils/measureAgain';
 import state from '../../state';
@@ -170,11 +170,27 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
 
   const snr = results.points.SNR;
   const [activeTab, setActiveTab] = useState<ResultsTabId>(tabs[0].id);
+  const [showPartialResultsModal, setShowPartialResultsModal] = useState(false);
+
+  useEffect(() => {
+    // if (results.statusId !== 'COMPLETE') {
+      setShowPartialResultsModal(true);
+    // }
+  }, [results]);
 
   const isAllTab = (tab: ResultsTabId): tab is 'All' => tab === 'All';
 
   return (
     <div {...stylex.props(styles.container, isDark ? styles.containerDark : styles.containerLight)}>
+      <Modal
+        isOpen={showPartialResultsModal}
+        variant="warning"
+        onClose={() => setShowPartialResultsModal(false)}
+        showConfirmButton={false}
+      >
+        <Paragraph>{t('PARTIAL_RESULTS_WARNING')}</Paragraph>
+      </Modal>
+
       <div {...stylex.props(styles.wrapper)}>
         {/* Header */}
         <div {...stylex.props(isDark ? styles.headerDark : styles.headerLight)}>

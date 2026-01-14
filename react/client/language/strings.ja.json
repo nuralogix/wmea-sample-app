@@ -92,5 +92,6 @@
   "LANGUAGE_FR": "フランス語",
   "LANGUAGE_DE": "ドイツ語",
   "LANGUAGE_BR": "ブラジルポルトガル語",
-  "APP_TITLE_SHORT": "サンプルアプリ"
+  "APP_TITLE_SHORT": "サンプルアプリ",
+  "PARTIAL_RESULTS_WARNING": "部分的な結果のみが受信されました。より良い条件でもう一度お試しください。"
 }

@@ -90,5 +90,6 @@
   "LANGUAGE_FR": "Français",
   "LANGUAGE_DE": "Allemand",
   "LANGUAGE_BR": "Portugais brésilien",
-  "APP_TITLE_SHORT": "Appli exemple"
+  "APP_TITLE_SHORT": "Appli exemple",
+  "PARTIAL_RESULTS_WARNING": "Seuls des résultats partiels ont été reçus. Veuillez réessayer dans de meilleures conditions."
 }
