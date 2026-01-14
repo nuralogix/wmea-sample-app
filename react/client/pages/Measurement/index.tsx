@@ -98,13 +98,18 @@ const Measurement = () => {
             case appEvents.ASSETS_DOWNLOADED:
               console.log('Assets downloaded, ready to measure!');
               break;
+            case appEvents.FACE_TRACKER_LOADED:
+              console.log('Face tracker loaded:', appEvent.payload.version);
+              break;
             case appEvents.CAMERA_PERMISSION_GRANTED:
               break;
             case appEvents.CAMERA_STARTED:
               break;
             case appEvents.CONSTRAINT_VIOLATION:
+              console.warn('Constraint violated:', appEvent.payload.code);
               break;
             case appEvents.INTERMEDIATE_RESULTS:
+              console.log('Intermediate results received:', appEvent.payload.points);
               break;
             case appEvents.MEASUREMENT_CANCELED:
               console.log('User manually canceled the measurement or closed the camera');
