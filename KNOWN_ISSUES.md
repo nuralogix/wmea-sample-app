@@ -1,8 +1,8 @@
 # Known Issues and Limitations
 
-## 1. Constraint Satisfaction on iPhones (WMEA-176)
+## 1. Constraint Satisfaction on iPhones in Landscape Mode (WMEA-176)
 
-It's difficult to satisfy measurement constraints on iPhones. As a temporary workaround, `checkConstraints` needs to be disabled for iPhone users.
+It may be difficult to satisfy measurement constraints on iPhones in landscape mode.
 
 ## 2. PartnerId Not Yet Supported (WMEA-10)
 
