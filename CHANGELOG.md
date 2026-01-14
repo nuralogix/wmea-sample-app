@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.0-beta.11] - 2026-01-14
+
+### Fixed
+
+- Constraint satisfaction on iPhones in portrait mode
+
+### Changed
+
+- Updated `@nuralogix.ai/web-measurement-embedded-app` to v0.1.0-beta.11
+
 ## [0.1.0-beta.10] - 2026-01-09
 
 ### Added
