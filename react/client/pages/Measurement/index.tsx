@@ -55,6 +55,10 @@ const Measurement = () => {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
             studyId: studyIdResponse.studyId,
+            // measurementOptions: {
+            //   partnerId: 'test-partner-id',
+            //   userProfileId: '550e8400-e29b-41d4-a716-446655440000',
+            // },
           },
           profile: demographics,
           config: {
