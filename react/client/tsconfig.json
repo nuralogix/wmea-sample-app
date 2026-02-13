@@ -3,7 +3,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "rootDir": "./",
-    "types": ["react", "react-dom"]
+    "types": ["react", "react-dom", "node"]
   },
   "include": ["./**/*.ts", "./**/*.tsx"],
   "exclude": ["node_modules"]
