@@ -1,5 +1,30 @@
 # Changelog
 
+## [0.1.0-beta.13] - 2026-02-13
+
+### 📦 Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v0.1.0-beta.13
+
+**Added**
+
+- `debugMode`: New optional `debugMode` property in `Config` to enables verbose logging for debugging purposes
+- `ASSET_DOWNLOAD_FAILED`: New error code dispatched when app fails to download assets and initialize SDK
+- New logs added to different components
+- `setAppSettings`: New method to allow updating app settings
+- `MeasurementOptions`: Results object now displays `MeasurementOptions`
+
+**Changed**
+
+- Lifecycle Safety: Prevented `destroy()` and `cancel()` from running before critical initialization event (`ASSETS_DOWNLOADED`)
+- Updated Logger: Updated the logger to format logs and emit console.logs when `debugMode` is set to true
+
+**Dependencies**
+
+- `@nuralogix.ai/anura-web-core-sdk`: Upgraded from `0.1.0-beta.5` to `0.1.0-beta.7`
+
+---
+
 ## [0.1.0-beta.12] - 2026-01-30
 
 ### 📦 Package Updates
