@@ -173,9 +173,9 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const [showPartialResultsModal, setShowPartialResultsModal] = useState(false);
 
   useEffect(() => {
-    // if (results.statusId !== 'COMPLETE') {
+    if (results.statusId !== 'COMPLETE') {
       setShowPartialResultsModal(true);
-    // }
+    }
   }, [results]);
 
   const isAllTab = (tab: ResultsTabId): tab is 'All' => tab === 'All';

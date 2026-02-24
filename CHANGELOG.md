@@ -1,5 +1,13 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Partial results warning modal: displays a warning when measurement results are incomplete (`statusId !== 'COMPLETE'`)
+
+---
+
 ## [0.1.0-beta.13] - 2026-02-13
 
 ### 📦 Package Updates
