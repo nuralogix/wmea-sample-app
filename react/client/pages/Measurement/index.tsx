@@ -24,6 +24,16 @@ const styles = stylex.create({
   },
 });
 
+const getAppSettings = async () => {
+  const apiUrl = '/api';
+  const studyId = await fetch(`${apiUrl}/studyId`);
+  const studyIdResponse = await studyId.json();
+  const token = await fetch(`${apiUrl}/token`);
+  const tokenResponse = await token.json();
+
+  return { studyIdResponse, tokenResponse };
+};
+
 const Measurement = () => {
   const [measurementApp] = useState(() => new MeasurementEmbeddedApp());
   const [isInit, setIsInit] = useState(false);
@@ -39,11 +49,7 @@ const Measurement = () => {
       container.id = 'measurement-embedded-app-container';
       document.body.appendChild(container);
 
-      const apiUrl = '/api';
-      const studyId = await fetch(`${apiUrl}/studyId`);
-      const studyIdResponse = await studyId.json();
-      const token = await fetch(`${apiUrl}/token`);
-      const tokenResponse = await token.json();
+      const { studyIdResponse, tokenResponse } = await getAppSettings();
 
       if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
         const options: MeasurementEmbeddedAppOptions = {
@@ -55,6 +61,10 @@ const Measurement = () => {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
             studyId: studyIdResponse.studyId,
+            // measurementOptions: {
+            //   partnerId: 'test-partner-id',
+            //   userProfileId: '550e8400-e29b-41d4-a716-446655440000',
+            // },
           },
           profile: demographics,
           config: {
@@ -63,6 +73,7 @@ const Measurement = () => {
             cameraAutoStart: false,
             measurementAutoStart: false,
             cancelWhenLowSNR: true,
+            debugMode: false,
           },
         };
 
@@ -73,7 +84,7 @@ const Measurement = () => {
         measurementApp.on.error = async (error) => {
           if (isCancelOnErrorCode(error.code)) {
             try {
-              await measurementApp.cancel(true);
+              const isCancelled = await measurementApp.cancel(true);
             } catch (e) {
               console.warn('Failed to cancel after error code', error.code, e);
             }
@@ -85,6 +96,9 @@ const Measurement = () => {
             case ErrorCodes.MEASUREMENT_PREPARE_FAILED:
               console.error('Credentials are invalid or missing');
               console.error('Check your token, refreshToken, or studyId');
+              break;
+            case ErrorCodes.ASSET_DOWNLOAD_FAILED:
+              console.log('Failed to download assets and initialize the SDK');
               break;
             default:
               console.log('Error received: ', error.code, error.message);
@@ -98,13 +112,18 @@ const Measurement = () => {
             case appEvents.ASSETS_DOWNLOADED:
               console.log('Assets downloaded, ready to measure!');
               break;
+            case appEvents.FACE_TRACKER_LOADED:
+              console.log('Face tracker loaded:', appEvent.payload.version);
+              break;
             case appEvents.CAMERA_PERMISSION_GRANTED:
               break;
             case appEvents.CAMERA_STARTED:
               break;
             case appEvents.CONSTRAINT_VIOLATION:
+              console.warn('Constraint violated:', appEvent.payload.code);
               break;
             case appEvents.INTERMEDIATE_RESULTS:
+              console.log('Intermediate results received:', appEvent.payload.points);
               break;
             case appEvents.MEASUREMENT_CANCELED:
               console.log('User manually canceled the measurement or closed the camera');
@@ -146,7 +165,7 @@ const Measurement = () => {
         const logs = await measurementApp.getLogs();
         console.log('WMEA Logs:', logs);
         // Destroy the instance and free up resources
-        await measurementApp.destroy();
+        const isDestroyed = await measurementApp.destroy();
         setIsInit(false);
         const container = document.getElementById('measurement-embedded-app-container');
         if (container) {
