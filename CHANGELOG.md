@@ -1,10 +1,22 @@
 # Changelog
 
-## [Unreleased]
+## [0.1.0-beta.14] - 2026-02-27
 
 ### Added
 
 - Partial results warning modal: displays a warning when measurement results are incomplete (`statusId !== 'COMPLETE'`)
+
+### 📦 Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v0.1.0-beta.14
+
+**Fixed**
+
+- **App Re-initialization**: Fixed bugs when destroying and re-initializing the app.
+
+**Added**
+
+- **downloadPayloads**: New optional `downloadPayloads` config property (default `false`) that saves payload and metadata binary files for each chunk sent to DeepAffex Cloud, so you can send them to NuraLogix for debugging. A 30-second measurement emits 6 chunks (every 5 seconds), generating 2 files per chunk.
 
 ---
 
