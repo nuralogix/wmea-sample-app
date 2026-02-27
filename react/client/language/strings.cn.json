@@ -92,5 +92,6 @@
   "LANGUAGE_FR": "法语",
   "LANGUAGE_DE": "德语",
   "LANGUAGE_BR": "巴西葡萄牙语",
-  "APP_TITLE_SHORT": "示例应用"
+  "APP_TITLE_SHORT": "示例应用",
+  "PARTIAL_RESULTS_WARNING": "仅收到部分结果。请在更好的条件下重试。"
 }

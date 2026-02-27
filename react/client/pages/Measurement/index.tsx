@@ -74,6 +74,7 @@ const Measurement = () => {
             measurementAutoStart: false,
             cancelWhenLowSNR: true,
             debugMode: false,
+            // downloadPayloads: false, // saves payload/metadata binary files per chunk for debugging
           },
         };
 

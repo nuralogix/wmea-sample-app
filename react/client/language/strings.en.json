@@ -92,5 +92,6 @@
   "LANGUAGE_FR": "French",
   "LANGUAGE_DE": "German",
   "LANGUAGE_BR": "Brazilian Portuguese",
-  "APP_TITLE_SHORT": "Sample App"
+  "APP_TITLE_SHORT": "Sample App",
+  "PARTIAL_RESULTS_WARNING": "Only partial results were received. Please try again under better conditions."
 }

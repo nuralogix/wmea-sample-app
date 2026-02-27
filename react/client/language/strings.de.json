@@ -92,5 +92,6 @@
   "LANGUAGE_FR": "Französisch",
   "LANGUAGE_DE": "Deutsch",
   "LANGUAGE_BR": "Brasilianisches Portugiesisch",
-  "APP_TITLE_SHORT": "Beispiel-App"
+  "APP_TITLE_SHORT": "Beispiel-App",
+  "PARTIAL_RESULTS_WARNING": "Es wurden nur Teilergebnisse empfangen. Bitte versuchen Sie es erneut unter besseren Bedingungen."
 }
