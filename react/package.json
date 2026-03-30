@@ -1,6 +1,6 @@
 {
   "name": "wmea-sample-app-react",
-  "version": "0.1.0-beta.14",
+  "version": "0.1.0-beta.15",
   "description": "Nuralogix WMEA Sample App - React",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "watch": "node --env-file=.dev.env ./node_modules/rollup/dist/bin/rollup --config ./client/config/rollup.config.mjs --watch",
     "build": "node --env-file=.prod.env ./node_modules/rollup/dist/bin/rollup --config ./client/config/rollup.config.mjs",
     "lint": "eslint",
-    "typecheck:react": "tsc --noEmit --project tsconfig.json",
+    "typecheck:react": "tsc --noEmit --project client/tsconfig.json",
     "typecheck:server": "tsc --noEmit --project server/tsconfig.json",
     "typecheck": "yarn typecheck:react && yarn typecheck:server",
     "server:dev": "node --experimental-strip-types --env-file=.dev.env server/src/index.ts",
@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@nuralogix.ai/dfx-api-client": "^1.0.73",
-    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-beta.14",
+    "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-beta.15",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.13",
     "@stylexjs/stylex": "0.9.3",
     "compression": "^1.8.0",

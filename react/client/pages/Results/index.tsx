@@ -2,7 +2,7 @@ import state from '../../state';
 import { useSnapshot } from 'valtio';
 import ResultsError from './ResultsError';
 import ResultsSummary from './ResultsSummary';
-import type { Results } from './types';
+import type { Results } from './helpers';
 
 const Results = () => {
   const measurementSnap = useSnapshot(state.measurement);

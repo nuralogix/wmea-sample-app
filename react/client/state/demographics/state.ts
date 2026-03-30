@@ -8,8 +8,8 @@ const { SEX_ASSIGNED_MALE_AT_BIRTH, SMOKER_FALSE, BLOOD_PRESSURE_MEDICATION_FALS
 
 const initial = loadSavedDemographics() || {
   age: 0,
-  height: 0,
-  weight: 0,
+  heightCm: 0,
+  weightKg: 0,
   sex: SEX_ASSIGNED_MALE_AT_BIRTH,
   smoking: SMOKER_FALSE,
   bloodPressureMedication: BLOOD_PRESSURE_MEDICATION_FALSE,

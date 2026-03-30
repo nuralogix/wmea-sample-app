@@ -851,7 +851,12 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.28.5"
 
-"@babel/runtime@^7.26.10", "@babel/runtime@^7.27.6":
+"@babel/runtime@^7.26.10":
+  version "7.29.2"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.2.tgz#9a6e2d05f4b6692e1801cd4fb176ad823930ed5e"
+  integrity sha512-JiDShH45zKHWyGe4ZNVRrCjBz8Nh9TMmZG1kh4QTK8hCBTWBi8Da+i7s1fJw7/lYpM4ccepSNfqzZ/QvABBi5g==
+
+"@babel/runtime@^7.27.6":
   version "7.28.4"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.28.4.tgz#a70226016fabe25c5783b2f22d3e1c9bc5ca3326"
   integrity sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==
@@ -1172,9 +1177,9 @@
   integrity sha512-Vc8cdjxS5+O2gnjWH9KncYpUCVXT0h714KlWAsyqJvJbIgUJBqpppbIx8yWcAzBDxm/5cYSuBI5p5ySIPxzcEg==
 
 "@mediapipe/tasks-vision@^0.10.21":
-  version "0.10.32"
-  resolved "https://registry.yarnpkg.com/@mediapipe/tasks-vision/-/tasks-vision-0.10.32.tgz#9adcb290cab508e001674a8b2b9dbfd9c9e0935f"
-  integrity sha512-3tiAZnmKloYnRXYoO3dKltTUGnqeCwzC4lV03uY0vCsE+aveJTyEVQyZHOlQGQNsjK+gRHzkf9q08C99Qm2K0Q==
+  version "0.10.34"
+  resolved "https://registry.yarnpkg.com/@mediapipe/tasks-vision/-/tasks-vision-0.10.34.tgz#ba90710a9396b795a7f52435a3c1fea71a439585"
+  integrity sha512-KFGyhDsjJ+9WUMcMfjTOpcEp3LJNS3KwC7BfvKrCYELn/7G/5kmwnU7z6Spps+iWQoTGL8xW8i68r65OTa3DwA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -1197,20 +1202,20 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nuralogix.ai/anura-web-core-sdk@^0.1.0-beta.10":
-  version "0.1.0-beta.10"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-beta.10.tgz#ded40ad70c6462e16605b7ce7b8d55de94bc8d36"
-  integrity sha512-qFrWygoIG5RL7mLeGyfmRA+apUSqR+EyTEaYgwnaBj1vOwjk9Nsxf2Lb9VsrX8hUTxUaK2MVNGy0Zk2drV1mzA==
+"@nuralogix.ai/anura-web-core-sdk@^0.1.0-beta.12":
+  version "0.1.0-beta.12"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-beta.12.tgz#a378bd0f6f3b805c8573b6adc42b29ff32f3c602"
+  integrity sha512-v2j1c7cGr5QIIKUHglw7pziIl5WUldVdzUJekRcKOV5oQyDGdU88jgta6kqKQxRofc7hoB72xdxCRVxQDUWK3Q==
 
 "@nuralogix.ai/dfx-api-client@^1.0.73":
   version "1.0.73"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/dfx-api-client/-/dfx-api-client-1.0.73.tgz#529782d7348dd9bcdb1dcef72f8217ad0f53bd2f"
   integrity sha512-2R1gYZ/smrqvvIXVO8sQfqslfHyini0lVMRnB5YVzpYHZhxHPLp5zJCU1sCFNCY/zZHh4bBfo4gVDy3O+6FGxw==
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.14":
-  version "0.1.0-beta.14"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.14.tgz#7b486dfd2025e06638f20051b854bbf954ddbe06"
-  integrity sha512-lIYj1nLKZ/NUAxDCXhFRQVZ2fbTtHkYwhde0IAJCHY67gThiU3iTy+NkvK9AoGmzioCrqC/x0VGDiZeF7KLTXQ==
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.15":
+  version "0.1.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.15.tgz#d30de0bb93334bff5ed4ed4e58f7029e6e21dc74"
+  integrity sha512-6fw/r0gzqQ/tmGwl8hNMTAu5xNIuRzY48P0XQ1xvUyax41zhWNzQUK4+yCBLVOxQRrodfJxMKEmTnBNa57pJqA==
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.13":
   version "0.1.0-alpha.13"
@@ -5297,9 +5302,9 @@ svgo@^2.7.0:
     stable "^0.1.8"
 
 terser@^5.0.0:
-  version "5.46.0"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.46.0.tgz#1b81e560d584bbdd74a8ede87b4d9477b0ff9695"
-  integrity sha512-jTwoImyr/QbOWFFso3YoU3ik0jBBDJ6JTOQiy/J2YxVJdZCc+5u7skhNwiOR3FQIygFqVUPHl7qbbxtjW2K3Qg==
+  version "5.46.1"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.46.1.tgz#40e4b1e35d5f13130f82793a8b3eeb7ec3a92eee"
+  integrity sha512-vzCjQO/rgUuK9sf8VJZvjqiqiHFaZLnOiimmUuOKODxWL8mm/xua7viT7aqX7dgPY60otQjUotzFMmCB4VdmqQ==
   dependencies:
     "@jridgewell/source-map" "^0.3.3"
     acorn "^8.15.0"

@@ -34,8 +34,8 @@ export const usePrepopulateForm = (
 
       populateField(next, FORM_FIELDS.AGE, saved.age);
       populateField(next, FORM_FIELDS.SEX, saved.sex);
-      populateField(next, FORM_FIELDS.WEIGHT, saved.weight);
-      populateField(next, FORM_FIELDS.HEIGHT_METRIC, saved.height);
+      populateField(next, FORM_FIELDS.WEIGHT, saved.weightKg);
+      populateField(next, FORM_FIELDS.HEIGHT_METRIC, saved.heightCm);
       populateField(next, FORM_FIELDS.SMOKING, saved.smoking);
       populateField(next, FORM_FIELDS.BLOOD_PRESSURE_MED, saved.bloodPressureMedication);
       populateField(next, FORM_FIELDS.DIABETES_STATUS, saved.diabetes);
