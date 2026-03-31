@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { useSnapshot } from 'valtio';
 import * as stylex from '@stylexjs/stylex';
-import type { Results, ResultsTabId, PointGroupType } from './types';
+import type { Results, PointGroupType } from './helpers';
 import { getOrderedGroupIds, getPointsForGroup } from './utils';
 import { Heading, Paragraph, Button, Modal } from '@nuralogix.ai/web-ui';
 import MetricCard from './MetricCard';
 import { handleMeasureAgain } from './utils/measureAgain';
 import state from '../../state';
 import { GROUP_I18N_KEY_MAP } from './constants';
+
+type ResultsTabId = PointGroupType | 'All';
 
 const styles = stylex.create({
   container: {
@@ -158,7 +159,6 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
   const { t } = useTranslation();
   const { theme } = useSnapshot(state.general);
   const isDark = theme === 'dark';
-  const navigate = useNavigate();
 
   const getGroupLabel = (group: PointGroupType): string => t(GROUP_I18N_KEY_MAP[group]);
 
@@ -241,7 +241,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
                   </div>
                   <div {...stylex.props(styles.grid)}>
                     {pointsForGroup.map(([dfxPointId, pt]) => (
-                      <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
+                      <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} results={results} />
                     ))}
                   </div>
                 </div>
@@ -251,7 +251,7 @@ const ResultsSummary: React.FC<ResultsSummaryProps> = ({ results }) => {
         ) : (
           <div {...stylex.props(styles.grid)}>
             {getPointsForGroup(results, activeTab).map(([dfxPointId, pt]) => (
-              <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} />
+              <MetricCard point={pt} key={dfxPointId} dfxPointId={dfxPointId} results={results} />
             ))}
           </div>
         )}

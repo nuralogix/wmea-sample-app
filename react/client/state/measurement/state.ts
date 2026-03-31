@@ -1,6 +1,6 @@
 import { proxy } from 'valtio';
 import { MeasurementState } from './types';
-import type { Results } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { Results } from '../../pages/Results/helpers';
 
 const measurementState: MeasurementState = proxy({
   apiUrl: 'api.na-east.deepaffex.ai',

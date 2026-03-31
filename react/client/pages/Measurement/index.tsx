@@ -12,6 +12,7 @@ import { isUiErrorCode, isCancelOnErrorCode } from './constants';
 import state from '../../state';
 import ErrorMessage from './ErrorMessage';
 import MeasurementHeader from '../../components/MeasurementHeader';
+import { parseResults } from '../../pages/Results/helpers';
 import * as stylex from '@stylexjs/stylex';
 
 const styles = stylex.create({
@@ -79,7 +80,7 @@ const Measurement = () => {
         };
 
         measurementApp.on.results = (results) => {
-          setResults(results);
+          setResults(parseResults(results));
           navigate('/results');
         };
         measurementApp.on.error = async (error) => {
@@ -124,7 +125,7 @@ const Measurement = () => {
               console.warn('Constraint violated:', appEvent.payload.code);
               break;
             case appEvents.INTERMEDIATE_RESULTS:
-              console.log('Intermediate results received:', appEvent.payload.points);
+              console.log('Intermediate results received:', appEvent.payload.results);
               break;
             case appEvents.MEASUREMENT_CANCELED:
               console.log('User manually canceled the measurement or closed the camera');

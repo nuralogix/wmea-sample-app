@@ -1,3 +1,5 @@
+import type { PointGroupType } from './helpers';
+
 // TODO use color tokens from design system?
 // const colors = {
 //   dfxPointBandGreen: '#62DB99',
@@ -25,8 +27,6 @@ export const BAND_COLOR_MAP = {
 } as const;
 
 export type BandColor = keyof typeof BAND_COLOR_MAP;
-
-import type { PointGroupType } from '@nuralogix.ai/web-measurement-embedded-app';
 
 // Translation key union for result point groups.
 export type ResultGroupTranslationKey =

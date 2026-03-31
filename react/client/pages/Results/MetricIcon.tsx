@@ -1,5 +1,5 @@
 import React from 'react';
-import { DfxPointId } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { DfxPointId } from './helpers';
 import {
   BodyShapeIndex,
   BodyMassIndex,

@@ -1,6 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
-import type { DfxPointId, Point } from '@nuralogix.ai/web-measurement-embedded-app';
+import type { DfxPointId, Point, Results } from './helpers';
 import { Heading, Paragraph } from '@nuralogix.ai/web-ui';
 import { BAND_COLOR_MAP } from './constants';
 import { MetricIcon } from './MetricIcon';
@@ -60,12 +60,26 @@ const styles = stylex.create({
   },
 });
 
-const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Point }) => {
+const MetricCard = ({ point, dfxPointId, results }: { dfxPointId: DfxPointId; point: Point; results: Results }) => {
   const { info, value, dial } = point;
   const { theme } = useSnapshot(state.general);
   const isDark = theme === 'dark';
   const sections = dial.sections || [];
   const group = dial.group || 0;
+
+  // Handle CVD_MULTI_YEAR_RISK_PROBS: extract the probability for a specific year
+  let displayValue: string | number[] = value;
+  // targetYear: value between 1 and 20 representing the year horizon for CVD risk
+  const targetYear = 10;
+  let isCvdRisk = false;
+  if (dfxPointId === 'CVD_MULTI_YEAR_RISK_PROBS' && Array.isArray(value)) {
+    const yearsPoint = results.points['CVD_MULTI_YEAR_RISK_YEARS'];
+    if (yearsPoint && Array.isArray(yearsPoint.value)) {
+      const index = yearsPoint.value.indexOf(targetYear);
+      displayValue = index !== -1 ? (value[index]?.toFixed(2) ?? 'N/A') : 'N/A';
+      isCvdRisk = true;
+    }
+  }
 
   // Get the band color, ensuring we handle missing bandColor properties
   let cardColor = 'transparent';
@@ -107,10 +121,13 @@ const MetricCard = ({ point, dfxPointId }: { dfxPointId: DfxPointId; point: Poin
       </div>
       <div {...stylex.props(styles.valueSection)}>
         <span {...stylex.props(styles.value, isDark ? styles.valueDark : styles.valueLight)}>
-          {value}
+          {displayValue}
         </span>
         {info.unit && <Paragraph>{info.unit}</Paragraph>}
       </div>
+      {isCvdRisk && (
+        <Paragraph>{`${targetYear}-year risk`}</Paragraph>
+      )}
     </div>
   );
 };

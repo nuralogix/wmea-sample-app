@@ -52,8 +52,8 @@ export const convertFormStateToSDKDemographics = (formState: FormState): Profile
 
   return {
     age: parseInt(age),
-    height: getHeightInCm(formState),
-    weight: getWeightInKg(formState),
+    heightCm: getHeightInCm(formState),
+    weightKg: getWeightInKg(formState),
     sex: parseInt(sex), // Form value is already SDK value as string
     smoking: parseInt(smoking), // Form value is already SDK value as string
     bloodPressureMedication: parseInt(bloodPressureMed), // Form value is already SDK value as string

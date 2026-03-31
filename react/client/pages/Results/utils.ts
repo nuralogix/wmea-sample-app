@@ -1,4 +1,5 @@
-import type { PointGroupType, DfxPointId, Point, Results } from './types';
+import type { PointGroupType, DfxPointId, Point, Results } from './helpers';
+import { RESULT_TYPE } from './helpers';
 
 /** Preferred display order for result point groups (others follow afterward). */
 export const PREFERRED_GROUP_ORDER: PointGroupType[] = [
@@ -16,7 +17,7 @@ export function getGroupsFromResults(results: Results): PointGroupType[] {
   const groups: Set<PointGroupType> = new Set();
   for (const pt of Object.values(results.points)) {
     const g = pt?.meta?.group;
-    if (g && g !== 'metadata') groups.add(g);
+    if (g && g !== 'metadata' && pt?.meta?.resultsType !== RESULT_TYPE.INTERNAL) groups.add(g);
   }
   return Array.from(groups);
 }
@@ -37,7 +38,7 @@ export function getOrderedGroupIds(results: Results): PointGroupType[] {
 export function getPointsForGroup(results: Results, group: PointGroupType): [DfxPointId, Point][] {
   const out: [DfxPointId, Point][] = [];
   for (const [id, pt] of Object.entries(results.points)) {
-    if (pt && pt.meta.group === group) {
+    if (pt && pt.meta.group === group && pt.meta.resultsType !== RESULT_TYPE.INTERNAL) {
       out.push([id as DfxPointId, pt]);
     }
   }
