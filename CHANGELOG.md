@@ -1,5 +1,28 @@
 # Changelog
 
+## [0.1.0-beta.15] - 2026-03-31
+
+### Added
+
+- **Results page (React)**: New results visualization with `helpers.ts` containing DFX point metadata, localization, range/dial calculations, and `parseResults()` for transforming raw measurement data
+- **Results page (CDN)**: New `results.html` page with table-based results display; `index.html` now stores results in `sessionStorage` and redirects to `/results.html` after measurement
+- **CVD multi-year risk display**: Both React and CDN results pages extract and display the probability for a configurable target year (default: 10) from `CVD_MULTI_YEAR_RISK_PROBS` / `CVD_MULTI_YEAR_RISK_YEARS` points
+- **Internal points filtering**: Points with `resultsType === 'INTERNAL'` are excluded from results display
+
+### Changed
+
+- **Results module refactor**: Updated imports across Results components, constants, MetricCard, MetricIcon, and state modules
+
+### 📦 Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v0.1.0-beta.15
+
+**Breaking**
+
+- **Raw results**: WMEA no longer adds metadata to measurement results for visualization. Results are now returned as-is from the DeepAffex Cloud without modification. The sample app provides `helpers.ts` (React) and `results.mjs` (CDN) with point metadata, localization info, and `parseResults()` to achieve the same effect. The sample app has been refactored to accommodate these changes.
+
+---
+
 ## [0.1.0-beta.14] - 2026-02-27
 
 ### Added
