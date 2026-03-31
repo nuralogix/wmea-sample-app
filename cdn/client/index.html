@@ -43,7 +43,9 @@
                 if (studyIdResponse.status === '200' && tokenResponse.status === '200') {
                     measurementApp.on.results = async (results) => {
                         console.log('Results received', results);
+                        sessionStorage.setItem('measurementResults', JSON.stringify(results));
                         await measurementApp.destroy();
+                        window.location.href = '/results.html';
                     };
 
                     measurementApp.on.error = (error) => {

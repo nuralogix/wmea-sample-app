@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Measurement Results</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #1f2937;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .error-banner {
+            background-color: #fef2f2;
+            border: 1px solid #fca5a5;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            color: #991b1b;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        thead {
+            background-color: #1e293b;
+            color: white;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: 600;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+        }
+
+        .back-btn {
+            display: block;
+            margin: 24px auto;
+            padding: 10px 24px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .back-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Health Measurement Results</h1>
+    <div id="error-container" style="max-width: 900px; margin: 0 auto;"></div>
+    <table id="results-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Value</th>
+                <th>Unit</th>
+                <th>Group</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <button class="back-btn" onclick="window.location.href='/'">Measure Again</button>
+
+    <script type="module">
+        import { parseResults, RESULT_TYPE } from './results.mjs';
+
+        const BAND_COLOR_MAP = {
+            YELLOW: 'rgb(255, 236, 137)',
+            LIGHT_GREEN: 'rgb(145, 230, 183)',
+            GREEN: 'rgb(98, 219, 153)',
+            LIGHT_RED: 'rgb(255, 137, 137)',
+            RED: 'rgb(255, 87, 87)',
+        };
+
+        const raw = sessionStorage.getItem('measurementResults');
+        if (!raw) {
+            document.querySelector('#results-table tbody').innerHTML =
+                '<tr><td colspan="4" class="no-results">No results found. Please take a measurement first.</td></tr>';
+        } else {
+            const results = JSON.parse(raw);
+            const parsedResults = parseResults(results);
+            const { points, errors } = parsedResults;
+
+            // Display errors if any
+            const errorContainer = document.getElementById('error-container');
+            if (errors.code !== 'OK') {
+                const banner = document.createElement('div');
+                banner.className = 'error-banner';
+                banner.textContent = `Error: ${errors.code}`;
+                errorContainer.appendChild(banner);
+            }
+
+            const pointList = Object.keys(points);
+            const uniqueGroups = Array.from(
+                new Set(pointList.map(p => points[p].meta.group))
+            );
+
+            const tbody = document.querySelector('#results-table tbody');
+
+            uniqueGroups.forEach(pointGroup => {
+                pointList.forEach(point => {
+                    const { meta, info, dial } = points[point];
+                    const { sections } = dial;
+                    const { group, resultsType } = meta;
+
+                    if (resultsType === RESULT_TYPE.INTERNAL) return;
+                    if (group !== pointGroup) return;
+
+                    const { name, unit } = info;
+                    const color = sections.length === 0
+                        ? 'transparent'
+                        : BAND_COLOR_MAP[sections[dial.group - 1]?.bandColor] ?? 'transparent';
+
+                    let value = points[point].value;
+
+                    // Handle CVD_MULTI_YEAR_RISK_PROBS: extract the probability for a specific year
+                    // targetYear: value between 1 and 20 representing the year horizon for CVD risk
+                    const targetYear = 10;
+                    let isCvdRisk = false;
+                    if (point === 'CVD_MULTI_YEAR_RISK_PROBS' && points['CVD_MULTI_YEAR_RISK_YEARS']) {
+                        const years = points['CVD_MULTI_YEAR_RISK_YEARS'].value;
+                        const index = years.indexOf(targetYear);
+                        value = index !== -1 ? (Number(value[index]).toFixed(2) ?? 'N/A') : 'N/A';
+                        isCvdRisk = true;
+                    }
+
+                    const row = document.createElement('tr');
+
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = isCvdRisk ? `${name} (${targetYear}-year risk)` : name;
+
+                    const valueCell = document.createElement('td');
+                    valueCell.textContent = value;
+                    valueCell.style.backgroundColor = color;
+
+                    const unitCell = document.createElement('td');
+                    unitCell.textContent = unit;
+
+                    const groupCell = document.createElement('td');
+                    groupCell.textContent = group;
+
+                    row.appendChild(nameCell);
+                    row.appendChild(valueCell);
+                    row.appendChild(unitCell);
+                    row.appendChild(groupCell);
+                    tbody.appendChild(row);
+                });
+            });
+        }
+    </script>
+</body>
+
+</html>
