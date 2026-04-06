@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.0-beta.15] - 2026-04-06
+
+### Fixed
+
+- **Camera not stopping on low SNR error**: Added `MEASUREMENT_LOW_SNR` to `CANCEL_ON_ERROR_CODES` so that a low SNR error triggers `cancel(true)`, properly stopping the camera and resetting the measurement state
+
+---
+
 ## [0.1.0-beta.15] - 2026-03-31
 
 ### Added

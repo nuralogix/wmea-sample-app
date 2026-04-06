@@ -24,6 +24,7 @@ export const CANCEL_ON_ERROR_CODES: ErrorCodes[] = [
   ErrorCodes.COLLECTOR,
   ErrorCodes.WEBSOCKET_DISCONNECTED,
   ErrorCodes.FACE_NONE,
+  ErrorCodes.MEASUREMENT_LOW_SNR,
 ] as const;
 export type CancelOnErrorCode = (typeof CANCEL_ON_ERROR_CODES)[number];
 
