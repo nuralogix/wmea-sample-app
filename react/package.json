@@ -28,7 +28,7 @@
   "dependencies": {
     "@nuralogix.ai/dfx-api-client": "^1.0.73",
     "@nuralogix.ai/web-measurement-embedded-app": "^0.1.0-beta.16",
-    "@nuralogix.ai/web-ui": "^0.1.0-alpha.13",
+    "@nuralogix.ai/web-ui": "^0.1.0-alpha.14",
     "@stylexjs/stylex": "0.9.3",
     "compression": "^1.8.0",
     "connect-livereload": "^0.6.1",

@@ -15,6 +15,8 @@
 - `@nuralogix.ai/anura-web-core-sdk`: Upgraded to `0.1.0-beta.13`
 - `@nuralogix.ai/web-ui`: Upgraded to `0.1.0-alpha.14`
 
+#### `@nuralogix.ai/web-ui` → v0.1.0-alpha.14
+
 ---
 
 ## [0.1.0-beta.15] - 2026-04-06
