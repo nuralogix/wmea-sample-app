@@ -1202,25 +1202,30 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nuralogix.ai/anura-web-core-sdk@^0.1.0-beta.12":
-  version "0.1.0-beta.12"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-beta.12.tgz#a378bd0f6f3b805c8573b6adc42b29ff32f3c602"
-  integrity sha512-v2j1c7cGr5QIIKUHglw7pziIl5WUldVdzUJekRcKOV5oQyDGdU88jgta6kqKQxRofc7hoB72xdxCRVxQDUWK3Q==
+"@nuralogix.ai/anura-web-core-sdk@^0.1.0-beta.13":
+  version "0.1.0-beta.13"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/anura-web-core-sdk/-/anura-web-core-sdk-0.1.0-beta.13.tgz#d34e275c1af4b713222731193ac27e11441fa00c"
+  integrity sha512-R64XO2aCfTafucePQbhH8inMmj8ybYroFWqx/J1z+xIco0MIYZdGqSV750aaV/vUk1xQsyP6CO2nbw1OvJ4h+Q==
 
 "@nuralogix.ai/dfx-api-client@^1.0.73":
   version "1.0.73"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/dfx-api-client/-/dfx-api-client-1.0.73.tgz#529782d7348dd9bcdb1dcef72f8217ad0f53bd2f"
   integrity sha512-2R1gYZ/smrqvvIXVO8sQfqslfHyini0lVMRnB5YVzpYHZhxHPLp5zJCU1sCFNCY/zZHh4bBfo4gVDy3O+6FGxw==
 
-"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.15":
-  version "0.1.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.15.tgz#d30de0bb93334bff5ed4ed4e58f7029e6e21dc74"
-  integrity sha512-6fw/r0gzqQ/tmGwl8hNMTAu5xNIuRzY48P0XQ1xvUyax41zhWNzQUK4+yCBLVOxQRrodfJxMKEmTnBNa57pJqA==
+"@nuralogix.ai/web-measurement-embedded-app@^0.1.0-beta.16":
+  version "0.1.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-measurement-embedded-app/-/web-measurement-embedded-app-0.1.0-beta.16.tgz#8d1438c37201e22db8e52bce4551e9d73419be25"
+  integrity sha512-rHdz9r6ravDPLq0rdHR05/2UGwQ6bAl3nL7z6pK4xk+YLUZYt0tASQ9LSLKStPSu5KSkgQbcxpxaU3sL+m/NkA==
 
 "@nuralogix.ai/web-ui@^0.1.0-alpha.13":
   version "0.1.0-alpha.13"
   resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.13.tgz#50a5b078b8b6c68ab8edc1111b092facd34eeafb"
   integrity sha512-HkrebpCe+5nVoucjWK5Z3yinAoEEJusFJ7O5nMt9QI/rO4MIo4QuuueLAd/o+y+phO66HL8rVTCRMu08HXZlFw==
+
+"@nuralogix.ai/web-ui@^0.1.0-alpha.14":
+  version "0.1.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@nuralogix.ai/web-ui/-/web-ui-0.1.0-alpha.14.tgz#6e153d012256f2080009a777562dbf26be70ed51"
+  integrity sha512-9ip6n56nZsU8p7EVV1XGNhr/6DJaqE3KZMQjqSpii4QIBpmhSF7B0f2GFn3zr6X0p/5I1frQO70hx8o8P33i2w==
 
 "@rollup/plugin-commonjs@^28.0.2":
   version "28.0.9"
