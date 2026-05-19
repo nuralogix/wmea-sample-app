@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.0.0] - 2026-05-19
+
+### 📦 Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v1.0.0
+
+### Changed
+
+- **Results types**: Reworked the public results types around `DFXResults`. The `results` callback, `ResultsEvent`, and `INTERMEDIATE_RESULTS` payload now use `DFXResults`, and several lower-level types are no longer exported.
+
+### Fixed
+
+- **Mobile `cameraAutoStart`**: Fixed a bug where `cameraAutoStart` left the video feed without a mask on mobile browsers.
+
+---
+
 ## [0.1.0-beta.16] - 2026-04-14
 
 ### 📦 Package Updates
