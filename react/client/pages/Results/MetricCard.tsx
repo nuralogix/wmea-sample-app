@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import * as stylex from '@stylexjs/stylex';
 import { useSnapshot } from 'valtio';
 import type { DfxPointId, Point, Results } from './helpers';
@@ -58,6 +59,24 @@ const styles = stylex.create({
   valueDark: {
     color: '#f8fafc',
   },
+  slider: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 4,
+  },
+  sliderInput: {
+    flex: 1,
+    height: 4,
+    cursor: 'pointer',
+    accentColor: '#000000',
+  },
+  sliderLabel: {
+    fontSize: 12,
+    fontWeight: 600,
+    minWidth: 24,
+    textAlign: 'center' as const,
+  },
 });
 
 const MetricCard = ({ point, dfxPointId, results }: { dfxPointId: DfxPointId; point: Point; results: Results }) => {
@@ -70,13 +89,15 @@ const MetricCard = ({ point, dfxPointId, results }: { dfxPointId: DfxPointId; po
   // Handle CVD_MULTI_YEAR_RISK_PROBS: extract the probability for a specific year
   let displayValue: string | number[] = value;
   // targetYear: value between 1 and 20 representing the year horizon for CVD risk
-  const targetYear = 10;
+  const [targetYear, setTargetYear] = useState(10);
   let isCvdRisk = false;
   if (dfxPointId === 'CVD_MULTI_YEAR_RISK_PROBS' && Array.isArray(value)) {
     const yearsPoint = results.points['CVD_MULTI_YEAR_RISK_YEARS'];
     if (yearsPoint && Array.isArray(yearsPoint.value)) {
       const index = yearsPoint.value.indexOf(targetYear);
-      displayValue = index !== -1 ? (value[index]?.toFixed(2) ?? 'N/A') : 'N/A';
+      displayValue = index !== -1 && value[index] != null
+        ? String(value[index])
+        : 'N/A';
       isCvdRisk = true;
     }
   }
@@ -126,7 +147,22 @@ const MetricCard = ({ point, dfxPointId, results }: { dfxPointId: DfxPointId; po
         {info.unit && <Paragraph>{info.unit}</Paragraph>}
       </div>
       {isCvdRisk && (
-        <Paragraph>{`${targetYear}-year risk`}</Paragraph>
+        <>
+          <Paragraph>{`${targetYear}-year risk`}</Paragraph>
+          <div {...stylex.props(styles.slider)}>
+            <span {...stylex.props(styles.sliderLabel, isDark ? styles.valueDark : styles.valueLight)}>1</span>
+            <input
+              {...stylex.props(styles.sliderInput)}
+              type="range"
+              min={1}
+              max={20}
+              value={targetYear}
+              onChange={(e) => setTargetYear(Number(e.target.value))}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <span {...stylex.props(styles.sliderLabel, isDark ? styles.valueDark : styles.valueLight)}>20</span>
+          </div>
+        </>
       )}
     </div>
   );

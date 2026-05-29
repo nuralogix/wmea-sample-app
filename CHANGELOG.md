@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1] - 2026-05-29
+
+### Added
+
+- **CVD multi-year risk slider**: `MetricCard` now renders a 1–20 year slider for `CVD_MULTI_YEAR_RISK_PROBS`, letting users pick the target year horizon.
+- **`isInteger` on DFX points**: `DFXMeta` now carries an `isInteger` flag; `parseResults` rounds integer-valued points with `Math.ceil` instead of formatting to two decimals.
+- **`BandColor` enum**: Replaced inline band color string literals with a `BandColor` const + type for type-safe dial colors.
+
 ## [1.0.0] - 2026-05-19
 
 ### 📦 Package Updates
