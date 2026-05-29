@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.1] - 2026-05-29
+## 2026-05-29 — App changes (SDK 1.0.0)
 
 ### Added
 
