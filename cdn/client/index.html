@@ -72,15 +72,16 @@
                             },
                             config: {
                                 checkConstraints: true,
-                                cameraFacingMode: 'user',
+                                cameraFacingMode: 'user', // 'user' (front) or 'environment' (back); omit to select by defaultCameraId / browser default. Takes precedence over defaultCameraId.
                                 cameraAutoStart: false,
                                 measurementAutoStart: false,
                                 cancelWhenLowSNR: true,
+                                // defaultCameraId: '', // preferred camera deviceId to open on startup; used only when cameraFacingMode is unset. Falls back to the browser default if not connected.
                             },
                             profile: {
                                 age: 40,
-                                height: 180,
-                                weight: 60,
+                                heightCm: 180,
+                                weightKg: 60,
                                 sex: faceAttributeValue.SEX_ASSIGNED_MALE_AT_BIRTH,
                                 smoking: faceAttributeValue.SMOKER_FALSE,
                                 bloodPressureMedication: faceAttributeValue.BLOOD_PRESSURE_MEDICATION_FALSE,

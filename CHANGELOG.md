@@ -1,5 +1,33 @@
 # Changelog
 
+## [1.0.1] - 2026-06-23
+
+### 📦 Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v1.0.1
+
+### Added
+
+- **`defaultCameraId`**: New optional `defaultCameraId` config property to specify a preferred camera `deviceId` on startup. Added (commented out) to the React and CDN sample config. Used only when `cameraFacingMode` is not set (`cameraFacingMode` takes precedence); falls back to the browser's default camera if the ID is not connected.
+
+### Changed
+
+- **`cameraFacingMode`**: Now `undefined` by default in the SDK (was `'user'`). The sample app still sets `'user'` explicitly; clarified in comments that, when set, it takes precedence over `defaultCameraId`, and that omitting it selects by `defaultCameraId` / browser default.
+- **Collector errors**: Collector errors that occur before a measurement starts are now silently handled by the SDK instead of dispatched to the parent page; guidance messages and face tracking resume automatically when the face returns to frame.
+
+### Fixed
+
+- **CDN profile (app)**: Updated the CDN sample `profile` to use `heightCm`/`weightKg` (was the legacy `height`/`weight`) to match the current `Profile` type.
+
+### Fixed (SDK)
+
+- **Camera selection**: Fixed a bug where the camera selected in the dropdown wasn't always respected.
+- **Mobile `cameraAutoStart`**: Fixed a bug where `cameraAutoStart` left the video feed without a mask on mobile browsers.
+
+### Dependencies
+
+- **@nuralogix.ai/anura-web-core-sdk**: Upgraded to `0.1.0-beta.15`
+
 ## 2026-05-29 — App changes (SDK 1.0.0)
 
 ### Added
