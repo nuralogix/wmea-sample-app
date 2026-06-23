@@ -70,12 +70,13 @@ const Measurement = () => {
           profile: demographics,
           config: {
             checkConstraints: true,
-            cameraFacingMode: 'user',
+            cameraFacingMode: 'user', // 'user' (front) or 'environment' (back); omit to select by defaultCameraId / browser default. Takes precedence over defaultCameraId.
             cameraAutoStart: false,
             measurementAutoStart: false,
             cancelWhenLowSNR: true,
             debugMode: false,
             // downloadPayloads: false, // saves payload/metadata binary files per chunk for debugging
+            // defaultCameraId: '', // preferred camera deviceId to open on startup; used only when cameraFacingMode is unset. Falls back to the browser default if not connected.
           },
         };
 
