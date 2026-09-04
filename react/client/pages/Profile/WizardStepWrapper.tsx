@@ -13,6 +13,7 @@ interface WizardStepWrapperProps {
 
 const WizardStepWrapper: React.FC<WizardStepWrapperProps> = ({ onSubmit, isEnabled, children }) => (
   <div
+    role="presentation"
     tabIndex={-1}
     onKeyDown={(e) => {
       if (e.key === 'Enter' && isEnabled) {

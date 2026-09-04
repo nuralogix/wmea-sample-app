@@ -1,5 +1,49 @@
 # Changelog
 
+## [1.1.0] - 2026-09-04
+
+### 📦 Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v1.1.0
+
+WMEA v1.1.0 is built on Anura Web Core SDK `0.1.0-beta.21`. The public `Config`,
+`MeasurementEmbeddedAppOptions`, `appEvents` and `ErrorCodes` types are unchanged from v1.0.1, so
+the upgrade is drop-in for both samples.
+
+### Added (SDK)
+
+- **Stats widget**: displayed when `debugMode` is enabled.
+
+### Changed (SDK)
+
+- WMEA now uses the new optimized face tracker from SDK version `0.1.0-beta.21`.
+- WMEA warns the user to move back if they are very close to the camera during the measurement. Being too close can cause the face tracker to lose the face.
+- The camera selector is now hidden while a camera is open.
+- The camera selector is now hidden when `cameraFacingMode` is set, since the browser chooses the device.
+
+### Fixed (SDK)
+
+- `downloadPayloads` now downloads a single ZIP named `<measurementId>.zip` when a measurement completes (containing `payload-N.bin` / `metadata-N.bin` per chunk) instead of triggering a separate download per file. This bundling is what lets the feature work on browsers that block multiple programmatic downloads, notably iOS/iPadOS Safari.
+- Fixed CVEs
+
+### Changed (app)
+
+- **React**: bumped `@nuralogix.ai/web-measurement-embedded-app` to `^1.1.0`; the WMEA bundle copied into `dist/wmea` by the Rollup build now comes from v1.1.0.
+- **React**: raised `engines.node` to `>=26` to match the package and the CDN sample.
+- **CDN**: added commented-out `debugMode` and `downloadPayloads` entries to the sample config.
+- **Config comments (both samples)**: noted that setting `cameraFacingMode` hides the camera selector, that `debugMode` also shows the stats widget, and that `downloadPayloads` produces a single `<measurementId>.zip` on completion.
+- **Browser targets (both samples)**: `browserslist` raised to `Safari >= 26` to match the WMEA package.
+
+### Fixed (app)
+
+- **`yarn lint` (React)**: the flat config spread `@typescript-eslint` and `valtio` rules without registering those plugins, so ESLint aborted before linting anything. Both are registered now; the react `jsx-runtime` rules were added (the build compiles JSX with the automatic runtime), and the base `no-unused-vars` / `no-redeclare` / `no-undef` rules - which misfire on generic parameters, mapped-type keys, `const` + `type` merging and type-only imports - are off in favour of tsc and the `@typescript-eslint` equivalents. `no-console` is off as well: the samples log deliberately.
+- **Lint errors surfaced by that fix (React)**: removed the unused `MOBILE_BREAKPOINT`, `NextFunction` and `devtools` bindings (the `devtools` import is now commented out next to its opt-in call site); logged the `cancel()` / `destroy()` return values in `Measurement` instead of discarding them; aliased the `Results` type import so it no longer collides with the `Results` component; added two missing semicolons in `Results/helpers.ts`.
+- **Accessibility (React)**: the language dropdown options are real `<button type="button">` elements, so they take keyboard focus and respond to Enter/Space; `WizardStepWrapper`'s Enter-key handler div carries `role="presentation"`.
+
+### Dependencies
+
+- **@nuralogix.ai/anura-web-core-sdk**: Upgraded to `0.1.0-beta.21`
+
 ## [1.0.1] - 2026-06-23
 
 ### 📦 Package Updates

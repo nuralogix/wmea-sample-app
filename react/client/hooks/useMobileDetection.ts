@@ -6,7 +6,6 @@ interface MobileDetection {
   titleKey: 'APP_TITLE' | 'APP_TITLE_SHORT';
 }
 
-const MOBILE_BREAKPOINT = 768;
 const TABLET_BREAKPOINT = 1024;
 
 export const useMobileDetection = (): MobileDetection => {

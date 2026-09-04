@@ -63,6 +63,11 @@ const config = [
       }),
       injectProcessEnv({
         IS_DEVELOPMENT: isDevelopment,
+        // Redux DevTools (valtio) is OFF by default: it serializes the whole state tree to the
+        // extension on every mutation, which saturates the main thread (where the ONNX frame
+        // pipeline runs) and breaks measurements when browser DevTools is open. Opt in explicitly
+        // with REDUX_DEV_TOOLS=true (e.g. in .dev.env) only when you need time-travel debugging.
+        REDUX_DEV_TOOLS: process.env.REDUX_DEV_TOOLS === 'true',
       }),
       esbuild({
         target: 'ES2022',

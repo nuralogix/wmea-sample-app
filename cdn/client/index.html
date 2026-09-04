@@ -72,10 +72,14 @@
                             },
                             config: {
                                 checkConstraints: true,
-                                cameraFacingMode: 'user', // 'user' (front) or 'environment' (back); omit to select by defaultCameraId / browser default. Takes precedence over defaultCameraId.
+                                // 'user' (front) or 'environment' (back); omit to select by defaultCameraId / browser default.
+                                // Takes precedence over defaultCameraId. When set, the camera selector is hidden and the browser picks the device.
+                                cameraFacingMode: 'user',
                                 cameraAutoStart: false,
                                 measurementAutoStart: false,
                                 cancelWhenLowSNR: true,
+                                debugMode: true, // verbose logging plus the on-screen stats widget
+                                // downloadPayloads: false, // on completion, downloads a single <measurementId>.zip containing payload-N.bin / metadata-N.bin per chunk
                                 // defaultCameraId: '', // preferred camera deviceId to open on startup; used only when cameraFacingMode is unset. Falls back to the browser default if not connected.
                             },
                             profile: {

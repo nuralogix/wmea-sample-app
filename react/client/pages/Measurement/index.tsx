@@ -57,7 +57,9 @@ const Measurement = () => {
           container,
           ...(language && { language }),
           appPath: './wmea',
-          // apiUrl: 'api.na-east.deepaffex.ai',
+          // IF you need to set a custom API URL, uncomment the line below and set the appropriate value.
+          // China users can set the API URL to the following:
+          //apiUrl: 'api.deepaffex.cn',
           settings: {
             token: tokenResponse.token,
             refreshToken: tokenResponse.refreshToken,
@@ -70,12 +72,15 @@ const Measurement = () => {
           profile: demographics,
           config: {
             checkConstraints: true,
-            cameraFacingMode: 'user', // 'user' (front) or 'environment' (back); omit to select by defaultCameraId / browser default. Takes precedence over defaultCameraId.
+            // 'user' (front) or 'environment' (back); omit to select by defaultCameraId / browser
+            // default. Takes precedence over defaultCameraId. When set, the camera selector is
+            // hidden and the browser picks the device.
+            cameraFacingMode: 'user',
             cameraAutoStart: false,
             measurementAutoStart: false,
             cancelWhenLowSNR: true,
-            debugMode: false,
-            // downloadPayloads: false, // saves payload/metadata binary files per chunk for debugging
+            debugMode: false, // verbose logging plus the on-screen stats widget
+            // downloadPayloads: false, // on completion, downloads a single <measurementId>.zip containing payload-N.bin / metadata-N.bin per chunk
             // defaultCameraId: '', // preferred camera deviceId to open on startup; used only when cameraFacingMode is unset. Falls back to the browser default if not connected.
           },
         };
@@ -88,6 +93,7 @@ const Measurement = () => {
           if (isCancelOnErrorCode(error.code)) {
             try {
               const isCancelled = await measurementApp.cancel(true);
+              console.log('Canceled after error code', error.code, isCancelled);
             } catch (e) {
               console.warn('Failed to cancel after error code', error.code, e);
             }
@@ -169,6 +175,7 @@ const Measurement = () => {
         console.log('WMEA Logs:', logs);
         // Destroy the instance and free up resources
         const isDestroyed = await measurementApp.destroy();
+        console.log('WMEA destroyed:', isDestroyed);
         setIsInit(false);
         const container = document.getElementById('measurement-embedded-app-container');
         if (container) {
