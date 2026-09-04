@@ -1,6 +1,6 @@
 {
   "name": "wmea-sample-app-react",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Nuralogix WMEA Sample App - React",
   "private": true,
   "type": "module",
@@ -23,11 +23,11 @@
   ],
   "license": "SEE LICENSE IN ../LICENSE",
   "engines": {
-    "node": ">=25"
+    "node": ">=26"
   },
   "dependencies": {
     "@nuralogix.ai/dfx-api-client": "^1.0.73",
-    "@nuralogix.ai/web-measurement-embedded-app": "^1.0.1",
+    "@nuralogix.ai/web-measurement-embedded-app": "^1.1.0",
     "@nuralogix.ai/web-ui": "^0.1.0-alpha.14",
     "@stylexjs/stylex": "0.9.3",
     "compression": "^1.8.0",
@@ -86,7 +86,7 @@
     "typescript-eslint": "^8.25.0"
   },
   "browserslist": [
-    "Safari >= 18",
+    "Safari >= 26",
     "last 3 versions"
   ]
 }

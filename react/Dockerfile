@@ -1,5 +1,5 @@
 # Stage 1 - base setup for the React app (client + server)
-ARG NODE_IMAGE="node:25.0.0-trixie-slim"
+ARG NODE_IMAGE="node:26.8.1-trixie-slim"
 
 FROM ${NODE_IMAGE} AS dependencies
 WORKDIR /app

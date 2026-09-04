@@ -47,9 +47,9 @@ Update the `browserslist` entry in `package.json` to adjust support levels. For 
 
 ```json
 "browserslist": [
-  "Safari >= 18",
+  "Safari >= 26",
   "last 3 versions"
 ]
 ```
 
-`Safari >= 18` removes unsupported legacy Safari releases, while `last 3 versions` covers the latest stable Chrome, Edge, and Firefox channels.
+`Safari >= 26` matches the WMEA package targets and removes unsupported legacy Safari releases, while `last 3 versions` covers the latest stable Chrome, Edge, and Firefox channels.

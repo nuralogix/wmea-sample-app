@@ -79,6 +79,13 @@ const styles = stylex.create({
     justifyContent: 'space-between',
     padding: '8px 12px',
     cursor: 'pointer',
+    width: '100%',
+    borderWidth: 0,
+    borderStyle: 'none',
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    fontFamily: 'inherit',
+    textAlign: 'left',
     borderRadius: 4,
     fontSize: 14,
     transition: 'background-color 0.15s ease',
@@ -142,14 +149,15 @@ export const LanguageSelector: React.FC = () => {
       {isOpen && (
         <div {...stylex.props(styles.dropdown)}>
           {LANGUAGE_OPTIONS.map(({ label, value }) => (
-            <div
+            <button
               key={value}
+              type="button"
               onClick={() => handleSelect(value)}
               {...stylex.props(styles.option, currentLanguage === value && styles.optionActive)}
             >
               <span>{t(label)}</span>
               <span {...stylex.props(styles.optionCode)}>{value}</span>
-            </div>
+            </button>
           ))}
         </div>
       )}

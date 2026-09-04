@@ -2,7 +2,7 @@ import state from '../../state';
 import { useSnapshot } from 'valtio';
 import ResultsError from './ResultsError';
 import ResultsSummary from './ResultsSummary';
-import type { Results } from './helpers';
+import type { Results as ResultsData } from './helpers';
 
 const Results = () => {
   const measurementSnap = useSnapshot(state.measurement);
@@ -16,7 +16,7 @@ const Results = () => {
     return <ResultsError />;
   }
 
-  return <ResultsSummary results={results as Results} />;
+  return <ResultsSummary results={results as ResultsData} />;
 };
 
 export default Results;

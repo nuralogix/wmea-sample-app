@@ -3554,7 +3554,7 @@ export const parseResults = (results: DFXResults): Results => {
         const defaultInfo = {
             name: '',
             unit: ''
-        }
+        };
         // Check if the point exists in DFX_POINTS, otherwise use defaults
         const pointMeta = DFX_POINTS[point as DfxPointId]?.meta || defaultMeta;
         if (!DFX_POINTS[point as DfxPointId]) {
@@ -3607,7 +3607,7 @@ export const parseResults = (results: DFXResults): Results => {
                         groupSize,
                         bandColor: bandColors[index],
                         range: [start, end],
-                    }
+                    };
                 }),
                 group,
                 subGroup,

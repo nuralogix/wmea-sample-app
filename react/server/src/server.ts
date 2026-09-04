@@ -1,4 +1,4 @@
-import express, { type Application, type NextFunction, type Request, type Response } from 'express';
+import express, { type Application, type Request, type Response } from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import { join } from 'path';
