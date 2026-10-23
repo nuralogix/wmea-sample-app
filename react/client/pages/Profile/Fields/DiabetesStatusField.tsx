@@ -1,7 +1,6 @@
 import React from 'react';
-import { RadioButtonGroup } from '@nuralogix.ai/web-ui';
 import { useTranslation } from 'react-i18next';
-import FieldWrapper from '../FieldWrapper';
+import OptionalRadioGroup from './OptionalRadioGroup';
 import { DiabetesStatus } from '../types';
 import { FORM_VALUES } from '../constants';
 
@@ -24,14 +23,12 @@ const DiabetesStatusField: React.FC<DiabetesStatusFieldProps> = ({ value, onChan
   };
 
   return (
-    <FieldWrapper>
-      <RadioButtonGroup
-        label={t('PROFILE_FORM_DIABETES_LABEL')}
-        value={value}
-        onChange={handleChange}
-        options={diabetesStatusOptions}
-      />
-    </FieldWrapper>
+    <OptionalRadioGroup
+      labelKey="PROFILE_FORM_DIABETES_LABEL"
+      value={value}
+      onChange={handleChange}
+      options={diabetesStatusOptions}
+    />
   );
 };
 

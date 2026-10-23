@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import FieldWrapper from '../FieldWrapper';
 import { isHeightMetricInvalid } from '../utils/validationUtils';
 import { createFieldBlurHandler } from '../utils/formUtils';
+import { usePartialProfile } from '../hooks/usePartialProfile';
 
 interface MetricHeightFieldProps {
   value: string;
@@ -12,6 +13,7 @@ interface MetricHeightFieldProps {
 
 const MetricHeightField: React.FC<MetricHeightFieldProps> = ({ value, onChange }) => {
   const { t } = useTranslation();
+  const { fieldLabel } = usePartialProfile();
   const [touched, setTouched] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,7 @@ const MetricHeightField: React.FC<MetricHeightFieldProps> = ({ value, onChange }
   return (
     <FieldWrapper variant="textInput">
       <TextInput
-        label={t('PROFILE_FORM_HEIGHT_LABEL_METRIC')}
+        label={fieldLabel('PROFILE_FORM_HEIGHT_LABEL_METRIC')}
         value={value}
         onChange={handleChange}
         placeholder={t('PROFILE_FORM_HEIGHT_PLACEHOLDER_METRIC')}

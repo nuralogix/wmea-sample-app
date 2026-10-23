@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import FieldWrapper from '../FieldWrapper';
 import { isAgeInvalid } from '../utils/validationUtils';
 import { createFieldBlurHandler } from '../utils/formUtils';
+import { usePartialProfile } from '../hooks/usePartialProfile';
 
 interface AgeFieldProps {
   value: string;
@@ -12,6 +13,7 @@ interface AgeFieldProps {
 
 const AgeField: React.FC<AgeFieldProps> = ({ value, onChange }) => {
   const { t } = useTranslation();
+  const { fieldLabel } = usePartialProfile();
   const [touched, setTouched] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +25,7 @@ const AgeField: React.FC<AgeFieldProps> = ({ value, onChange }) => {
   return (
     <FieldWrapper variant="textInput">
       <TextInput
-        label={t('PROFILE_FORM_AGE_LABEL')}
+        label={fieldLabel('PROFILE_FORM_AGE_LABEL')}
         value={value}
         onChange={handleChange}
         placeholder={t('PROFILE_FORM_AGE_PLACEHOLDER')}

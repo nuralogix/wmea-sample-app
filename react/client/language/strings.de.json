@@ -93,5 +93,7 @@
   "LANGUAGE_DE": "Deutsch",
   "LANGUAGE_BR": "Brasilianisches Portugiesisch",
   "APP_TITLE_SHORT": "Beispiel-App",
-  "PARTIAL_RESULTS_WARNING": "Es wurden nur Teilergebnisse empfangen. Bitte versuchen Sie es erneut unter besseren Bedingungen."
+  "PARTIAL_RESULTS_WARNING": "Es wurden nur Teilergebnisse empfangen. Bitte versuchen Sie es erneut unter besseren Bedingungen.",
+  "PROFILE_FORM_OPTIONAL_LABEL": "{{label}} (optional)",
+  "PROFILE_FORM_CLEAR_SELECTION": "Zurücksetzen"
 }

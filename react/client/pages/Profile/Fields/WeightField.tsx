@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import FieldWrapper from '../FieldWrapper';
 import { isWeightMetricInvalid, isWeightImperialInvalid } from '../utils/validationUtils';
 import { createFieldBlurHandler } from '../utils/formUtils';
+import { usePartialProfile } from '../hooks/usePartialProfile';
 
 interface WeightFieldProps {
   value: string;
@@ -13,6 +14,7 @@ interface WeightFieldProps {
 
 const WeightField: React.FC<WeightFieldProps> = ({ value, onChange, isMetric }) => {
   const { t } = useTranslation();
+  const { fieldLabel } = usePartialProfile();
   const [touched, setTouched] = useState(false);
 
   // Reset touched state when unit changes
@@ -29,7 +31,7 @@ const WeightField: React.FC<WeightFieldProps> = ({ value, onChange, isMetric }) 
   return (
     <FieldWrapper variant="textInput">
       <TextInput
-        label={t(
+        label={fieldLabel(
           isMetric ? 'PROFILE_FORM_WEIGHT_LABEL_METRIC' : 'PROFILE_FORM_WEIGHT_LABEL_IMPERIAL'
         )}
         value={value}

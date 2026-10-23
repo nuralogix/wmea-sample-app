@@ -1,8 +1,49 @@
 # Changelog
 
+## [1.2.0] - 2026-10-22
+
+### Package Updates
+
+#### `@nuralogix.ai/web-measurement-embedded-app` → v1.2.0
+
+WMEA v1.2.0 is built on Anura Web Core SDK `0.1.0-beta.24`. `Profile` is now `FullProfile | PartialProfile`; a profile without `partialProfile` is a `FullProfile` with every field required, as before, so the upgrade is drop-in for both samples.
+
+### Added (SDK)
+
+- **Partial profiles**: set `partialProfile: true` on the `Profile` to send only some demographic fields, for example only `heightCm` and `weightKg`. Only the fields provided are validated and sent, and results are calculated using only those fields.
+
+### Changed (SDK)
+
+- **Age**: must be a whole number; a decimal age is rejected with `INVALID_PROFILE`.
+
+### Fixed (SDK)
+
+- The rear camera preview is no longer mirrored, however the rear camera was chosen. Front cameras are still mirrored.
+- On Android, the front camera preview is mirrored again after a session that used the rear camera.
+- On iOS, the face guide now appears on first load in portrait on smaller screens (for example iPad 9th generation, iPhone SE) without rotating the device.
+- After a measurement was cancelled (for example for low SNR) and the camera restarted, the face bounding box could be drawn at half size in the top-left corner and face guidance was based on that wrong position.
+
+### Added (app)
+
+- **Partial profile form (React)**: set `ALLOW_PARTIAL_PROFILE` to `true` in `client/state/demographics/state.ts` to make every profile field optional. Labels are marked "(optional)", answered radio questions get a **Clear** button, BMI is checked only when both height and weight are entered, and the form sends a partial profile with only the fields filled in. Off by default, so the form behaves as before. While it is off, a previously saved partial profile is loaded as skipped.
+- **CDN**: added a commented-out `partialProfile` entry to the sample profile.
+- **Translations (React)**: `PROFILE_FORM_OPTIONAL_LABEL` and `PROFILE_FORM_CLEAR_SELECTION` in all 9 languages.
+
+### Changed (app)
+
+- **React**: bumped `@nuralogix.ai/web-measurement-embedded-app` to `^1.2.0`.
+
+### Fixed (app)
+
+- **Profile prefill (React)**: skipping the profile before ever filling it in saved placeholder values (age, height and weight 0, sex male, non-smoker, ...), and the profile form later prefilled them as if the user had entered them. The default profile now carries no values, and a placeholder saved by an earlier version is no longer prefilled. A profile the user filled in and later skipped is still prefilled.
+
+### Dependencies
+
+- **@nuralogix.ai/anura-web-core-sdk**: Upgraded to `0.1.0-beta.24`.
+
 ## [1.1.0] - 2026-09-04
 
-### 📦 Package Updates
+### Package Updates
 
 #### `@nuralogix.ai/web-measurement-embedded-app` → v1.1.0
 

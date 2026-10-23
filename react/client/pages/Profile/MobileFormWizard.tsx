@@ -4,7 +4,7 @@ import * as stylex from '@stylexjs/stylex';
 import { useTranslation } from 'react-i18next';
 import MedicalQuestionnaire from './MedicalQuestionnaire';
 import { FormState } from './types';
-import { isAgeInvalid, isProfileInfoValid } from './utils/validationUtils';
+import { isSexAndAgeValid, isProfileInfoValid } from './utils/validationUtils';
 import { INITIAL_FORM_STATE, FORM_VALUES } from './constants';
 import { useFormSubmission } from './utils/formSubmissionUtils';
 import useUnitConversion from './hooks/useUnitConversion';
@@ -131,7 +131,7 @@ const MobileFormWizard = () => {
 
   const onSubmit = () => handleSubmit(formState);
 
-  const canProceedSexAge = formState.sex !== '' && !isAgeInvalid(formState.age);
+  const canProceedSexAge = isSexAndAgeValid(formState);
   const canProceedBody = isProfileInfoValid(formState);
 
   const stepsArray = [MOBILE_STEPS.SEX_AGE, MOBILE_STEPS.BODY, MOBILE_STEPS.MEDICAL];

@@ -91,5 +91,7 @@
   "LANGUAGE_DE": "Allemand",
   "LANGUAGE_BR": "Portugais brésilien",
   "APP_TITLE_SHORT": "Appli exemple",
-  "PARTIAL_RESULTS_WARNING": "Seuls des résultats partiels ont été reçus. Veuillez réessayer dans de meilleures conditions."
+  "PARTIAL_RESULTS_WARNING": "Seuls des résultats partiels ont été reçus. Veuillez réessayer dans de meilleures conditions.",
+  "PROFILE_FORM_OPTIONAL_LABEL": "{{label}} (facultatif)",
+  "PROFILE_FORM_CLEAR_SELECTION": "Effacer"
 }

@@ -1,13 +1,18 @@
 # Stage 1 - base setup for the React app (client + server)
 ARG NODE_IMAGE="node:26.8.1-trixie-slim"
 
-FROM ${NODE_IMAGE} AS dependencies
+# The node >= 26 images ship neither yarn nor corepack, so install the pinned yarn once and
+# derive every stage that runs a yarn command from this one.
+FROM ${NODE_IMAGE} AS base
+RUN npm install --global yarn@1.22.22
+
+FROM base AS dependencies
 WORKDIR /app
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 # Stage 2 - build the React bundle
-FROM ${NODE_IMAGE} AS builder
+FROM base AS builder
 WORKDIR /app
 ENV NODE_ENV=production
 COPY package.json ./
