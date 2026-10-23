@@ -93,5 +93,7 @@
   "LANGUAGE_DE": "德语",
   "LANGUAGE_BR": "巴西葡萄牙语",
   "APP_TITLE_SHORT": "示例应用",
-  "PARTIAL_RESULTS_WARNING": "仅收到部分结果。请在更好的条件下重试。"
+  "PARTIAL_RESULTS_WARNING": "仅收到部分结果。请在更好的条件下重试。",
+  "PROFILE_FORM_OPTIONAL_LABEL": "{{label}}（可选）",
+  "PROFILE_FORM_CLEAR_SELECTION": "清除"
 }

@@ -9,12 +9,28 @@ import type { FormState } from '../types';
 const populateField = <K extends keyof FormState>(
   formState: FormState,
   fieldKey: K,
-  value: number
+  value: number | undefined
 ): void => {
+  // A partial profile may not have every field
+  if (value === undefined) return;
   if (!formState[fieldKey]) {
     formState[fieldKey] = String(value) as FormState[K];
   }
 };
+
+/**
+ * Older versions saved a placeholder profile (age, height and weight 0, sex male,
+ * non-smoker, ...) when the profile was skipped before ever being filled in. Those
+ * values were never entered by the user, so they must not be prefilled. No real
+ * profile has age, height and weight all 0 (minimums are 13 years, 120 cm, 30 kg).
+ */
+const isLegacyPlaceholder = (saved: {
+  bypassProfile: boolean;
+  age?: number;
+  heightCm?: number;
+  weightKg?: number;
+}): boolean =>
+  saved.bypassProfile && saved.age === 0 && saved.heightCm === 0 && saved.weightKg === 0;
 
 /**
  * Custom hook to prepopulate form state from saved demographics in localStorage on mount.
@@ -28,7 +44,7 @@ export const usePrepopulateForm = (
     setFormState((prev) => {
       const saved = loadSavedDemographics();
 
-      if (!saved) return prev;
+      if (!saved || isLegacyPlaceholder(saved)) return prev;
 
       const next = { ...prev };
 

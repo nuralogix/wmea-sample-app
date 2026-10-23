@@ -5,6 +5,7 @@ import * as stylex from '@stylexjs/stylex';
 import FieldWrapper from '../FieldWrapper';
 import { isHeightFeetInvalid, isHeightInchesInvalid } from '../utils/validationUtils';
 import { createFieldBlurHandler } from '../utils/formUtils';
+import { usePartialProfile } from '../hooks/usePartialProfile';
 
 const styles = stylex.create({
   container: {
@@ -31,6 +32,7 @@ const ImperialHeightField: React.FC<ImperialHeightFieldProps> = ({
   onInchesChange,
 }) => {
   const { t } = useTranslation();
+  const { fieldLabel } = usePartialProfile();
   const [feetTouched, setFeetTouched] = useState(false);
   const [inchesTouched, setInchesTouched] = useState(false);
 
@@ -50,7 +52,7 @@ const ImperialHeightField: React.FC<ImperialHeightFieldProps> = ({
       <div {...stylex.props(styles.container)}>
         <div {...stylex.props(styles.inputWrapper)}>
           <TextInput
-            label={t('PROFILE_FORM_HEIGHT_FEET_LABEL')}
+            label={fieldLabel('PROFILE_FORM_HEIGHT_FEET_LABEL')}
             value={feet}
             onChange={handleFeetChange}
             placeholder={t('PROFILE_FORM_HEIGHT_FEET_PLACEHOLDER')}
@@ -62,7 +64,7 @@ const ImperialHeightField: React.FC<ImperialHeightFieldProps> = ({
         </div>
         <div {...stylex.props(styles.inputWrapper)}>
           <TextInput
-            label={t('PROFILE_FORM_HEIGHT_INCHES_LABEL')}
+            label={fieldLabel('PROFILE_FORM_HEIGHT_INCHES_LABEL')}
             value={inches}
             onChange={handleInchesChange}
             placeholder={t('PROFILE_FORM_HEIGHT_INCHES_PLACEHOLDER')}
